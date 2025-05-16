@@ -7,6 +7,7 @@ const LoginPage = () => {
   const { role } = useParams();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  
 
   useEffect(() => {
     if (!role) {
@@ -16,10 +17,12 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
+      const result = await signInWithPopup(auth, provider);const user = result.user;
+      const token = await user.getIdToken();
+      
 
       // Save user info
+      localStorage.setItem('token', token);
       localStorage.setItem('role', role || '');
       localStorage.setItem('email', user.email || '');
       localStorage.setItem('name', user.displayName || '');

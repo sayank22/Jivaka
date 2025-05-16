@@ -10,7 +10,8 @@ import PatientDashboard from '../pages/Dashboards/PatientDashboard';
 import HospitalDashboard from '../pages/Dashboards/HospitalDashboard';
 
 const isAuthenticated = () => {
-  return !!localStorage.getItem('token');
+  const token = localStorage.getItem('token');
+    return !!token;
 };
 
 const AppRoutes = () => {
