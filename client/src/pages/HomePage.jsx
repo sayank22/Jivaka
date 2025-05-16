@@ -279,7 +279,46 @@ const HomePage = () => {
           Blazingly fast, super-easy app to book. A customer friendly app by the Students in collaboration with leading tech companies. Creating a symbiotic community.
         </motion.p>
         </div>
-
+<div className="overflow-hidden bg-teal-700 text-white py-3">
+  <div className="flex flex-nowrap gap-8 animate-marquee whitespace-nowrap">
+    {[
+      { label: 'Doctors can easily manage every task', icon: '🩺' },
+      { label: 'Diagnostic Tests uploaded & managed', icon: '🧪' },
+      { label: 'Can manage schedule & Staff in Hospital', icon: '🏥' },
+      { label: 'Patients can see, book pay safely', icon: '👥' },
+    ].map((item, idx) => (
+      <div key={idx} className="flex items-center gap-2 min-w-fit">
+        <span>{item.icon}</span>
+        <span className="font-light">{item.label}</span>
+        <div className="w-2 h-2 bg-white opacity-60 rounded-full mx-3" />
+      </div>
+    ))}
+    {[
+      { label: 'Doctors',  icon: '🩺' },
+      { label: 'Diagnostic Tests', icon: '🧪' },
+      { label: 'Hospitals', icon: '🏥' },
+      { label: 'Patients Served', icon: '👥' },
+    ].map((item, idx) => (
+      <div key={idx} className="flex items-center gap-2 min-w-fit">
+        <span>{item.icon}</span>
+        <span className="font-light">{item.label}</span>
+        <div className="w-2 h-2 bg-white opacity-60 rounded-full mx-3" />
+      </div>
+    ))}
+    {[
+      { label: 'Doctors', icon: '🩺' },
+      { label: 'Diagnostic Tests', icon: '🧪' },
+      { label: 'Hospitals', icon: '🏥' },
+      { label: 'Patients Served', icon: '👥' },
+    ].map((item, idx) => (
+      <div key={idx + 100} className="flex items-center gap-2 min-w-fit">
+        <span>{item.icon}</span>
+        <span className="font-light">{item.label}</span>
+        <div className="w-2 h-2 bg-white opacity-60 rounded-full mx-3" />
+      </div>
+    ))}
+  </div>
+</div>
       {/* How It Works Section */}
 <div className="mt-20 max-w-4xl mx-auto px-6 text-center">
   <h2 className="text-3xl font-bold text-teal-700 mb-6">How It Works</h2>
