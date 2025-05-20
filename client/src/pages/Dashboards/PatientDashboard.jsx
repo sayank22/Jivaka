@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAuth } from 'firebase/auth';
-import { FaHospitalAlt, FaUserMd, FaVials, FaFileMedical } from 'react-icons/fa';
+import { useUser, SignOutButton } from '@clerk/clerk-react'; 
+import { FaHospitalAlt, FaUserMd, FaVials, FaFileMedical, FaBars, FaUserEdit, FaSignOutAlt, FaCalendarAlt, FaFileAlt, FaCommentDots, FaPhone, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import logoImage from '../../assets/logo.png';
 
@@ -150,27 +150,86 @@ const ToggleList = ({ items, renderTitle, renderDetails }) => {
 
 const PatientDashboard = () => {
   const navigate = useNavigate();
-  const user = getAuth().currentUser;
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const { user, isLoaded } = useUser();
 
   useEffect(() => {
-    if (!user) navigate('/login/patient');
-  }, [user, navigate]);
+    if (isLoaded && !user) navigate('/login/doctor');
+   }, [user, isLoaded, navigate]);
 
+   if (!isLoaded) return null;
   if (!user) return null;
 
   return (
     <div className="p-6 bg-gradient-to-tr from-blue-100 to-purple-200 min-h-screen">
-      <div className="text-center mb-8">
+      <header className="fixed inset-x-0 top-0 flex items-center justify-between px-4 py-2 bg-sky-200 shadow z-40 h-20">
+        {/* Left – Title */}
+        <h3 className="text-2xl font-bold text-teal-800">JIVAKA</h3>
+
+        {/* Center – Logo */}
         <img
           src={logoImage}
           alt="Jivaka Logo"
-          className="mx-auto top-6 left-6 w-20 h-20 shadow-lg rounded-full"
+          className="w-16 h-16 object-contain absolute left-1/2 -translate-x-1/2"
         />
-        <h1 className="mx-auto text-3xl font-bold text-teal-800 mt-3">
-          Welcome, {user.displayName || user.email}
-        </h1>
-      </div>
 
+        {/* Right – Hamburger Icon */}
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="text-2xl focus:outline-none"
+        >
+          <FaBars />
+        </button>
+      </header>
+
+      {/* ---------- Sidebar ---------- */}
+      <div className={`fixed top-0 right-0 h-full bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'} w-64`}>
+        <div className="flex justify-between items-center p-4 border-b">
+          <h2 className="text-lg font-bold">Menu</h2>
+          <button onClick={() => setSidebarOpen(false)} className="text-xl text-gray-600 hover:text-red-500">
+            &times;
+          </button>
+        </div>
+        <ul className="p-4 space-y-3">
+          <li className="flex items-center gap-2 cursor-pointer hover:text-teal-600"><FaCalendarAlt /> Next Appointments</li>
+          <li className="flex items-center gap-2 cursor-pointer hover:text-teal-600"><FaVials /> Upcoming Lab Tests</li>
+          <li className="flex items-center gap-2 cursor-pointer hover:text-teal-600"><FaFileAlt /> View Reports</li>
+          <li className="flex items-center gap-2 cursor-pointer hover:text-teal-600"><FaCommentDots /> Feedback</li>
+          <li className="flex items-center gap-2 cursor-pointer hover:text-teal-600"><FaPhone /> Contact Us</li>
+
+          {/* Edit Profile */}
+          <li>
+            <button
+              onClick={() => setEditOpen(!editOpen)}
+              className="flex items-center gap-2 w-full text-left hover:text-teal-600"
+            >
+              <FaUserEdit /> Edit Profile {editOpen ? <FaChevronUp /> : <FaChevronDown />}
+            </button>
+            {editOpen && (
+              <ul className="ml-5 mt-2 space-y-2 text-sm">
+                <li>Change Profile Picture</li>
+                <li>Name: {user?.fullName}</li>
+                <li>Email: {user?.emailAddresses[0]?.emailAddress}</li>
+                <li>Phone: {user?.phoneNumbers[0]?.phoneNumber || 'N/A'}</li>
+                <li className="flex items-center gap-2 text-red-500 hover:underline mt-2">
+                  <FaSignOutAlt />
+                  <SignOutButton signOutCallback={() => window.location.href = '/'} />
+                </li>
+              </ul>
+            )}
+          </li>
+        </ul>
+      </div>
+      {/* ---------- Main Content ---------- */}
+      <main className="pt-24 px-4">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-teal-800">
+            Welcome, {user?.fullName || user?.primaryEmailAddress?.emailAddress}
+          </h1>
+        </div>
+        </main>
+      
       <Section title="Doctor Specializations" icon={<FaUserMd />}> 
         <ToggleList
           items={mockData.specialists}
@@ -178,7 +237,7 @@ const PatientDashboard = () => {
           renderDetails={(spec) => (
             <div className="grid sm:grid-cols-2 gap-3">
               {spec.doctors.map((doc, i) => (
-                <div key={i} className="bg-teal-50 p-3 rounded-lg shadow-inner hover:shadow-md hover:scale-[1.01] transition">
+                <div key={i} className="bg-purple-300 p-3 rounded-lg shadow-inner hover:shadow-md hover:scale-[1.01] transition">
                   <p className="font-semibold text-teal-800">{doc.name}</p>
                   <p className="text-sm">Fee: <span className="text-gray-600">{doc.fee}</span></p>
                   <p className="text-sm">Time: {doc.time}</p>

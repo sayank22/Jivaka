@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { useUser } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
-import { getAuth } from 'firebase/auth';
 import { FaUserMd, FaNotesMedical, FaCalendarAlt, FaFlask, FaChartBar, FaShareAlt, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import logoImage from '../../assets/logo.png';
 
 const DoctorDashboard = () => {
   const navigate = useNavigate();
-  const user = getAuth().currentUser;
+  const { user, isLoaded } = useUser(); 
 
-  useEffect(() => {
-    if (!user) navigate('/login/doctor');
-  }, [user, navigate]);
+  useEffect(() => {if (isLoaded && !user) navigate('/login/doctor');
+   }, [user, isLoaded, navigate]);
 
   const [showWeek, setShowWeek] = useState(false);
   const [showMonth, setShowMonth] = useState(false);
   const [showPatients, setShowPatients] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
+  if (!isLoaded) return null;
   if (!user) return null;
 
   const patients = [
@@ -85,7 +85,7 @@ const DoctorDashboard = () => {
       <div className="flex justify-center">
         <img src={logoImage} alt="Jivaka Logo" className="w-24 h-24 object-contain" />
       </div>
-      <h1 className="text-2xl font-bold text-center text-teal-800 mt-2 mb-6">Welcome, Dr.{user.displayName || user.email}</h1>
+      <h1 className="text-2xl font-bold text-center text-teal-800 mt-2 mb-6">Welcome, Dr.{user.fullName || user.primaryEmailAddress?.emailAddress}</h1>
 
       {/* Today's Appointments */}
       <Section title="Today's Appointments" icon={<FaCalendarAlt />}>

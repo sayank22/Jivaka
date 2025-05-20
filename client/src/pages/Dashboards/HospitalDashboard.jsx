@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAuth } from 'firebase/auth';
+import { useUser } from '@clerk/clerk-react';
 import { FaAngleDown } from 'react-icons/fa';
 import logoImage from '../../assets/logo.png';
 
@@ -23,12 +23,12 @@ const CollapsibleSection = ({ title, children }) => {
 
 const HospitalDashboard = () => {
   const navigate = useNavigate();
-  const user = getAuth().currentUser;
+  const { user, isLoaded } = useUser();
 
-  useEffect(() => {
-    if (!user) navigate('/login/hospital');
-  }, [user, navigate]);
+  useEffect(() => {if (isLoaded && !user) navigate('/login/doctor');
+   }, [user, isLoaded, navigate]);
 
+  if (!isLoaded) return null;
   if (!user) return null;
 
   const doctors = [
@@ -68,7 +68,8 @@ const HospitalDashboard = () => {
   return (
     <div className="p-6 bg-gradient-to-tr from-gray-50 to-blue-100 min-h-screen">
       <img src={logoImage} alt="Logo" className="w-20 h-20 mx-auto mb-4" />
-      <h1 className="text-2xl text-center font-bold text-teal-800 mb-6">Welcome, {user.displayName || user.email}</h1>
+      <h1 className="text-2xl text-center font-bold text-teal-800 mb-6">Welcome, {user.fullName || user.primaryEmailAddress?.emailAddress}
+</h1>
 
       {/* Schedule */}
       <section className="mb-6 bg-white p-4 rounded shadow">

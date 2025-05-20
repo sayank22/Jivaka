@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
 import HomePage from '../pages/HomePage';
@@ -8,11 +8,7 @@ import LoginPage from '../pages/LoginPage';
 import DoctorDashboard from '../pages/Dashboards/DoctorDashboard';
 import PatientDashboard from '../pages/Dashboards/PatientDashboard';
 import HospitalDashboard from '../pages/Dashboards/HospitalDashboard';
-
-const isAuthenticated = () => {
-  const token = localStorage.getItem('token');
-    return !!token;
-};
+import ProtectedRoute from '../components/ProtectedRoute';
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -24,18 +20,30 @@ const AppRoutes = () => {
         <Route path="/about" element={<About />} />
         <Route path="/login/:role" element={<LoginPage />} />
 
-        {/* Protected routes */}
+        {/* Protected Routes */}
         <Route
           path="/doctor"
-          element={isAuthenticated() ? <DoctorDashboard /> : <Navigate to="/login/doctor" />}
+          element={
+            <ProtectedRoute>
+              <DoctorDashboard />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/patient"
-          element={isAuthenticated() ? <PatientDashboard /> : <Navigate to="/login/patient" />}
+          element={
+            <ProtectedRoute>
+              <PatientDashboard />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/hospital"
-          element={isAuthenticated() ? <HospitalDashboard /> : <Navigate to="/login/hospital" />}
+          element={
+            <ProtectedRoute>
+              <HospitalDashboard />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </AnimatePresence>

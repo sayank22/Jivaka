@@ -1,29 +1,17 @@
-import React, { useEffect } from 'react';
-import { auth } from './firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+import React from 'react';
+import { ClerkProvider } from '@clerk/clerk-react';
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './routes/AppRoutes';
 
-function App() {
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const token = await user.getIdToken(true); // refresh token
-        localStorage.setItem('token', token);
-        localStorage.setItem('email', user.email || '');
-        localStorage.setItem('name', user.displayName || '');
-        // role is stored at login, no change here
-      } else {
-        localStorage.clear();
-      }
-    });
+const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
-    return () => unsubscribe();
-  }, []);
+function App() {
   return (
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
+    <ClerkProvider publishableKey={clerkPubKey}>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </ClerkProvider>
   );
 }
 
