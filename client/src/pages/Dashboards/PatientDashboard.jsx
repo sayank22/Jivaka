@@ -5,6 +5,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useUser, SignOutButton } from '@clerk/clerk-react'; 
 import { FaHospitalAlt, FaUserMd, FaVials, FaPrescriptionBottle } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import PaymentPage from '../PaymentPage';
+
 
 const mockData = {
   specialists: [
@@ -155,6 +157,10 @@ const [showTestModal, setShowTestModal] = useState(false);
 const [showModal, setShowModal] = useState(false);
 const [prescriptions, setPrescriptions] = useState([]);
 const [testResults, setTestResults] = useState([]);
+const handlePaymentRedirect = () => {
+  navigate('/payment'); // 👈 This will redirect to PaymentPage
+};
+
 
   useEffect(() => {
     if (isLoaded && !user) navigate('/login/patient');
@@ -443,7 +449,7 @@ useEffect(() => {
           </div>
         )}
       </Section>
-<section className="mt-10 px-4">
+<section className="mb-6 mt-10 px-4">
   <h2 className="text-2xl font-bold mb-6 text-gray-800">Uploaded Test Results</h2>
 
   {testResults.length === 0 ? (
@@ -479,6 +485,29 @@ useEffect(() => {
     </div>
   )}
 </section>
+
+<section className="mb-6 bg-white p-4 rounded shadow">
+  <h2 className="text-xl font-semibold text-teal-700 mb-2">Payment for Hospital</h2>
+  <form className="grid gap-3" onSubmit={handlePaymentRedirect}></form>
+        <form className="grid gap-3">
+          <input type="text" placeholder="Hospital Name" className="p-2 border rounded" />
+          <input type="number" placeholder="Amount" className="p-2 border rounded" />
+          <button onClick={handlePaymentRedirect} 
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Pay To hospital</button>
+        </form>
+      </section>
+
+      <section className="mb-6 bg-white p-4 rounded shadow">
+  <h2 className="text-xl font-semibold text-teal-700 mb-2">Payment for Doctor</h2>
+  <form className="grid gap-3" onSubmit={handlePaymentRedirect}></form>
+        <form className="grid gap-3">
+          <input type="text" placeholder="Doctor Name" className="p-2 border rounded" />
+          <input type="number" placeholder="Amount" className="p-2 border rounded" />
+          <button onClick={handlePaymentRedirect} 
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Pay To Doctor</button>
+        </form>
+      </section>
+
     </div>
   );
 };

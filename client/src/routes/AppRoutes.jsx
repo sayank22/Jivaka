@@ -6,11 +6,14 @@ import { SignIn, SignUp } from '@clerk/clerk-react';
 import Navbar from '../components/Navbar';
 import HomePage from '../pages/HomePage';
 import About from '../pages/About';
+import Feedback from '../pages/Feedback';
 import LoginPage from '../pages/LoginPage';
 import SignupPage from '../pages/SignupPage';
 import DoctorDashboard from '../pages/Dashboards/DoctorDashboard';
 import PatientDashboard from '../pages/Dashboards/PatientDashboard';
 import HospitalDashboard from '../pages/Dashboards/HospitalDashboard';
+import PaymentPage from '../pages/PaymentPage';
+
 import ProtectedRoute from '../components/ProtectedRoute';
 
 const AppRoutes = () => {
@@ -29,6 +32,7 @@ const AppRoutes = () => {
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<About />} />
+          <Route path="/feedback" element={<Feedback />} />
           <Route path="/login/:role" element={<LoginPage />} />
           <Route path="/signup/:role" element={<SignupPage />} />
 
@@ -67,6 +71,8 @@ const AppRoutes = () => {
               </ProtectedRoute>
             }
           />
+          <Route path="/payment" element={<PaymentPage />} />
+
         </Routes>
       </AnimatePresence>
     </>

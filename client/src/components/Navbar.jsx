@@ -21,8 +21,8 @@ const Navbar = () => {
         />
       </Link>
 
-      <div className="text-teal-700 ml-auto flex items-center space-x-4 text-xl font-bold">
-        <Link to="/about" className="hover:underline">About</Link>
+      <div className="text-teal-700 ml-auto flex items-center space-x-4 text-lg font-bold">
+        <Link to="/feedback" className="hover:underline">Feedback</Link>
         <Link to="/" className="hover:underline">Home</Link>
 
         {/* Show Sign Out button only on dashboards and if logged in */}
@@ -30,7 +30,7 @@ const Navbar = () => {
           <div className="flex items-center space-x-4">
           <SignOutButton
             onClick={() => signOut()}
-            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+            className="bg-red-600 hover:bg-red-700 text-white px-2 py-2 rounded"
           >
             Sign Out
           </SignOutButton>

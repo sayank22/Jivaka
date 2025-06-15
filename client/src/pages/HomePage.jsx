@@ -120,15 +120,6 @@ const HomePage = () => {
             <ul className="text-left text-gray-700">
               <li>
                 <Link
-                  to="/"
-                  className="block px-4 py-2 hover:bg-gray-100"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
                   to="/about"
                   className="block px-4 py-2 hover:bg-gray-100"
                   onClick={() => setMenuOpen(false)}
@@ -146,6 +137,15 @@ const HomePage = () => {
                 >
                   Plans
                 </button>
+              </li>
+              <li>
+                <Link
+                  to="/feedback"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Feedback
+                </Link>
               </li>
             </ul>
           </motion.div>
@@ -594,44 +594,63 @@ const HomePage = () => {
       </footer>
 
       {/* Modal for Plans */}
-      <AnimatePresence>
-        {showModal && (
-          <motion.div
-            className="fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex justify-center items-center z-50"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowModal(false)}
-          >
-            <motion.div
-              className="bg-white p-8 rounded-xl shadow-xl w-80 text-center relative"
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={() => setShowModal(false)}
-                className="absolute top-2 right-3 text-xl text-gray-500 hover:text-gray-800"
-              >
-                &times;
-              </button>
-              <h3 className="text-xl font-semibold mb-4 text-teal-700">Our Plans</h3>
-              <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                - Basic Access: Free for patients and doctors<br />
-                - Premium: ₹499/month for full hospital analytics<br />
-                - Enterprise: Custom plan for large hospitals
-              </p>
-              <button
-                onClick={() => setShowModal(false)}
-                className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700"
-              >
-                Close
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+     <AnimatePresence>
+  {showModal && (
+    <motion.div
+      className="fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex justify-center items-center z-50"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={() => setShowModal(false)}
+    >
+      <motion.div
+        className="bg-white p-8 rounded-xl shadow-xl w-96 text-center relative"
+        initial={{ scale: 0.8 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0.8 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={() => setShowModal(false)}
+          className="absolute top-2 right-3 text-xl text-gray-500 hover:text-gray-800"
+        >
+          &times;
+        </button>
+        <h3 className="text-xl font-semibold mb-4 text-teal-700">Our Plans</h3>
+        <p className="text-gray-600 mb-4 text-sm leading-relaxed text-left">
+          <span className="font-semibold text-teal-600">🩺 Basic Access – Free</span><br />
+          - Book appointments and receive reminders<br />
+          - Doctors can manage schedule and view history<br />
+          - Access to test results and prescriptions<br />
+          - Basic support via email<br />
+          - UPI & card payment included<br /><br />
+
+          <span className="font-semibold text-teal-600">💼 Premium – ₹499/month</span><br />
+          - All Basic features, plus:<br />
+          - Advanced hospital analytics & dashboards<br />
+          - Priority appointment scheduling<br />
+          - Doctor performance tracking<br />
+          - Hospital slot management<br />
+          - Premium support (Email + Chat)<br /><br />
+
+          <span className="font-semibold text-teal-600">🏢 Enterprise – Custom Pricing</span><br />
+          - All Premium features, plus:<br />
+          - Dedicated account manager<br />
+          - Integration with hospital systems<br />
+          - Unlimited medical record storage<br />
+          - Custom features & security audits<br />
+          - 24x7 priority support
+        </p>
+        <button
+          onClick={() => setShowModal(false)}
+          className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700"
+        >
+          Close
+        </button>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
     </div>
   );
 };

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useUser, useAuth } from '@clerk/clerk-react';
 import { FaAngleDown } from 'react-icons/fa';
 import axios from 'axios';
+import PaymentPage from '../PaymentPage';
+
 
 const CollapsibleSection = ({ title, children }) => {
   const [open, setOpen] = useState(false);
@@ -31,7 +33,9 @@ const HospitalDashboard = () => {
   const [doctorSlots, setDoctorSlots] = useState([]);
   const [testResults, setTestResults] = useState([]);
   
-
+const handlePaymentRedirect = () => {
+  navigate('/payment'); // 👈 This will redirect to PaymentPage
+};
 
 const [formData, setFormData] = useState({
   patientName: '',
@@ -296,9 +300,11 @@ useEffect(() => {
         <form className="grid gap-3">
           <input type="text" placeholder="Hospital Name" className="p-2 border rounded" />
           <input type="number" placeholder="Amount" className="p-2 border rounded" />
-          <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Generate Invoice</button>
+          <button onClick={handlePaymentRedirect} 
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Pay To Jivaka</button>
         </form>
       </section>
+      
 
 <CollapsibleSection title="Patient Queue System">
         <div className="grid gap-3">
