@@ -39,57 +39,55 @@ const [slot, setSlot] = useState([]);
     if (!user) navigate('/login');
   }, [user, isLoaded, navigate]);
 
- useEffect(() => {
-  // Fetch Appointments
-  axios.get(`${import.meta.env.VITE_API_URL}/api/appointments`)
-    .then(res => {
-      console.log('✅ Appointments response:', res.data);
-      if (Array.isArray(res.data)) {
-        setAppointments(res.data);
-      } else {
-        console.warn('⚠️ Appointments response is not an array:', res.data);
-        setAppointments([]);
-      }
-    })
-    .catch(err => {
-      console.error('❌ Error fetching appointments:', err);
-    });
+ /* ───────── 1️⃣  Appointments + My Prescriptions ───────── */
+useEffect(() => {
+  const fetchAllData = async () => {
+    try {
+      const [appointmentsRes, prescriptionsRes] = await Promise.all([
+        axios.get(`${import.meta.env.VITE_API_URL}/api/appointments`),
+        getToken().then(token =>
+          axios.get(
+            `${import.meta.env.VITE_API_URL}/api/prescriptions`,
+            { headers: { Authorization: `Bearer ${token}` } }
+          )
+        ),
+      ]);
 
-  // Fetch Prescriptions if user exists
-  if (user) {
-    const email = user?.primaryEmailAddress?.emailAddress;
-    console.log('🔍 Fetching prescriptions for doctor email:', email);
-
-    axios.get(`${import.meta.env.VITE_API_URL}/api/prescriptions/doctor/${email}`)
-      .then(res => {
-        console.log('✅ Prescriptions response:', res.data);
-        if (Array.isArray(res.data)) {
-          setPrescriptions(res.data);
-        } else {
-          console.warn('⚠️ Prescriptions response is not an array:', res.data);
-          setPrescriptions([]);
-        }
-      })
-      .catch(err => {
-        console.error('❌ Error fetching prescriptions:', err);
-      });
+      setAppointments(
+        Array.isArray(appointmentsRes.data) ? appointmentsRes.data : []
+      );
+      setPrescriptions(
+        Array.isArray(prescriptionsRes.data) ? prescriptionsRes.data : []
+      );
+    } catch (err) {
+      console.error('Error fetching appointments / prescriptions:', err);
     }
-    if (user) {
-  axios.get(`${import.meta.env.VITE_API_URL}/api/hospital-slots`)
-    .then(res => setSlot(res.data))
-    .catch(err => console.error('Error fetching hospital slots:', err));
-}
-  }, [user]);
+  };
 
+  if (user) fetchAllData();
+}, [user, getToken]);
+
+/* ───────── 2️⃣  Hospital slots (doctor‑specific) ───────── */
+useEffect(() => {
+  if (!user) return;
+
+  axios
+    .get(`${import.meta.env.VITE_API_URL}/api/hospital-slots`)
+    .then(res => setSlot(res.data))
+    .catch(err =>
+      console.error('Error fetching hospital slots:', err)
+    );
+}, [user]);
+
+/* ───────── 3️⃣  Test results (once on mount) ───────── */
 useEffect(() => {
   const fetchTestResults = async () => {
     try {
       const token = await getToken();
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/test-results`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/test-results`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setTestResults(res.data);
     } catch (err) {
       console.error('Failed to fetch test results:', err);
@@ -97,8 +95,7 @@ useEffect(() => {
   };
 
   fetchTestResults();
-}, []);
-
+}, [getToken]);
 
 
   const todayStr = new Date().toISOString().split('T')[0];
@@ -128,21 +125,25 @@ const handleSlotChange = (e) => {
 };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(`${import.meta.env.VITE_API_URL
-}/api/prescriptions`, {
-        ...formData,
-        doctorEmail: user.primaryEmailAddress.emailAddress
-      });
-      alert('Prescription submitted!');
-      setFormData({ patientName: '', symptoms: '', diagnosis: '', medicines: '' });
-    } catch (err) {
-      console.error(err);
-      alert('Failed to submit prescription.');
-    }
-    
-  };
+  e.preventDefault();
+  try {
+    await axios.post(`${import.meta.env.VITE_API_URL}/api/prescriptions`, formData);
+    alert('Prescription submitted!');
+    setFormData({ patientName: '', symptoms: '', diagnosis: '', medicines: '' });
+
+    // Refetch prescriptions after submission
+    const token = await getToken();
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/prescriptions/myprescriptions`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    setPrescriptions(res.data);
+
+  } catch (err) {
+    console.error(err);
+    alert('Failed to submit prescription.');
+  }
+};
+
   const handleSlotSubmit = async (e) => {
   e.preventDefault();
   try {

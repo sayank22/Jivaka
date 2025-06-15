@@ -165,15 +165,16 @@ const [testResults, setTestResults] = useState([]);
     if (user) {
       try {
         const token = await getToken();
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/prescriptions/myprescriptions`, {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/prescriptions`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setPrescriptions(res.data);
       } catch (error) {
-        console.error('Failed to fetch prescriptions', error);
+        // You can optionally handle UI error state here
       }
     }
   };
+
   fetchPrescriptions();
 }, [user, getToken]);
 

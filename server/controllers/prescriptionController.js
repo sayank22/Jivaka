@@ -1,41 +1,35 @@
 const Prescription = require('../models/Prescription');
 
-// GET /api/prescriptions/doctor/:email
-const getPrescriptionsForDoctor = async (req, res) => {
+// GET /api/prescriptions — Fetch all prescriptions
+const getAllPrescriptions = async (req, res) => {
   try {
-    const doctorEmail = req.params.email;
-    const prescriptions = await Prescription.find({ doctorEmail });
-    res.json(prescriptions);
+    const prescriptions = await Prescription.find().sort({ date: -1 }); // newest first
+    res.status(200).json(prescriptions);
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching doctor prescriptions', error: err.message });
+    res.status(500).json({ message: 'Error fetching prescriptions', error: err.message });
   }
 };
 
-// GET /api/prescriptions/myprescriptions
-const getPrescriptionsForPatient = async (req, res) => {
-  try {
-    const patientEmail = req.user?.email || req.userEmail || req.query.email;
-    const prescriptions = await Prescription.find({ patientEmail });
-    res.json(prescriptions);
-  } catch (err) {
-    res.status(500).json({ message: 'Error fetching patient prescriptions', error: err.message });
-  }
-};
-
-// POST /api/prescriptions
+// POST /api/prescriptions — Create a new prescription
 const createPrescription = async (req, res) => {
   try {
-    const { patientEmail, patientName, doctorEmail, doctorName, date, diagnosis, medicines, notes } = req.body;
-    const newPrescription = new Prescription({
-      patientEmail,
+    console.log('REQ BODY:', req.body);
+
+    const {
       patientName,
-      doctorEmail,
-      doctorName,
-      date,
+      symptoms,
       diagnosis,
       medicines,
-      notes,
+    } = req.body;
+
+    const newPrescription = new Prescription({
+      patientName,
+      symptoms,
+      diagnosis,
+      medicines,
+      // 'date' is auto-filled by schema
     });
+
     await newPrescription.save();
     res.status(201).json(newPrescription);
   } catch (err) {
@@ -44,7 +38,6 @@ const createPrescription = async (req, res) => {
 };
 
 module.exports = {
-  getPrescriptionsForDoctor,
-  getPrescriptionsForPatient,
-  createPrescription,
+  getAllPrescriptions,
+  createPrescription
 };
