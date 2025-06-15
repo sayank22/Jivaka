@@ -160,28 +160,28 @@ const [testResults, setTestResults] = useState([]);
     if (isLoaded && !user) navigate('/login/patient');
    }, [user, isLoaded, navigate]);
 
- useEffect(() => {
-    const fetchPrescriptions = async () => {
-      if (user) {
-        try {
-          const token = await getToken();
-          const res = await axios.get('${process.env.REACT_APP_API_URL}/api/prescriptions/myprescriptions', {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          setPrescriptions(res.data);
-        } catch (error) {
-          console.error('Failed to fetch prescriptions', error);
-        }
-      }
-    };
-    fetchPrescriptions();
-  }, [user, getToken]);
-
   useEffect(() => {
+  const fetchPrescriptions = async () => {
+    if (user) {
+      try {
+        const token = await getToken();
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/prescriptions/myprescriptions`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setPrescriptions(res.data);
+      } catch (error) {
+        console.error('Failed to fetch prescriptions', error);
+      }
+    }
+  };
+  fetchPrescriptions();
+}, [user, getToken]);
+
+useEffect(() => {
   const fetchTestResults = async () => {
     try {
       const token = await getToken();
-      const res = await axios.get('${process.env.REACT_APP_API_URL}/api/test-results', {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/test-results`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -194,6 +194,7 @@ const [testResults, setTestResults] = useState([]);
 
   fetchTestResults();
 }, []);
+
 
   if (!isLoaded || !user) return null;
 
@@ -226,7 +227,8 @@ const [testResults, setTestResults] = useState([]);
           try {
             const token = await getToken();
             await axios.post(
-              "${process.env.REACT_APP_API_URL}/api/appointments/book",
+              `${import.meta.env.VITE_API_URL
+}/api/appointments/book`,
               {
                 patientName: user.fullName,
                 patientEmail: user.primaryEmailAddress.emailAddress,
@@ -334,7 +336,8 @@ const [testResults, setTestResults] = useState([]);
           try {
             const token = await getToken();
             await axios.post(
-              "${process.env.REACT_APP_API_URL}/api/diagnostics/book",
+              `${import.meta.env.VITE_API_URL
+}/api/diagnostics/book`,
               {
                 patientName: user.fullName,
                 patientEmail: user.primaryEmailAddress.emailAddress,
@@ -475,7 +478,8 @@ const [testResults, setTestResults] = useState([]);
 
           {result.fileUrl && (
             <a
-              href={`${process.env.REACT_APP_API_URL}${result.fileUrl}`}
+              href={`${import.meta.env.VITE_API_URL
+}${result.fileUrl}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-500 underline mt-2 inline-block"

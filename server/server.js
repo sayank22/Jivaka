@@ -14,7 +14,7 @@ const app = express();
 // ✅ Proper CORS config — allows frontend to access API
 app.use(
   cors({
-    origin: "https://jivaka.vercel.app", // ✅ No trailing slash
+    origin: ["https://jivaka.vercel.app", 'http://localhost:5173'],// ✅ No trailing slash
     credentials: true,
   })
 );

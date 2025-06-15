@@ -39,18 +39,43 @@ const [slot, setSlot] = useState([]);
     if (!user) navigate('/login');
   }, [user, isLoaded, navigate]);
 
-  useEffect(() => {
-    axios.get('${process.env.REACT_APP_API_URL}/api/appointments')
-      .then(res => setAppointments(res.data))
-      .catch(err => console.error('Error fetching appointments:', err));
+ useEffect(() => {
+  // Fetch Appointments
+  axios.get(`${import.meta.env.VITE_API_URL}/api/appointments`)
+    .then(res => {
+      console.log('✅ Appointments response:', res.data);
+      if (Array.isArray(res.data)) {
+        setAppointments(res.data);
+      } else {
+        console.warn('⚠️ Appointments response is not an array:', res.data);
+        setAppointments([]);
+      }
+    })
+    .catch(err => {
+      console.error('❌ Error fetching appointments:', err);
+    });
 
-    if (user) {
-      axios.get(`${process.env.REACT_APP_API_URL}/api/prescriptions/doctor/${user.primaryEmailAddress.emailAddress}`)
-        .then(res => setPrescriptions(res.data))
-        .catch(err => console.error('Error fetching prescriptions:', err));
+  // Fetch Prescriptions if user exists
+  if (user) {
+    const email = user?.primaryEmailAddress?.emailAddress;
+    console.log('🔍 Fetching prescriptions for doctor email:', email);
+
+    axios.get(`${import.meta.env.VITE_API_URL}/api/prescriptions/doctor/${email}`)
+      .then(res => {
+        console.log('✅ Prescriptions response:', res.data);
+        if (Array.isArray(res.data)) {
+          setPrescriptions(res.data);
+        } else {
+          console.warn('⚠️ Prescriptions response is not an array:', res.data);
+          setPrescriptions([]);
+        }
+      })
+      .catch(err => {
+        console.error('❌ Error fetching prescriptions:', err);
+      });
     }
     if (user) {
-  axios.get(`${process.env.REACT_APP_API_URL}/api/hospital-slots`)
+  axios.get(`${import.meta.env.VITE_API_URL}/api/hospital-slots`)
     .then(res => setSlot(res.data))
     .catch(err => console.error('Error fetching hospital slots:', err));
 }
@@ -60,7 +85,7 @@ useEffect(() => {
   const fetchTestResults = async () => {
     try {
       const token = await getToken();
-      const res = await axios.get('${process.env.REACT_APP_API_URL}/api/test-results', {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/test-results`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -105,7 +130,8 @@ const handleSlotChange = (e) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('${process.env.REACT_APP_API_URL}/api/prescriptions', {
+      await axios.post(`${import.meta.env.VITE_API_URL
+}/api/prescriptions`, {
         ...formData,
         doctorEmail: user.primaryEmailAddress.emailAddress
       });
@@ -120,7 +146,8 @@ const handleSlotChange = (e) => {
   const handleSlotSubmit = async (e) => {
   e.preventDefault();
   try {
-    await axios.post('${process.env.REACT_APP_API_URL}/api/hospital-slots', {
+    await axios.post(`${import.meta.env.VITE_API_URL
+}/api/hospital-slots`, {
       ...slotForm,
       doctorEmail: user.primaryEmailAddress.emailAddress
     });
@@ -128,7 +155,8 @@ const handleSlotChange = (e) => {
     setSlotForm({ hospitalName: '', days: '', time: '' });
 
     // Refetch slot list
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/hospital-slots/${user.primaryEmailAddress.emailAddress}`);
+    const res = await axios.get(`${import.meta.env.VITE_API_URL
+}/api/hospital-slots/${user.primaryEmailAddress.emailAddress}`);
     setSlot(res.data);
   } catch (err) {
     console.error('Error submitting slot:', err);
@@ -210,7 +238,8 @@ const handleSlotChange = (e) => {
 
           {result.fileUrl && (
             <a
-              href={`${process.env.REACT_APP_API_URL}${result.fileUrl}`}
+              href={`${import.meta.env.VITE_API_URL
+}${result.fileUrl}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-500 underline mt-2 inline-block"
