@@ -24,7 +24,6 @@ import {
 } from 'lucide-react';
 
 import patientImage from '../assets/1.jpg';
-import logoImage from '../assets/logo.png';
 
 const roles = [
   {
@@ -97,11 +96,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-tr from-blue-100 to-purple-200 relative">
       {/* Logo */}
-      <img
-        src={logoImage}
-        alt="Jivaka Logo"
-        className="absolute top-6 left-6 w-20 h-20 object-contain"
-      />
+      
 
       {/* Hamburger Button */}
       <div className="absolute top-6 right-6 z-50">

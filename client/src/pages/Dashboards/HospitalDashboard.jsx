@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '@clerk/clerk-react';
+import { useUser, useAuth } from '@clerk/clerk-react';
 import { FaAngleDown } from 'react-icons/fa';
-import logoImage from '../../assets/logo.png';
+import axios from 'axios';
 
 const CollapsibleSection = ({ title, children }) => {
   const [open, setOpen] = useState(false);
+
+  
 
   return (
     <div className="mb-6">
@@ -24,12 +26,107 @@ const CollapsibleSection = ({ title, children }) => {
 const HospitalDashboard = () => {
   const navigate = useNavigate();
   const { user, isLoaded } = useUser();
+  const { getToken } = useAuth();
+  const [diagnosticAppointments, setDiagnosticAppointments] = useState([]);
+  const [doctorSlots, setDoctorSlots] = useState([]);
+  const [testResults, setTestResults] = useState([]);
+  
 
-  useEffect(() => {if (isLoaded && !user) navigate('/login/doctor');
-   }, [user, isLoaded, navigate]);
 
-  if (!isLoaded) return null;
-  if (!user) return null;
+const [formData, setFormData] = useState({
+  patientName: '',
+  recommendedDoctor: '',
+  testName: '',
+  result: '',
+  file: null,
+});
+
+const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  setFormData({ ...formData, [name]: value });
+};
+
+const handleFileChange = (e) => {
+  setFormData({ ...formData, file: e.target.files[0] });
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const token = await getToken();
+  const data = new FormData();
+
+  for (const key in formData) {
+    data.append(key, formData[key]);
+  }
+
+  try {
+    await axios.post('http://localhost:5000/api/test-results/upload', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    alert("Test result uploaded!");
+  } catch (error) {
+    console.error("Upload failed:", error);
+  }
+};
+
+
+  useEffect(() => {
+    if (isLoaded && !user) navigate('/login/doctor');
+  }, [user, isLoaded, navigate]);
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const token = await getToken();
+        const res = await axios.get("http://localhost:5000/api/diagnostics/all", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setDiagnosticAppointments(res.data);
+      } catch (error) {
+        console.error("Error fetching diagnostics:", error);
+      }
+    };
+
+    fetchBookings();
+  }, [getToken]);
+
+  useEffect(() => {
+  const fetchDoctorSlots = async () => {
+    try {
+      const token = await getToken();
+      const res = await axios.get('http://localhost:5000/api/hospital-slots', {
+  headers: { Authorization: `Bearer ${token}` },
+});
+      setDoctorSlots(res.data);
+    } catch (error) {
+      console.error("Error fetching doctor slots:", error);
+    }
+  };
+
+  fetchDoctorSlots();
+}, [getToken]);
+
+useEffect(() => {
+    const fetchResults = async () => {
+      try {
+        const token = await getToken(); // Clerk token for auth
+        const res = await axios.get("http://localhost:5000/api/test-results", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setTestResults(res.data);
+      } catch (err) {
+        console.error("Failed to fetch test results:", err);
+      }
+    };
+
+    fetchResults();
+  }, [user]);
+
+
+  if (!isLoaded || !user) return null;
 
   const doctors = [
     { name: 'Dr. Rakesh Sharma', specialization: 'General Physician', fees: '₹300', available: 'Mon, Wed - 10 AM to 1 PM' },
@@ -67,18 +164,130 @@ const HospitalDashboard = () => {
 
   return (
     <div className="p-6 bg-gradient-to-tr from-gray-50 to-blue-100 min-h-screen">
-      <img src={logoImage} alt="Logo" className="w-20 h-20 mx-auto mb-4" />
-      <h1 className="text-2xl text-center font-bold text-teal-800 mb-6">Welcome, {user.fullName || user.primaryEmailAddress?.emailAddress}
-</h1>
-
-      {/* Schedule */}
-      <section className="mb-6 bg-white p-4 rounded shadow">
-        <h2 className="text-xl font-semibold text-teal-700 mb-2">Today's Schedule</h2>
-        <p>Dr. Anita Roy - Cardiology - 11:00 AM</p>
-        <p>CT Scan - 2:30 PM</p>
+      <h1 className="text-2xl text-center font-bold text-teal-800 mb-6">
+        Welcome, {user.fullName || user.primaryEmailAddress?.emailAddress}
+      </h1>
+      
+<section className="mb-6 bg-white p-4 rounded shadow">
+  <h2 className="text-xl font-semibold text-teal-700 mb-2">Diagnostic Appointment</h2>
+        {diagnosticAppointments.length === 0 ? (
+          <p className="text-gray-500">No diagnostic appointments found.</p>
+        ) : (
+          diagnosticAppointments.map((booking) => (
+            <div key={booking._id} className="border-b py-2">
+              <p><strong>Patient:</strong> {booking.patientName}</p>
+              <p><strong>Test:</strong> {booking.testName}</p>
+              <p><strong>Center:</strong> {booking.center}</p>
+              <p><strong>Date:</strong> {new Date(booking.date).toLocaleDateString()}</p>
+              <p><strong>Time:</strong> {booking.time}</p>
+              <p><strong>Slot #:</strong> {booking.slotNumber}</p>
+              <p><strong>Price:</strong> ₹{booking.price}</p>
+            </div>
+          ))
+        )}
       </section>
+      
+      <section className="mb-6 bg-white p-4 rounded shadow">
+  <h2 className="text-xl font-semibold text-teal-700 mb-2">Doctor's Schedule</h2>
+  {doctorSlots.length === 0 ? (
+    <p className="text-gray-500">No slots available</p>
+  ) : (
+    doctorSlots.map((slot, index) => (
+      <div key={index} className="border-b py-2">
+        <p><strong>Doctor:</strong> {slot.doctorName}</p>
+        <p><strong>Specialization:</strong> {slot.specialization}</p>
+        <p><strong>Day:</strong> {slot.day}</p>
+        <p><strong>Time:</strong> {slot.time}</p>
+        <p><strong>Hospital:</strong> {slot.hospital}</p>
+      </div>
+    ))
+  )}
+</section>
 
-      {/* Booking */}
+<section className="mb-6 bg-white p-4 rounded shadow">
+  <h2 className="text-xl font-semibold text-teal-700 mb-2">Upload Test Results</h2>
+  <form className="grid gap-3" onSubmit={handleSubmit}>
+    <input
+      type="text"
+      name="patientName"
+      placeholder="Patient Name"
+      onChange={handleInputChange}
+      className="p-2 border rounded"
+    />
+    <input
+      type="text"
+      name="recommendedDoctor"
+      placeholder="Recommended Doctor"
+      onChange={handleInputChange}
+      className="p-2 border rounded"
+    />
+    <input
+      type="text"
+      name="testName"
+      placeholder="Test Name"
+      onChange={handleInputChange}
+      className="p-2 border rounded"
+    />
+    <select
+      name="result"
+      onChange={handleInputChange}
+      className="p-2 border rounded"
+    >
+      <option value="">Test Result</option>
+      <option value="Positive">Positive</option>
+      <option value="Negative">Negative</option>
+    </select>
+    <input
+      type="file"
+      onChange={handleFileChange}
+      className="p-2 border rounded"
+    />
+    <button
+      type="submit"
+      className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+    >
+      Upload
+    </button>
+  </form>
+</section>
+
+ <section className="mt-10 px-4">
+  <h2 className="text-2xl font-bold mb-6 text-gray-800">Uploaded Test Results</h2>
+
+  {testResults.length === 0 ? (
+    <p className="text-gray-600 text-center text-lg">No test results uploaded yet.</p>
+  ) : (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {testResults.map((result) => (
+        <article
+          key={result._id}
+          className="bg-white p-4 shadow-sm rounded-xl border border-gray-200 transition hover:shadow-md"
+        >
+          <h3 className="text-lg font-semibold text-blue-800">{result.testName}</h3>
+          <p className="text-sm text-gray-700 mt-1">👤 Patient: <strong>{result.patientName}</strong></p>
+          <p className="text-sm text-gray-700">👨‍⚕️ Doctor: <strong>{result.recommendedDoctor}</strong></p>
+          <p className="text-sm text-gray-700">📝 Result: <em>{result.result}</em></p>
+
+          {result.fileUrl && (
+            <a
+              href={`http://localhost:5000${result.fileUrl}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 underline mt-2 inline-block"
+            >
+              📄 View Report
+            </a>
+          )}
+
+          <p className="text-xs text-gray-500 mt-2">🏥 Uploaded by: {result.uploadedBy}</p>
+          <p className="text-xs text-gray-500">🕒 {new Date(result.timestamp).toLocaleString()}</p>
+        </article>
+      ))}
+    </div>
+  )}
+</section>
+
+
       <CollapsibleSection title="Appointment / Test Booking">
         <form className="grid gap-3">
           <input type="text" placeholder="Patient Name" className="p-2 border rounded" />
@@ -92,22 +301,21 @@ const HospitalDashboard = () => {
         </form>
       </CollapsibleSection>
 
-      {/* Billing */}
-      <CollapsibleSection title="Billing & Invoice Generator">
+      <section className="mb-6 bg-white p-4 rounded shadow">
+  <h2 className="text-xl font-semibold text-teal-700 mb-2">Pay</h2>
+  <form className="grid gap-3" onSubmit={handleSubmit}></form>
         <form className="grid gap-3">
-          <input type="text" placeholder="Patient Name" className="p-2 border rounded" />
+          <input type="text" placeholder="Hospital Name" className="p-2 border rounded" />
           <input type="number" placeholder="Amount" className="p-2 border rounded" />
           <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Generate Invoice</button>
         </form>
-      </CollapsibleSection>
+      </section>
 
-      {/* Patient Queue */}
       <section className="mb-6 bg-white p-4 rounded shadow">
         <h2 className="text-xl font-semibold text-teal-700 mb-2">Patient Queue System</h2>
         <p>Next Patient: Ramesh Sinha (Token #12)</p>
       </section>
 
-      {/* Staff Directory */}
       <section className="mb-6 bg-white p-4 rounded shadow">
         <h2 className="text-xl font-semibold text-teal-700 mb-2">Staff Directory</h2>
         <ul className="list-disc pl-5">
@@ -116,14 +324,12 @@ const HospitalDashboard = () => {
         </ul>
       </section>
 
-      {/* Room and Bed Availability */}
       <section className="mb-6 bg-white p-4 rounded shadow">
         <h2 className="text-xl font-semibold text-teal-700 mb-2">Room & Bed Availability</h2>
         <p>General Beds - Total: 20, Occupied: 14, Available: 6</p>
         <p>ICU Beds - Total: 10, Occupied: 7, Available: 3</p>
       </section>
 
-      {/* Doctor List */}
       <CollapsibleSection title="Doctor List">
         {doctors.map((doc, i) => (
           <div key={i} className="mb-2 p-2 border rounded">
@@ -134,7 +340,6 @@ const HospitalDashboard = () => {
         ))}
       </CollapsibleSection>
 
-      {/* Diagnosis Tests */}
       <CollapsibleSection title="Diagnosis Tests">
         {tests.map((t, i) => (
           <div key={i} className="mb-2">
@@ -143,17 +348,7 @@ const HospitalDashboard = () => {
         ))}
       </CollapsibleSection>
 
-      {/* Upload Results */}
-      <CollapsibleSection title="Upload Results">
-        <form className="grid gap-3">
-          <input type="text" placeholder="Patient Name" className="p-2 border rounded" />
-          <input type="text" placeholder="Recommended Doctor" className="p-2 border rounded" />
-          <input type="file" className="p-2 border rounded" />
-          <button className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Upload</button>
-        </form>
-      </CollapsibleSection>
 
-      {/* Reports & Analytics */}
       <CollapsibleSection title="Reports & Analytics">
         <div className="grid gap-3">
           <p>Total Patients Today: 58</p>
@@ -164,7 +359,6 @@ const HospitalDashboard = () => {
         </div>
       </CollapsibleSection>
 
-      {/* Patient Record Access */}
       <CollapsibleSection title="Patient Record Access">
         <input type="text" placeholder="Search by name..." className="mb-3 p-2 border rounded w-full" />
         {patientRecords.map((p, i) => (
@@ -175,6 +369,8 @@ const HospitalDashboard = () => {
           </div>
         ))}
       </CollapsibleSection>
+
+      
     </div>
   );
 };

@@ -1,71 +1,72 @@
+import { useAuth } from '@clerk/clerk-react';
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useUser, SignOutButton } from '@clerk/clerk-react'; 
-import { FaHospitalAlt, FaUserMd, FaVials, FaFileMedical, FaBars, FaUserEdit, FaSignOutAlt, FaCalendarAlt, FaFileAlt, FaCommentDots, FaPhone, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaHospitalAlt, FaUserMd, FaVials, FaPrescriptionBottle } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
-import logoImage from '../../assets/logo.png';
 
 const mockData = {
   specialists: [
     {
       type: 'General Physician',
-      doctors: [{ name: 'Dr. Anjali Mehra', fee: '₹400', time: '10am - 1pm', hospital: 'City Care Hospital' }],
+      doctors: [{ _id: 'doc001', name: 'Dr. Anjali Mehra', fee: '₹400', time: '10am - 1pm', hospital: 'City Care Hospital' }],
     },
     {
       type: 'Cardiologist (Heart Specialist)',
-      doctors: [{ name: 'Dr. Sneha Rao', fee: '₹800', time: '9am - 12pm', hospital: 'HeartWell Center' }],
+      doctors: [{ _id: 'doc002', name: 'Dr. Sneha Rao', fee: '₹800', time: '9am - 12pm', hospital: 'HeartWell Center' }],
     },
     {
       type: 'Neurosurgeon',
-      doctors: [{ name: 'Dr. Mehul Desai', fee: '₹1500', time: '11am - 2pm', hospital: 'Neuroscience Hospital' }],
+      doctors: [{ _id: 'doc003', name: 'Dr. Mehul Desai', fee: '₹1500', time: '11am - 2pm', hospital: 'Neuroscience Hospital' }],
     },
     {
       type: 'Orthopedic Surgeon',
-      doctors: [{ name: 'Dr. Alok Singh', fee: '₹1200', time: '10am - 12pm', hospital: 'Bone & Joint Clinic' }],
+      doctors: [{ _id: 'doc004', name: 'Dr. Alok Singh', fee: '₹1200', time: '10am - 12pm', hospital: 'Bone & Joint Clinic' }],
     },
     {
       type: 'Urologist',
-      doctors: [{ name: 'Dr. Kavita Gupta', fee: '₹1100', time: '2pm - 4pm', hospital: 'UroHealth Hospital' }],
+      doctors: [{ _id: 'doc005', name: 'Dr. Kavita Gupta', fee: '₹1100', time: '2pm - 4pm', hospital: 'UroHealth Hospital' }],
     },
     {
       type: 'ENT Specialist',
-      doctors: [{ name: 'Dr. Ramesh Kulkarni', fee: '₹700', time: '3pm - 6pm', hospital: 'City ENT Clinic' }],
+      doctors: [{ _id: 'doc006', name: 'Dr. Ramesh Kulkarni', fee: '₹700', time: '3pm - 6pm', hospital: 'City ENT Clinic' }],
     },
     {
       type: 'Dermatologist',
-      doctors: [{ name: 'Dr. Priya Malhotra', fee: '₹600', time: '11am - 1pm', hospital: 'SkinCare Center' }],
+      doctors: [{ _id: 'doc007', name: 'Dr. Priya Malhotra', fee: '₹600', time: '11am - 1pm', hospital: 'SkinCare Center' }],
     },
     {
       type: 'Gynecologist',
-      doctors: [{ name: 'Dr. Sunita Verma', fee: '₹900', time: '4pm - 6pm', hospital: 'Mother & Child Clinic' }],
+      doctors: [{ _id: 'doc008', name: 'Dr. Sunita Verma', fee: '₹900', time: '4pm - 6pm', hospital: 'Mother & Child Clinic' }],
     },
     {
       type: 'Oncologist',
-      doctors: [{ name: 'Dr. Vikram Sen', fee: '₹1600', time: '9am - 11am', hospital: 'Cancer Care Hospital' }],
+      doctors: [{ _id: 'doc009', name: 'Dr. Vikram Sen', fee: '₹1600', time: '9am - 11am', hospital: 'Cancer Care Hospital' }],
     },
   ],
   diagnostics: [
     {
       center: 'City Diagnostics',
       tests: [
-        { name: 'Blood Test', price: '₹250' },
-        { name: 'X-Ray', price: '₹500' },
-        { name: 'MRI Scan', price: '₹4000' },
+        { _id: 'test001', name: 'Blood Test', price: '₹250' },
+        { _id: 'test002', name: 'X-Ray', price: '₹500' },
+        { _id: 'test003', name: 'MRI Scan', price: '₹4000' },
       ],
     },
     {
       center: 'Health Lab',
       tests: [
-        { name: 'ECG', price: '₹800' },
-        { name: 'Liver Function Test', price: '₹1200' },
+        { _id: 'test004', name: 'ECG', price: '₹800' },
+        { _id: 'test005', name: 'Liver Function Test', price: '₹1200' },
       ],
     },
     {
       center: 'Green Cross Lab',
       tests: [
-        { name: 'CT Scan', price: '₹3500' },
-        { name: 'Ultrasound (USG)', price: '₹700' },
-        { name: 'Thyroid Test', price: '₹400' },
+        { _id: 'test006', name: 'CT Scan', price: '₹3500' },
+        { _id: 'test007', name: 'Ultrasound (USG)', price: '₹700' },
+        { _id: 'test008', name: 'Thyroid Test', price: '₹400' },
       ],
     },
   ],
@@ -94,10 +95,6 @@ const mockData = {
         { name: 'Dr. Abhay Verma', specialization: 'Dermatologist', time: '5pm - 8pm' },
       ],
     },
-  ],
-  prescriptions: [
-    { date: '2025-05-12', doctor: 'Dr. Sneha Rao', medicines: ['Aspirin', 'Metoprolol'] },
-    { date: '2025-04-25', doctor: 'Dr. Rajiv Sharma', medicines: ['Paracetamol', 'Antacid'] },
   ],
 };
 
@@ -149,79 +146,61 @@ const ToggleList = ({ items, renderTitle, renderDetails }) => {
 };
 
 const PatientDashboard = () => {
+  const { getToken } = useAuth();
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
   const { user, isLoaded } = useUser();
+const [selectedDoctor, setSelectedDoctor] = useState(null); 
+const [selectedTest, setSelectedTest] = useState(null);
+const [showTestModal, setShowTestModal] = useState(false);
+const [showModal, setShowModal] = useState(false);
+const [prescriptions, setPrescriptions] = useState([]);
+const [testResults, setTestResults] = useState([]);
 
   useEffect(() => {
-    if (isLoaded && !user) navigate('/login/doctor');
+    if (isLoaded && !user) navigate('/login/patient');
    }, [user, isLoaded, navigate]);
 
-   if (!isLoaded) return null;
-  if (!user) return null;
+ useEffect(() => {
+    const fetchPrescriptions = async () => {
+      if (user) {
+        try {
+          const token = await getToken();
+          const res = await axios.get('http://localhost:5000/api/prescriptions/myprescriptions', {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setPrescriptions(res.data);
+        } catch (error) {
+          console.error('Failed to fetch prescriptions', error);
+        }
+      }
+    };
+    fetchPrescriptions();
+  }, [user, getToken]);
+
+  useEffect(() => {
+  const fetchTestResults = async () => {
+    try {
+      const token = await getToken();
+      const res = await axios.get('http://localhost:5000/api/test-results', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setTestResults(res.data);
+    } catch (err) {
+      console.error('Failed to fetch test results:', err);
+    }
+  };
+
+  fetchTestResults();
+}, []);
+
+  if (!isLoaded || !user) return null;
 
   return (
     <div className="p-6 bg-gradient-to-tr from-blue-100 to-purple-200 min-h-screen">
-      <header className="fixed inset-x-0 top-0 flex items-center justify-between px-4 py-2 bg-sky-200 shadow z-40 h-20">
-        {/* Left – Title */}
-        <h3 className="text-2xl font-bold text-teal-800">JIVAKA</h3>
-
-        {/* Center – Logo */}
-        <img
-          src={logoImage}
-          alt="Jivaka Logo"
-          className="w-16 h-16 object-contain absolute left-1/2 -translate-x-1/2"
-        />
-
-        {/* Right – Hamburger Icon */}
-        <button
-          onClick={() => setSidebarOpen(true)}
-          className="text-2xl focus:outline-none"
-        >
-          <FaBars />
-        </button>
-      </header>
-
-      {/* ---------- Sidebar ---------- */}
-      <div className={`fixed top-0 right-0 h-full bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'} w-64`}>
-        <div className="flex justify-between items-center p-4 border-b">
-          <h2 className="text-lg font-bold">Menu</h2>
-          <button onClick={() => setSidebarOpen(false)} className="text-xl text-gray-600 hover:text-red-500">
-            &times;
-          </button>
-        </div>
-        <ul className="p-4 space-y-3">
-          <li className="flex items-center gap-2 cursor-pointer hover:text-teal-600"><FaCalendarAlt /> Next Appointments</li>
-          <li className="flex items-center gap-2 cursor-pointer hover:text-teal-600"><FaVials /> Upcoming Lab Tests</li>
-          <li className="flex items-center gap-2 cursor-pointer hover:text-teal-600"><FaFileAlt /> View Reports</li>
-          <li className="flex items-center gap-2 cursor-pointer hover:text-teal-600"><FaCommentDots /> Feedback</li>
-          <li className="flex items-center gap-2 cursor-pointer hover:text-teal-600"><FaPhone /> Contact Us</li>
-
-          {/* Edit Profile */}
-          <li>
-            <button
-              onClick={() => setEditOpen(!editOpen)}
-              className="flex items-center gap-2 w-full text-left hover:text-teal-600"
-            >
-              <FaUserEdit /> Edit Profile {editOpen ? <FaChevronUp /> : <FaChevronDown />}
-            </button>
-            {editOpen && (
-              <ul className="ml-5 mt-2 space-y-2 text-sm">
-                <li>Change Profile Picture</li>
-                <li>Name: {user?.fullName}</li>
-                <li>Email: {user?.emailAddresses[0]?.emailAddress}</li>
-                <li>Phone: {user?.phoneNumbers[0]?.phoneNumber || 'N/A'}</li>
-                <li className="flex items-center gap-2 text-red-500 hover:underline mt-2">
-                  <FaSignOutAlt />
-                  <SignOutButton signOutCallback={() => window.location.href = '/'} />
-                </li>
-              </ul>
-            )}
-          </li>
-        </ul>
-      </div>
-      {/* ---------- Main Content ---------- */}
+      
+{/* ---------- Main Content ---------- */}
       <main className="pt-24 px-4">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-teal-800">
@@ -231,6 +210,81 @@ const PatientDashboard = () => {
         </main>
       
       <Section title="Doctor Specializations" icon={<FaUserMd />}> 
+      {showModal && selectedDoctor && (
+  <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
+    <div className="bg-white p-6 rounded-xl w-full max-w-md shadow-lg relative">
+      <h2 className="text-xl font-bold mb-4 text-teal-700">Book Appointment</h2>
+      <button
+        className="absolute top-2 right-3 text-xl text-gray-500 hover:text-red-500"
+        onClick={() => setShowModal(false)}
+      >
+        &times;
+      </button>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          try {
+            const token = await getToken();
+            await axios.post(
+              "http://localhost:5000/api/appointments/book",
+              {
+                patientName: user.fullName,
+                patientEmail: user.primaryEmailAddress.emailAddress,
+                doctorName: selectedDoctor.name,
+                specialization: selectedDoctor.specialization,
+                hospital: selectedDoctor.hospital,
+                fee: selectedDoctor.fee,
+                date: e.target.date.value,
+                reason: e.target.notes.value,
+              },
+              {
+                headers: { Authorization: `Bearer ${token}` },
+              }
+            );
+            alert("Appointment booked successfully!");
+            setShowModal(false);
+          } catch (err) {
+            console.error(err);
+            alert("Failed to book appointment.");
+          }
+        }}
+        className="space-y-4"
+      >
+        <p><strong>Doctor:</strong> {selectedDoctor.name}</p>
+        <p><strong>Specialization:</strong> {selectedDoctor.specialization}</p>
+        <p><strong>Hospital:</strong> {selectedDoctor.hospital}</p>
+        <p><strong>Fee:</strong> {selectedDoctor.fee}</p>
+
+        <label className="block">
+          Date:
+          <input
+            type="date"
+            name="date"
+            required
+            className="w-full mt-1 p-2 border rounded"
+          />
+        </label>
+
+        <label className="block">
+          Notes:
+          <textarea
+            name="notes"
+            rows="3"
+            className="w-full mt-1 p-2 border rounded"
+            placeholder="Symptoms or concern"
+          />
+        </label>
+
+        <button
+          type="submit"
+          className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700"
+        >
+          Confirm Appointment
+        </button>
+      </form>
+    </div>
+  </div>
+)}
         <ToggleList
           items={mockData.specialists}
           renderTitle={(spec) => spec.type}
@@ -242,6 +296,20 @@ const PatientDashboard = () => {
                   <p className="text-sm">Fee: <span className="text-gray-600">{doc.fee}</span></p>
                   <p className="text-sm">Time: {doc.time}</p>
                   <p className="text-sm">Hospital: {doc.hospital}</p>
+                   <button
+  onClick={() => {
+    setSelectedDoctor({
+      name: doc.name,
+      specialization: spec.type,
+      hospital: doc.hospital,
+      fee: doc.fee,
+    });
+     setShowModal(true)
+  }}
+  className="mt-2 inline-block bg-teal-600 text-white px-3 py-1 rounded-full text-sm hover:bg-teal-700"
+>
+  Book Appointment
+</button>
                 </div>
               ))}
             </div>
@@ -250,6 +318,79 @@ const PatientDashboard = () => {
       </Section>
 
       <Section title="Diagnostic Centers" icon={<FaVials />}> 
+      {showTestModal && selectedTest && (
+  <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
+    <div className="bg-white p-6 rounded-xl w-full max-w-md shadow-lg relative">
+      <h2 className="text-xl font-bold mb-4 text-teal-700">Book Diagnostic Test</h2>
+      <button
+        className="absolute top-2 right-3 text-xl text-gray-500 hover:text-red-500"
+        onClick={() => setShowTestModal(false)}
+      >
+        &times;
+      </button>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          try {
+            const token = await getToken();
+            await axios.post(
+              "http://localhost:5000/api/diagnostics/book",
+              {
+                patientName: user.fullName,
+                patientEmail: user.primaryEmailAddress.emailAddress,
+                testName: selectedTest.name,
+                center: selectedTest.center,
+                price: selectedTest.price,
+                date: e.target.date.value,
+                notes: e.target.notes.value,
+              },
+              {
+                headers: { Authorization: `Bearer ${token}` },
+              }
+            );
+            alert("Diagnostic Test booked successfully!");
+            setShowTestModal(false);
+          } catch (err) {
+            console.error(err);
+            alert("Failed to book test.");
+          }
+        }}
+        className="space-y-4"
+      >
+        <p><strong>Test:</strong> {selectedTest.name}</p>
+        <p><strong>Center:</strong> {selectedTest.center}</p>
+        <p><strong>Price:</strong> {selectedTest.price}</p>
+
+        <label className="block">
+          Date:
+          <input
+            type="date"
+            name="date"
+            required
+            className="w-full mt-1 p-2 border rounded"
+          />
+        </label>
+
+        <label className="block">
+          Notes:
+          <textarea
+            name="notes"
+            rows="3"
+            className="w-full mt-1 p-2 border rounded"
+            placeholder="Any additional info"
+          />
+        </label>
+
+        <button
+          type="submit"
+          className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700"
+        >
+          Confirm Booking
+        </button>
+      </form>
+    </div>
+  </div>
+)}
         <ToggleList
           items={mockData.diagnostics}
           renderTitle={(diag) => diag.center}
@@ -259,6 +400,19 @@ const PatientDashboard = () => {
                 <div key={i} className="bg-purple-50 p-3 rounded-lg hover:shadow-md transition">
                   <p className="font-semibold">{test.name}</p>
                   <p className="text-sm text-gray-700">Price: {test.price}</p>
+                   <button
+  onClick={() => {
+  setSelectedTest({
+    name: test.name,
+    price: test.price,
+    center: diag.center,
+  });
+  setShowTestModal(true);
+}}
+  className="mt-2 inline-block bg-teal-600 text-white px-3 py-1 rounded-full text-sm hover:bg-teal-700"
+>
+  Book Appointment
+</button>
                 </div>
               ))}
             </div>
@@ -284,16 +438,59 @@ const PatientDashboard = () => {
         />
       </Section>
 
-      <Section title="Prescription History" icon={<FaFileMedical />}> 
-        <div className="grid gap-3">
-          {mockData.prescriptions.map((presc, i) => (
-            <div key={i} className="bg-white p-4 rounded-xl border border-gray-200 shadow hover:shadow-md transition">
-              <p className="font-semibold text-gray-800">{presc.date} — {presc.doctor}</p>
-              <p className="text-sm text-gray-600">Medicines: {presc.medicines.join(', ')}</p>
-            </div>
-          ))}
-        </div>
+    {/* ✅ Prescriptions Section */}
+      <Section title="Your Prescriptions" icon={<FaPrescriptionBottle />}>
+        {prescriptions.length === 0 ? (
+          <p className="text-gray-600">No prescriptions yet.</p>
+        ) : (
+          <div className="space-y-4">
+            {prescriptions.map((pres, i) => (
+              <div key={i} className="bg-white border border-teal-200 rounded-lg p-4 shadow hover:shadow-md transition">
+                <p><strong>Doctor:</strong> {pres.doctorName}</p>
+                <p><strong>Date:</strong> {new Date(pres.date).toLocaleDateString()}</p>
+                <p><strong>Diagnosis:</strong> {pres.diagnosis}</p>
+                <p><strong>Medicines:</strong> {pres.medicines}</p>
+                <p><strong>Notes:</strong> {pres.notes}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </Section>
+<section className="mt-10 px-4">
+  <h2 className="text-2xl font-bold mb-6 text-gray-800">Uploaded Test Results</h2>
+
+  {testResults.length === 0 ? (
+    <p className="text-gray-600 text-center text-lg">No test results uploaded yet.</p>
+  ) : (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {testResults.map((result) => (
+        <article
+          key={result._id}
+          className="bg-white p-4 shadow-sm rounded-xl border border-gray-200 transition hover:shadow-md"
+        >
+          <h3 className="text-lg font-semibold text-blue-800">{result.testName}</h3>
+          <p className="text-sm text-gray-700 mt-1">👤 Patient: <strong>{result.patientName}</strong></p>
+          <p className="text-sm text-gray-700">👨‍⚕️ Doctor: <strong>{result.recommendedDoctor}</strong></p>
+          <p className="text-sm text-gray-700">📝 Result: <em>{result.result}</em></p>
+
+          {result.fileUrl && (
+            <a
+              href={`http://localhost:5000${result.fileUrl}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 underline mt-2 inline-block"
+            >
+              📄 View Report
+            </a>
+          )}
+
+          <p className="text-xs text-gray-500 mt-2">🏥 Uploaded by: {result.uploadedBy}</p>
+          <p className="text-xs text-gray-500">🕒 {new Date(result.timestamp).toLocaleString()}</p>
+        </article>
+      ))}
+    </div>
+  )}
+</section>
     </div>
   );
 };
