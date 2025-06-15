@@ -140,7 +140,6 @@ const handleSlotChange = (e) => {
 
   } catch (err) {
     console.error(err);
-    alert('Failed to submit prescription.');
   }
 };
 
@@ -161,7 +160,7 @@ const handleSlotChange = (e) => {
     setSlot(res.data);
   } catch (err) {
     console.error('Error submitting slot:', err);
-    alert('Failed to submit slot.');
+
   }
 };
 
