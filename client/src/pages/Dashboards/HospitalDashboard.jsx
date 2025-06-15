@@ -60,7 +60,7 @@ const handleSubmit = async (e) => {
   }
 
   try {
-    await axios.post('http://localhost:5000/api/test-results/upload', data, {
+    await axios.post('${process.env.REACT_APP_API_URL}/api/test-results/upload', data, {
       headers: {
         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${token}`,
@@ -81,7 +81,7 @@ const handleSubmit = async (e) => {
     const fetchBookings = async () => {
       try {
         const token = await getToken();
-        const res = await axios.get("http://localhost:5000/api/diagnostics/all", {
+        const res = await axios.get("${process.env.REACT_APP_API_URL}/api/diagnostics/all", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setDiagnosticAppointments(res.data);
@@ -97,7 +97,7 @@ const handleSubmit = async (e) => {
   const fetchDoctorSlots = async () => {
     try {
       const token = await getToken();
-      const res = await axios.get('http://localhost:5000/api/hospital-slots', {
+      const res = await axios.get('${process.env.REACT_APP_API_URL}/api/hospital-slots', {
   headers: { Authorization: `Bearer ${token}` },
 });
       setDoctorSlots(res.data);
@@ -113,7 +113,7 @@ useEffect(() => {
     const fetchResults = async () => {
       try {
         const token = await getToken(); // Clerk token for auth
-        const res = await axios.get("http://localhost:5000/api/test-results", {
+        const res = await axios.get("${process.env.REACT_APP_API_URL}/api/test-results", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTestResults(res.data);
@@ -270,7 +270,7 @@ useEffect(() => {
 
           {result.fileUrl && (
             <a
-              href={`http://localhost:5000${result.fileUrl}`}
+              href={`${process.env.REACT_APP_API_URL}${result.fileUrl}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-500 underline mt-2 inline-block"

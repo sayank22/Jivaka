@@ -165,7 +165,7 @@ const [testResults, setTestResults] = useState([]);
       if (user) {
         try {
           const token = await getToken();
-          const res = await axios.get('http://localhost:5000/api/prescriptions/myprescriptions', {
+          const res = await axios.get('${process.env.REACT_APP_API_URL}/api/prescriptions/myprescriptions', {
             headers: { Authorization: `Bearer ${token}` },
           });
           setPrescriptions(res.data);
@@ -181,7 +181,7 @@ const [testResults, setTestResults] = useState([]);
   const fetchTestResults = async () => {
     try {
       const token = await getToken();
-      const res = await axios.get('http://localhost:5000/api/test-results', {
+      const res = await axios.get('${process.env.REACT_APP_API_URL}/api/test-results', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -226,7 +226,7 @@ const [testResults, setTestResults] = useState([]);
           try {
             const token = await getToken();
             await axios.post(
-              "http://localhost:5000/api/appointments/book",
+              "${process.env.REACT_APP_API_URL}/api/appointments/book",
               {
                 patientName: user.fullName,
                 patientEmail: user.primaryEmailAddress.emailAddress,
@@ -334,7 +334,7 @@ const [testResults, setTestResults] = useState([]);
           try {
             const token = await getToken();
             await axios.post(
-              "http://localhost:5000/api/diagnostics/book",
+              "${process.env.REACT_APP_API_URL}/api/diagnostics/book",
               {
                 patientName: user.fullName,
                 patientEmail: user.primaryEmailAddress.emailAddress,
@@ -475,7 +475,7 @@ const [testResults, setTestResults] = useState([]);
 
           {result.fileUrl && (
             <a
-              href={`http://localhost:5000${result.fileUrl}`}
+              href={`${process.env.REACT_APP_API_URL}${result.fileUrl}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-500 underline mt-2 inline-block"

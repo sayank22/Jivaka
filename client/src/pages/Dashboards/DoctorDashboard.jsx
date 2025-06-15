@@ -40,17 +40,17 @@ const [slot, setSlot] = useState([]);
   }, [user, isLoaded, navigate]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/appointments')
+    axios.get('${process.env.REACT_APP_API_URL}/api/appointments')
       .then(res => setAppointments(res.data))
       .catch(err => console.error('Error fetching appointments:', err));
 
     if (user) {
-      axios.get(`http://localhost:5000/api/prescriptions/doctor/${user.primaryEmailAddress.emailAddress}`)
+      axios.get(`${process.env.REACT_APP_API_URL}/api/prescriptions/doctor/${user.primaryEmailAddress.emailAddress}`)
         .then(res => setPrescriptions(res.data))
         .catch(err => console.error('Error fetching prescriptions:', err));
     }
     if (user) {
-  axios.get(`http://localhost:5000/api/hospital-slots`)
+  axios.get(`${process.env.REACT_APP_API_URL}/api/hospital-slots`)
     .then(res => setSlot(res.data))
     .catch(err => console.error('Error fetching hospital slots:', err));
 }
@@ -60,7 +60,7 @@ useEffect(() => {
   const fetchTestResults = async () => {
     try {
       const token = await getToken();
-      const res = await axios.get('http://localhost:5000/api/test-results', {
+      const res = await axios.get('${process.env.REACT_APP_API_URL}/api/test-results', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -105,7 +105,7 @@ const handleSlotChange = (e) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/prescriptions', {
+      await axios.post('${process.env.REACT_APP_API_URL}/api/prescriptions', {
         ...formData,
         doctorEmail: user.primaryEmailAddress.emailAddress
       });
@@ -120,7 +120,7 @@ const handleSlotChange = (e) => {
   const handleSlotSubmit = async (e) => {
   e.preventDefault();
   try {
-    await axios.post('http://localhost:5000/api/hospital-slots', {
+    await axios.post('${process.env.REACT_APP_API_URL}/api/hospital-slots', {
       ...slotForm,
       doctorEmail: user.primaryEmailAddress.emailAddress
     });
@@ -128,7 +128,7 @@ const handleSlotChange = (e) => {
     setSlotForm({ hospitalName: '', days: '', time: '' });
 
     // Refetch slot list
-    const res = await axios.get(`http://localhost:5000/api/hospital-slots/${user.primaryEmailAddress.emailAddress}`);
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/hospital-slots/${user.primaryEmailAddress.emailAddress}`);
     setSlot(res.data);
   } catch (err) {
     console.error('Error submitting slot:', err);
@@ -210,7 +210,7 @@ const handleSlotChange = (e) => {
 
           {result.fileUrl && (
             <a
-              href={`http://localhost:5000${result.fileUrl}`}
+              href={`${process.env.REACT_APP_API_URL}${result.fileUrl}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-500 underline mt-2 inline-block"
