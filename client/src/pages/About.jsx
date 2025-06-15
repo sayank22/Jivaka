@@ -35,10 +35,10 @@ const About = () => {
           Technologies Used
         </motion.h2>
         <ul className="text-gray-800 space-y-1 list-disc pl-6">
-          <li><strong>Frontend:</strong> React, HTML, CSS, Tailwind</li>
+          <li><strong>Frontend:</strong> React, CSS, Tailwind</li>
           <li><strong>Backend:</strong> Node.js, Express.js</li>
           <li><strong>Database:</strong> MongoDB</li>
-          <li><strong>Authentication:</strong> JWT (JSON Web Tokens)</li>
+          <li><strong>Authentication:</strong> CLERK (JSON Web Tokens)</li>
         </ul>
 
         <motion.h2 className="text-2xl font-semibold text-teal-700 mt-8 mb-4">

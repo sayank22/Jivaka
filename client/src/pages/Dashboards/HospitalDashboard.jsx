@@ -169,7 +169,7 @@ useEffect(() => {
   return (
     <div className="p-6 bg-gradient-to-tr from-gray-50 to-blue-100 min-h-screen">
       <h1 className="text-2xl text-center font-bold text-teal-800 mb-6">
-        Welcome, {user.fullName || user.primaryEmailAddress?.emailAddress}
+        Hospital - {user.fullName || user.primaryEmailAddress?.emailAddress}
       </h1>
       
 <section className="mb-6 bg-white p-4 rounded shadow">
@@ -198,11 +198,8 @@ useEffect(() => {
   ) : (
     doctorSlots.map((slot, index) => (
       <div key={index} className="border-b py-2">
-        <p><strong>Doctor:</strong> {slot.doctorName}</p>
-        <p><strong>Specialization:</strong> {slot.specialization}</p>
-        <p><strong>Day:</strong> {slot.day}</p>
+        <p><strong>Day:</strong> {slot.days}</p>
         <p><strong>Time:</strong> {slot.time}</p>
-        <p><strong>Hospital:</strong> {slot.hospital}</p>
       </div>
     ))
   )}
@@ -255,7 +252,7 @@ useEffect(() => {
   </form>
 </section>
 
- <section className="mt-10 px-4">
+ <section className="mb-6 mt-10 px-4">
   <h2 className="text-2xl font-bold mb-6 text-gray-800">Uploaded Test Results</h2>
 
   {testResults.length === 0 ? (
@@ -293,6 +290,23 @@ useEffect(() => {
 </section>
 
 
+      <section className="mb-6 bg-white p-4 rounded shadow">
+  <h2 className="text-xl font-semibold text-teal-700 mb-2">Pay</h2>
+  <form className="grid gap-3" onSubmit={handleSubmit}></form>
+        <form className="grid gap-3">
+          <input type="text" placeholder="Hospital Name" className="p-2 border rounded" />
+          <input type="number" placeholder="Amount" className="p-2 border rounded" />
+          <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Generate Invoice</button>
+        </form>
+      </section>
+
+<CollapsibleSection title="Patient Queue System">
+        <div className="grid gap-3">
+        <p>Next Patient: Ramesh Sinha (Token #12)</p>
+        <p>Next Patient: Amitabh Bhattacharya (Token #13)s</p>
+      </div>
+      </CollapsibleSection>
+
       <CollapsibleSection title="Appointment / Test Booking">
         <form className="grid gap-3">
           <input type="text" placeholder="Patient Name" className="p-2 border rounded" />
@@ -305,35 +319,20 @@ useEffect(() => {
           <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Book</button>
         </form>
       </CollapsibleSection>
+      
+      <CollapsibleSection title="Staff Directory">
+        <div className="grid gap-3">
+        <p>Reception: Meena Kumari</p>
+        <p>Nurse: Rani Das</p>
+      </div>
+      </CollapsibleSection>
 
-      <section className="mb-6 bg-white p-4 rounded shadow">
-  <h2 className="text-xl font-semibold text-teal-700 mb-2">Pay</h2>
-  <form className="grid gap-3" onSubmit={handleSubmit}></form>
-        <form className="grid gap-3">
-          <input type="text" placeholder="Hospital Name" className="p-2 border rounded" />
-          <input type="number" placeholder="Amount" className="p-2 border rounded" />
-          <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Generate Invoice</button>
-        </form>
-      </section>
-
-      <section className="mb-6 bg-white p-4 rounded shadow">
-        <h2 className="text-xl font-semibold text-teal-700 mb-2">Patient Queue System</h2>
-        <p>Next Patient: Ramesh Sinha (Token #12)</p>
-      </section>
-
-      <section className="mb-6 bg-white p-4 rounded shadow">
-        <h2 className="text-xl font-semibold text-teal-700 mb-2">Staff Directory</h2>
-        <ul className="list-disc pl-5">
-          <li>Reception: Meena Kumari</li>
-          <li>Nurse: Rani Das</li>
-        </ul>
-      </section>
-
-      <section className="mb-6 bg-white p-4 rounded shadow">
-        <h2 className="text-xl font-semibold text-teal-700 mb-2">Room & Bed Availability</h2>
+      <CollapsibleSection title="Room & Bed Availability">
+        <div className="grid gap-3">
         <p>General Beds - Total: 20, Occupied: 14, Available: 6</p>
         <p>ICU Beds - Total: 10, Occupied: 7, Available: 3</p>
-      </section>
+      </div>
+      </CollapsibleSection>
 
       <CollapsibleSection title="Doctor List">
         {doctors.map((doc, i) => (

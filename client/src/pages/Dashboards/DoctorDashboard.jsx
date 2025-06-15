@@ -167,7 +167,7 @@ const handleSlotChange = (e) => {
 
 
   return (
-    <div className="p-6 bg-gradient-to-tr from-gray-100 to-blue-50 min-h-screen">
+    <div className="p-6 bg-gradient-to-tr from-green-100 to-blue-50 min-h-screen">
 
       <h1 className="text-2xl font-bold text-center text-teal-800 mt-2 mb-6">
         Welcome, Dr. {user?.fullName || user?.primaryEmailAddress?.emailAddress}
@@ -210,7 +210,7 @@ const handleSlotChange = (e) => {
   </form>
 </Section>
 
-      <Section title="Time/Slot for Hospital" icon={<FaNotesMedical />}>
+      <Section title="Time-Slot for Hospital" icon={<FaNotesMedical />}>
   {slot.length ? slot.map((s, i) => (
     <div key={i} className="p-2 border mb-2 rounded bg-gray-50">
       <strong>{s.hospitalName}</strong><br />
@@ -220,7 +220,7 @@ const handleSlotChange = (e) => {
   )) : <p>No slot yet.</p>}
 </Section>
 
- <section className="mt-10 px-4">
+ <section className="mb-6 mt-10 px-4">
   <h2 className="text-2xl font-bold mb-6 text-gray-800">Uploaded Test Results</h2>
 
   {testResults.length === 0 ? (

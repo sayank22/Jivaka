@@ -201,15 +201,9 @@ useEffect(() => {
 
   return (
     <div className="p-6 bg-gradient-to-tr from-blue-100 to-purple-200 min-h-screen">
-      
-{/* ---------- Main Content ---------- */}
-      <main className="pt-24 px-4">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-teal-800">
+       <h1 className=" mb-6 text-3xl font-bold text-teal-800">
             Welcome, {user?.fullName || user?.primaryEmailAddress?.emailAddress}
           </h1>
-        </div>
-        </main>
       
       <Section title="Doctor Specializations" icon={<FaUserMd />}> 
       {showModal && selectedDoctor && (
@@ -450,11 +444,10 @@ useEffect(() => {
           <div className="space-y-4">
             {prescriptions.map((pres, i) => (
               <div key={i} className="bg-white border border-teal-200 rounded-lg p-4 shadow hover:shadow-md transition">
-                <p><strong>Doctor:</strong> {pres.doctorName}</p>
                 <p><strong>Date:</strong> {new Date(pres.date).toLocaleDateString()}</p>
+                <p><strong>Symptoms:</strong> {pres.symptoms}</p>
                 <p><strong>Diagnosis:</strong> {pres.diagnosis}</p>
                 <p><strong>Medicines:</strong> {pres.medicines}</p>
-                <p><strong>Notes:</strong> {pres.notes}</p>
               </div>
             ))}
           </div>
