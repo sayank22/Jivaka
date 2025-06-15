@@ -552,30 +552,18 @@ const HomePage = () => {
     </li>
     <li>
       <a
-        href="https://www.linkedin.com/in/sayan-kundu-70b5442b6/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-blue-50 hover:scale-[1.02] hover:shadow-md"
-      >
-        💼 LinkedIn
-      </a>
-    </li>
-    <li>
-      <a
         href="mailto:sayank10023@gmail.com"
         className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-red-50 hover:scale-[1.02] hover:shadow-md"
       >
         📧 Email: sayank10023@gmail.com
       </a>
     </li>
-    <li>
+     <li>
       <a
-        href="https://www.instagram.com/sayankun22/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-pink-50 hover:scale-[1.02] hover:shadow-md"
+        href="sammitra.official@gmail.com"
+        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-red-50 hover:scale-[1.02] hover:shadow-md"
       >
-        📷 Instagram
+        📧 Email: sammitra.official@gmail.com
       </a>
     </li>
   </ul>

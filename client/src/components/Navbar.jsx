@@ -12,7 +12,7 @@ const Navbar = () => {
   const isDashboard = location.pathname.includes("dashboard");
 
   return (
-    <nav className="bg-teal-100 text-white px-4 py-10 flex justify-between items-center relative">
+    <nav className="bg-teal-100 text-white px-4 py-6 flex justify-between items-center relative">
       <Link to="/">
         <img
           src={logoImage}
