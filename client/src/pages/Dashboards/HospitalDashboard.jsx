@@ -309,7 +309,7 @@ useEffect(() => {
 <CollapsibleSection title="Patient Queue System">
         <div className="grid gap-3">
         <p>Next Patient: Ramesh Sinha (Token #12)</p>
-        <p>Next Patient: Amitabh Bhattacharya (Token #13)s</p>
+        <p>Next Patient: Amitabh Bhattacharya (Token #13)</p>
       </div>
       </CollapsibleSection>
 
