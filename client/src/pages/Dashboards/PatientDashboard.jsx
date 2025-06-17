@@ -341,12 +341,10 @@ useEffect(() => {
 }/api/diagnostics/book`,
               {
                 patientName: user.fullName,
-                patientEmail: user.primaryEmailAddress.emailAddress,
                 testName: selectedTest.name,
                 center: selectedTest.center,
                 price: selectedTest.price,
                 date: e.target.date.value,
-                notes: e.target.notes.value,
               },
               {
                 headers: { Authorization: `Bearer ${token}` },

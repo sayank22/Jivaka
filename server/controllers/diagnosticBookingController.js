@@ -8,7 +8,7 @@ async function getNextSlotNumber(center, date) {
 }
 
 const bookDiagnosticTest = async (req, res) => {
-  let { patientName, patientEmail, testName, center, price, date, notes } = req.body;
+  let { patientName, testName, center, price, date } = req.body;
 
   try {
      if (typeof price === "string") {
@@ -19,20 +19,20 @@ const bookDiagnosticTest = async (req, res) => {
 
     const newBooking = new DiagnosticBooking({
       patientName,
-      patientEmail,
       testName,
       center,
       price,
       date,
       time,
       slotNumber,
-      notes,
     });
+console.log("Incoming Diagnostic Booking Request:", req.body);
 
     await newBooking.save();
     res.status(201).json({ message: "Test booked successfully", slotNumber, time });
   } catch (error) {
-    console.error("Diagnostic booking failed:", error);
+    console.error("Diagnostic booking failed:", error.message);
+    console.error("Full error stack:", error.stack);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
