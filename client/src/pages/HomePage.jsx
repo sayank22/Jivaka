@@ -534,10 +534,26 @@ const HomePage = () => {
   <ul className="space-y-3">
     <li>
       <a
+        href="https://www.linkedin.com/in/sayan-kundu-70b5442b6"
+        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-red-400 hover:scale-[1.02] hover:shadow-md"
+      >
+        💼 LinkdIn: Sayan Kundu
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://drive.google.com/file/d/1Mhn6U396WW0DiciBdBbsP2eJP5P9CSg4/view?usp=drive_link"
+        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-blue-400 hover:scale-[1.02] hover:shadow-md"
+      >
+        📄 Resume
+      </a>
+    </li>
+    <li>
+      <a
         href="https://github.com/sayank22/Jivaka"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-gray-100 hover:scale-[1.02] hover:shadow-md"
+        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-yellow-400 hover:scale-[1.02] hover:shadow-md"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -553,17 +569,9 @@ const HomePage = () => {
     <li>
       <a
         href="mailto:sayank10023@gmail.com"
-        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-red-50 hover:scale-[1.02] hover:shadow-md"
+        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-green-400 hover:scale-[1.02] hover:shadow-md"
       >
         📧 Email: sayank10023@gmail.com
-      </a>
-    </li>
-     <li>
-      <a
-        href="sammitra.official@gmail.com"
-        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-red-50 hover:scale-[1.02] hover:shadow-md"
-      >
-        📧 Email: sammitra.official@gmail.com
       </a>
     </li>
   </ul>
