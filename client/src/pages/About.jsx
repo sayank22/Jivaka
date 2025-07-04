@@ -69,7 +69,10 @@ const About = () => {
       <strong>Backend:</strong> 🛠️ Node.js, 🚀 Express
     </li>
     <li>
-      <strong>Ui/UX:</strong> 🎞️ Framer Motion, 🎨 Tailwind CSS, 📱 Fully Responsive Desig
+      <strong>UI/UX:</strong> 🎞️ Framer Motion, 🎨 Tailwind CSS, 📱 Fully Responsive Desig
+    </li>
+    <li>
+      <strong>Database:</strong> 🗃️ MongoDB
     </li>
     <li>
       <strong>Authentication:</strong> 🔐 Clerk
