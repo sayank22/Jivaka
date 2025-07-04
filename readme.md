@@ -5,9 +5,9 @@
 ---
 
 ## 🔗 Links
-[![Resume](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://drive.google.com/file/d/1Mhn6U396WW0DiciBdBbsP2eJP5P9CSg4/view?usp=drive_link)
+[![Resume](https://img.shields.io/badge/View_Reasume-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://drive.google.com/file/d/1Mhn6U396WW0DiciBdBbsP2eJP5P9CSg4/view?usp=drive_link)
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/sayan-kundu-70b5442b6/)
-[![Github](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://github.com/sayank22)
+[![Github](https://img.shields.io/badge/github-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://github.com/sayank22)
 
 ---
 
@@ -123,6 +123,6 @@ npm run dev
 
 See it live: [https://jivaka-sayankundu.vercel.app](https://jivaka-sayankundu.vercel.app)
 
-![Mobile Demo](client/src/assets/images/image-2.jpg)
+![Mobile Demo](client/src/assets/Screenshot1.png)
 
-![Desktop Demo](client/rc/assets/images/image-1.png)
+![Desktop Demo](client/rc/assets/Screenshot1.png)
