@@ -6,6 +6,7 @@ import {
   FaUserMd, FaNotesMedical, FaCalendarAlt,
   FaChartBar, FaChevronDown, FaChevronUp
 } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 const DoctorDashboard = () => {
   const { user, isLoaded } = useUser();
@@ -39,7 +40,7 @@ const [slot, setSlot] = useState([]);
     if (!user) navigate('/login');
   }, [user, isLoaded, navigate]);
 
- /* ───────── 1️⃣  Appointments + My Prescriptions ───────── */
+ /* ───────── 1️⃣  Appointments + MyPrescriptions ───────── */
 useEffect(() => {
   const fetchAllData = async () => {
     try {
@@ -128,7 +129,7 @@ const handleSlotChange = (e) => {
   e.preventDefault();
   try {
     await axios.post(`${import.meta.env.VITE_API_URL}/api/prescriptions`, formData);
-    alert('Prescription submitted!');
+    toast.success('Prescription submitted!');
     setFormData({ patientName: '', symptoms: '', diagnosis: '', medicines: '' });
 
     // Refetch prescriptions after submission
@@ -151,7 +152,7 @@ const handleSlotChange = (e) => {
       ...slotForm,
       doctorEmail: user.primaryEmailAddress.emailAddress
     });
-    alert('Slot submitted!');
+    toast.success('Slot submitted!');
     setSlotForm({ hospitalName: '', days: '', time: '' });
 
     // Refetch slot list

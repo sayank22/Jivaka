@@ -4,8 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useUser, SignOutButton } from '@clerk/clerk-react'; 
 import { FaHospitalAlt, FaUserMd, FaVials, FaPrescriptionBottle } from 'react-icons/fa';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import PaymentPage from '../PaymentPage';
+import { toast } from 'react-toastify';
 
 
 const mockData = {
@@ -176,7 +177,8 @@ const handlePaymentRedirect = () => {
         });
         setPrescriptions(res.data);
       } catch (error) {
-        // You can optionally handle UI error state here
+        toast.error("Failed to fetch prescriptions. Please try again.");
+        console.error("Prescription fetch error:", error);
       }
     }
   };
@@ -244,11 +246,11 @@ useEffect(() => {
                 headers: { Authorization: `Bearer ${token}` },
               }
             );
-            alert("Appointment booked successfully!");
+            toast.success("Appointment booked successfully!");
             setShowModal(false);
           } catch (err) {
             console.error(err);
-            alert("Failed to book appointment.");
+            toast.error("Failed to book appointment.");
           }
         }}
         className="space-y-4"
@@ -350,11 +352,11 @@ useEffect(() => {
                 headers: { Authorization: `Bearer ${token}` },
               }
             );
-            alert("Diagnostic Test booked successfully!");
+            toast.success("Diagnostic Test booked successfully!");
             setShowTestModal(false);
           } catch (err) {
             console.error(err);
-            alert("Failed to book test.");
+            toast.error("Failed to book test.");
           }
         }}
         className="space-y-4"

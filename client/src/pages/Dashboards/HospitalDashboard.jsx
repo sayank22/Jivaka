@@ -4,6 +4,8 @@ import { useUser, useAuth } from '@clerk/clerk-react';
 import { FaAngleDown } from 'react-icons/fa';
 import axios from 'axios';
 import PaymentPage from '../PaymentPage';
+import { toast } from 'react-toastify';
+
 
 
 const CollapsibleSection = ({ title, children }) => {
@@ -71,7 +73,7 @@ const handleSubmit = async (e) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    alert("Test result uploaded!");
+    toast.info("Test result uploaded!");
   } catch (error) {
     console.error("Upload failed:", error);
   }

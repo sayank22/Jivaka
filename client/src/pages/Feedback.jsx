@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const Feedback = () => {
   const [formData, setFormData] = useState({
@@ -18,7 +19,7 @@ const Feedback = () => {
     e.preventDefault();
     console.log('Feedback Submitted:', formData);
     // You can replace this with an API call to save feedback
-    alert("Thank you for your feedback!");
+    toast.success("Thank you for your feedback!");
     setFormData({ name: '', profession: '', concern: '' });
   };
 
