@@ -123,6 +123,6 @@ npm run dev
 
 See it live: [https://jivaka-sayankundu.vercel.app](https://jivaka-sayankundu.vercel.app)
 
-![Mobile Demo](client/src/assets/Screenshot2.png)
+![Desktop Demo 1](client/src/assets/Screenshot2.png)
 
-![Desktop Demo](client/rc/assets/Screenshot1.png)
+![Desktop Demo 2](client/src/assets/Screenshot1.png)
