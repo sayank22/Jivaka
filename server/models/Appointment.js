@@ -8,7 +8,7 @@ const appointmentSchema = new mongoose.Schema({
   hospital: String,
   fee: String,
   date: Date,
-  slot: Number, // changed from string
+  slot: Number, 
   reason: String,
 });
 

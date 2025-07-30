@@ -1,4 +1,3 @@
-// models/DiagnosticBooking.js
 const mongoose = require("mongoose");
 
 const diagnosticBookingSchema = new mongoose.Schema({

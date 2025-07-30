@@ -1,7 +1,5 @@
-// controllers/diagnosticBookingController.js
 const DiagnosticBooking = require("../models/DiagnosticBooking");
 
-// Utility to get next slot number
 async function getNextSlotNumber(center, date) {
   const bookings = await DiagnosticBooking.find({ center, date });
   return bookings.length + 1;

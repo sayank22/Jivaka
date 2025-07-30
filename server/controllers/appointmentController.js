@@ -1,6 +1,5 @@
 const Appointment = require('../models/Appointment');
 
-// Book an appointment
 const bookAppointment = async (req, res) => {
   const { patientName, doctorName, specialization, hospital, date, slot, reason } = req.body;
 
@@ -23,7 +22,7 @@ const bookAppointment = async (req, res) => {
   }
 };
 
-// Get appointments for a specific doctor
+
 const getAllAppointments = async (req, res) => {
   try {
     const appointments = await Appointment.find().sort({ date: 1 });

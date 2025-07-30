@@ -7,13 +7,9 @@ import {
   Building2Icon,
   Search,
   Calendar,
-  CheckCircle,
   CreditCard,
   ClipboardList,
-  FileText,
-  Upload,
   DollarSign,
-  Users,
   UserCog,
   Hospital,
   Microscope,
@@ -30,21 +26,21 @@ const roles = [
     label: 'Doctor',
     description: 'Doctor and their Assistants',
     path: '/login/doctor',
-    color: 'bg-blue-600 hover:bg-blue-700',
+    color: 'bg-blue-500 hover:bg-blue-700',
     image: 'https://cdn-icons-png.flaticon.com/512/3774/3774299.png',
   },
   {
     label: 'Patient',
     description: 'Patient and Family',
     path: '/login/patient',
-    color: 'bg-green-600 hover:bg-green-700',
+    color: 'bg-green-500 hover:bg-green-700',
     image: patientImage,
   },
   {
     label: 'Hospital',
     description: 'Hospital Staffs and Admin',
     path: '/login/hospital',
-    color: 'bg-purple-600 hover:bg-purple-700',
+    color: 'bg-purple-500 hover:bg-purple-700',
     image: 'https://cdn-icons-png.flaticon.com/512/4320/4320337.png',
   },
 ];
@@ -271,7 +267,7 @@ const HomePage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
         >
-          Blazingly fast, super-easy app to book. A customer friendly app by the Students in collaboration with leading tech companies. Creating a symbiotic community.
+          A customer friendly, Blazingly fast, super-easy app to book. 
         </motion.p>
         </div>
 <div className="overflow-hidden bg-teal-700 text-white py-3">

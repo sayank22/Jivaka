@@ -11,7 +11,6 @@ const verifyClerkToken = async (req, res, next) => {
 
     const token = authHeader.split(" ")[1];
 
-    // ✅ Explicitly verify using Clerk secret
     const payload = await verifyToken(token, {
       secretKey: process.env.CLERK_SECRET_KEY,
     });
