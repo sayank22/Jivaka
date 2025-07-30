@@ -7,6 +7,7 @@ import { FaHospitalAlt, FaUserMd, FaVials, FaPrescriptionBottle } from 'react-ic
 import { AnimatePresence } from 'framer-motion';
 import PaymentPage from '../PaymentPage';
 import { toast } from 'react-toastify';
+import { motion } from 'framer-motion';
 
 
 const mockData = {
