@@ -1,17 +1,17 @@
 ## Made By - Sayan Kundu
 
-**B.Tech in Computer Science | Full Stack Developer | Passionate about building real-world solutions**
+**Full Stack Developer | Hands On Experince in EdTech & Fintech | Passionate about building real-world solutions**
 
 ---
 
 ## 🔗 Links
-[![Resume](https://img.shields.io/badge/View_Reasume-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://drive.google.com/file/d/1Mhn6U396WW0DiciBdBbsP2eJP5P9CSg4/view?usp=drive_link)
+[![Resume](https://img.shields.io/badge/View_Resume-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://drive.google.com/file/d/1c0JPOQJcRBYOldQvooPfd4gQQ0kkJgbq/view?usp=drive_link)
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/sayan-kundu-70b5442b6/)
 [![Github](https://img.shields.io/badge/github-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://github.com/sayank22)
 
 ---
 
-# Dropbox Brand Animation Demo
+# Jivaka
 
 Live Demo: [https://jivaka-sayankundu.vercel.app](https://jivaka-sayankundu.vercel.app)
 
@@ -89,9 +89,8 @@ npm install
    ```
 **Create a .env file in /Server:**
 ```ini
-PORT=5000
 MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
+CLERK_SECRET_KEY=your_clerk_key(for jwt token)
 
 ```
 **Run the server:**
@@ -110,6 +109,7 @@ npm install
 **Create a .env file in /client:**
 ```ini
 VITE_API_URL=https://your-backend-url.com
+VITE_CLERK_PUBLISHABLE_KEY=clerk_key(for jwt token)
 
 ```
 **Run the server:**

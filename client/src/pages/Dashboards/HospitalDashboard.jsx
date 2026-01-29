@@ -244,11 +244,11 @@ useEffect(() => {
       <option value="Positive">Positive</option>
       <option value="Negative">Negative</option>
     </select>
-    <input
+    {/* <input
       type="file"
       onChange={handleFileChange}
       className="p-2 border rounded"
-    />
+    /> */}
     <button
       type="submit"
       className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
