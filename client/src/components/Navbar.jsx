@@ -1,9 +1,10 @@
 import React from "react";
-import { useUser, useClerk, SignOutButton  } from "@clerk/clerk-react";
+import { useUser, useClerk, SignOutButton } from "@clerk/clerk-react";
 import { Link, useLocation } from "react-router-dom";
 import logoImage from '../assets/logo.png';
+import { Sun, Moon } from "lucide-react";
 
-const Navbar = () => {
+const Navbar = ({ theme, toggleTheme }) => {
   const { user } = useUser();
   const { signOut } = useClerk();
   const location = useLocation();
@@ -12,7 +13,7 @@ const Navbar = () => {
   const isDashboard = location.pathname.includes("dashboard");
 
   return (
-    <nav className="bg-teal-100 text-white px-4 py-8 flex justify-between items-center relative">
+    <nav className="bg-surface text-surface-foreground px-4 py-8 flex justify-between items-center relative dark:bg-surface dark:text-surface-foreground transition-colors duration-300">
       <Link to="/">
         <img
           src={logoImage}
@@ -21,19 +22,34 @@ const Navbar = () => {
         />
       </Link>
 
-      <div className="text-teal-700 ml-auto flex items-center space-x-4 text-lg font-bold">
+      <div className="text-surface-foreground ml-auto flex items-center space-x-4 text-lg font-bold dark:text-surface-foreground">
         <Link to="/feedback" className="hover:underline">Feedback</Link>
         <Link to="/" className="hover:underline">Home</Link>
+
+        <button
+  type="button"
+  onClick={toggleTheme}
+  aria-label="Toggle theme"
+  className="rounded-full border border-input bg-background p-2 text-foreground shadow-sm transition hover:bg-muted/70 dark:bg-surface dark:border-border"
+>
+  {theme === "dark" ? (
+  <Sun className="h-5 w-5 transition-all duration-300 hover:rotate-180" />
+) : (
+  <Moon className="h-5 w-5 transition-all duration-300 hover:-rotate-12" />
+)}
+</button>
+
+
 
         {/* Show Sign Out button only on dashboards and if logged in */}
         {user && (
           <div className="flex items-center space-x-4">
-          <SignOutButton
-            onClick={() => signOut()}
-            className="bg-red-600 hover:bg-red-700 text-white px-2 py-2 rounded"
-          >
-            Sign Out
-          </SignOutButton>
+            <SignOutButton
+              onClick={() => signOut()}
+              className="bg-destructive hover:bg-destructive/90 text-destructive-foreground px-2 py-2 rounded"
+            >
+              Sign Out
+            </SignOutButton>
           </div>
         )}
       </div>

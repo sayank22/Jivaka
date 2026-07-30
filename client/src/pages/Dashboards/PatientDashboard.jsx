@@ -105,10 +105,10 @@ const mockData = {
 const Section = ({ title, icon, children }) => (
   <div className="mb-10">
     <div className="flex items-center mb-4">
-      {icon && <span className="text-teal-600 text-2xl mr-2">{icon}</span>}
-      <h2 className="text-xl font-semibold text-teal-800">{title}</h2>
+      {icon && <span className="text-primary text-2xl mr-2">{icon}</span>}
+      <h2 className="text-xl font-semibold text-primary">{title}</h2>
     </div>
-    <div className="bg-white p-5 rounded-2xl shadow-xl border border-gray-100">
+    <div className="bg-card p-5 rounded-2xl shadow-xl border border-border">
       {children}
     </div>
   </div>
@@ -121,11 +121,11 @@ const ToggleList = ({ items, renderTitle, renderDetails }) => {
       {items.map((item, idx) => (
         <div
           key={idx}
-          className="cursor-pointer border border-teal-300 rounded-lg p-3 bg-white shadow hover:bg-teal-50 transition"
+          className="cursor-pointer border border-border rounded-lg p-3 bg-card shadow hover:bg-muted transition"
         >
           <div
             onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-            className="font-medium text-lg text-teal-700 flex justify-between items-center"
+            className="font-medium text-lg text-primary flex justify-between items-center"
           >
             {renderTitle(item)}
             <span>{openIndex === idx ? '▲' : '▼'}</span>
@@ -137,7 +137,7 @@ const ToggleList = ({ items, renderTitle, renderDetails }) => {
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="overflow-hidden mt-2 text-gray-700 text-sm"
+                className="overflow-hidden mt-2 text-muted-foreground text-sm"
               >
                 {renderDetails(item)}
               </motion.div>
@@ -209,18 +209,18 @@ useEffect(() => {
   if (!isLoaded || !user) return null;
 
   return (
-    <div className="p-6 bg-gradient-to-tr from-blue-100 to-purple-200 min-h-screen">
-       <h1 className=" mb-6 text-3xl font-bold text-teal-800">
+    <div className="p-6 bg-gradient-to-tr from-surface to-muted min-h-screen">
+       <h1 className=" mb-6 text-3xl font-bold text-primary">
             Welcome, {user?.fullName || user?.primaryEmailAddress?.emailAddress}
           </h1>
       
       <Section title="Doctor Specializations" icon={<FaUserMd />}> 
       {showModal && selectedDoctor && (
   <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
-    <div className="bg-white p-6 rounded-xl w-full max-w-md shadow-lg relative">
-      <h2 className="text-xl font-bold mb-4 text-teal-700">Book Appointment</h2>
+    <div className="bg-card p-6 rounded-xl w-full max-w-md shadow-lg relative">
+      <h2 className="text-xl font-bold mb-4 text-primary">Book Appointment</h2>
       <button
-        className="absolute top-2 right-3 text-xl text-gray-500 hover:text-red-500"
+        className="absolute top-2 right-3 text-xl text-muted-foreground hover:text-destructive"
         onClick={() => setShowModal(false)}
       >
         &times;
@@ -283,7 +283,7 @@ useEffect(() => {
 
         <button
           type="submit"
-          className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700"
+          className="bg-primary text-surface-foreground px-4 py-2 rounded hover:bg-primary"
         >
           Confirm Appointment
         </button>
@@ -297,9 +297,9 @@ useEffect(() => {
           renderDetails={(spec) => (
             <div className="grid sm:grid-cols-2 gap-3">
               {spec.doctors.map((doc, i) => (
-                <div key={i} className="bg-purple-300 p-3 rounded-lg shadow-inner hover:shadow-md hover:scale-[1.01] transition">
-                  <p className="font-semibold text-teal-800">{doc.name}</p>
-                  <p className="text-sm">Fee: <span className="text-gray-600">{doc.fee}</span></p>
+                <div key={i} className="bg-accent/30 p-3 rounded-lg shadow-inner hover:shadow-md hover:scale-[1.01] transition">
+                  <p className="font-semibold text-primary">{doc.name}</p>
+                  <p className="text-sm">Fee: <span className="text-muted-foreground">{doc.fee}</span></p>
                   <p className="text-sm">Time: {doc.time}</p>
                   <p className="text-sm">Hospital: {doc.hospital}</p>
                    <button
@@ -312,7 +312,7 @@ useEffect(() => {
     });
      setShowModal(true)
   }}
-  className="mt-2 inline-block bg-teal-600 text-white px-3 py-1 rounded-full text-sm hover:bg-teal-700"
+  className="mt-2 inline-block bg-primary text-surface-foreground px-3 py-1 rounded-full text-sm hover:bg-primary"
 >
   Book Appointment
 </button>
@@ -326,10 +326,10 @@ useEffect(() => {
       <Section title="Diagnostic Centers" icon={<FaVials />}> 
       {showTestModal && selectedTest && (
   <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
-    <div className="bg-white p-6 rounded-xl w-full max-w-md shadow-lg relative">
-      <h2 className="text-xl font-bold mb-4 text-teal-700">Book Diagnostic Test</h2>
+    <div className="bg-card p-6 rounded-xl w-full max-w-md shadow-lg relative">
+      <h2 className="text-xl font-bold mb-4 text-primary">Book Diagnostic Test</h2>
       <button
-        className="absolute top-2 right-3 text-xl text-gray-500 hover:text-red-500"
+        className="absolute top-2 right-3 text-xl text-muted-foreground hover:text-destructive"
         onClick={() => setShowTestModal(false)}
       >
         &times;
@@ -378,7 +378,7 @@ useEffect(() => {
 
         <button
           type="submit"
-          className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700"
+          className="bg-primary text-surface-foreground px-4 py-2 rounded hover:bg-primary"
         >
           Confirm Booking
         </button>
@@ -392,9 +392,9 @@ useEffect(() => {
           renderDetails={(diag) => (
             <div className="grid gap-3">
               {diag.tests.map((test, i) => (
-                <div key={i} className="bg-purple-50 p-3 rounded-lg hover:shadow-md transition">
+                <div key={i} className="bg-muted p-3 rounded-lg hover:shadow-md transition">
                   <p className="font-semibold">{test.name}</p>
-                  <p className="text-sm text-gray-700">Price: {test.price}</p>
+                  <p className="text-sm text-muted-foreground">Price: {test.price}</p>
                    <button
   onClick={() => {
   setSelectedTest({
@@ -404,7 +404,7 @@ useEffect(() => {
   });
   setShowTestModal(true);
 }}
-  className="mt-2 inline-block bg-teal-600 text-white px-3 py-1 rounded-full text-sm hover:bg-teal-700"
+  className="mt-2 inline-block bg-primary text-surface-foreground px-3 py-1 rounded-full text-sm hover:bg-primary"
 >
   Book Appointment
 </button>
@@ -422,7 +422,7 @@ useEffect(() => {
           renderDetails={(hos) => (
             <div className="space-y-2">
               {hos.doctors.map((doc, i) => (
-                <div key={i} className="bg-green-50 p-3 rounded-lg hover:shadow-md transition">
+                <div key={i} className="bg-muted p-3 rounded-lg hover:shadow-md transition">
                   <p className="font-semibold">{doc.name}</p>
                   <p className="text-sm">Specialization: {doc.specialization}</p>
                   <p className="text-sm">Time: {doc.time}</p>
@@ -436,11 +436,11 @@ useEffect(() => {
     {/* ✅ Prescriptions Section */}
       <Section title="Your Prescriptions" icon={<FaPrescriptionBottle />}>
         {prescriptions.length === 0 ? (
-          <p className="text-gray-600">No prescriptions yet.</p>
+          <p className="text-muted-foreground">No prescriptions yet.</p>
         ) : (
           <div className="space-y-4">
             {prescriptions.map((pres, i) => (
-              <div key={i} className="bg-white border border-teal-200 rounded-lg p-4 shadow hover:shadow-md transition">
+              <div key={i} className="bg-card border border-border rounded-lg p-4 shadow hover:shadow-md transition">
                 <p><strong>Date:</strong> {new Date(pres.date).toLocaleDateString()}</p>
                 <p><strong>Symptoms:</strong> {pres.symptoms}</p>
                 <p><strong>Diagnosis:</strong> {pres.diagnosis}</p>
@@ -451,21 +451,21 @@ useEffect(() => {
         )}
       </Section>
 <section className="mb-6 mt-10 px-4">
-  <h2 className="text-2xl font-bold mb-6 text-gray-800">Uploaded Test Results</h2>
+  <h2 className="text-2xl font-bold mb-6 text-muted-foreground">Uploaded Test Results</h2>
 
   {testResults.length === 0 ? (
-    <p className="text-gray-600 text-center text-lg">No test results uploaded yet.</p>
+    <p className="text-muted-foreground text-center text-lg">No test results uploaded yet.</p>
   ) : (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {testResults.map((result) => (
         <article
           key={result._id}
-          className="bg-white p-4 shadow-sm rounded-xl border border-gray-200 transition hover:shadow-md"
+          className="bg-card p-4 shadow-sm rounded-xl border border-border transition hover:shadow-md"
         >
-          <h3 className="text-lg font-semibold text-blue-800">{result.testName}</h3>
-          <p className="text-sm text-gray-700 mt-1">👤 Patient: <strong>{result.patientName}</strong></p>
-          <p className="text-sm text-gray-700">👨‍⚕️ Doctor: <strong>{result.recommendedDoctor}</strong></p>
-          <p className="text-sm text-gray-700">📝 Result: <em>{result.result}</em></p>
+          <h3 className="text-lg font-semibold text-info">{result.testName}</h3>
+          <p className="text-sm text-muted-foreground mt-1">👤 Patient: <strong>{result.patientName}</strong></p>
+          <p className="text-sm text-muted-foreground">👨‍⚕️ Doctor: <strong>{result.recommendedDoctor}</strong></p>
+          <p className="text-sm text-muted-foreground">📝 Result: <em>{result.result}</em></p>
 
           {result.fileUrl && (
             <a
@@ -473,39 +473,39 @@ useEffect(() => {
 }${result.fileUrl}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-500 underline mt-2 inline-block"
+              className="text-info underline mt-2 inline-block"
             >
               📄 View Report
             </a>
           )}
 
-          <p className="text-xs text-gray-500 mt-2">🏥 Uploaded by: {result.uploadedBy}</p>
-          <p className="text-xs text-gray-500">🕒 {new Date(result.timestamp).toLocaleString()}</p>
+          <p className="text-xs text-muted-foreground mt-2">🏥 Uploaded by: {result.uploadedBy}</p>
+          <p className="text-xs text-muted-foreground">🕒 {new Date(result.timestamp).toLocaleString()}</p>
         </article>
       ))}
     </div>
   )}
 </section>
 
-<section className="mb-6 bg-white p-4 rounded shadow">
-  <h2 className="text-xl font-semibold text-teal-700 mb-2">Payment for Hospital</h2>
+<section className="mb-6 bg-card p-4 rounded shadow">
+  <h2 className="text-xl font-semibold text-primary mb-2">Payment for Hospital</h2>
   <form className="grid gap-3" onSubmit={handlePaymentRedirect}></form>
         <form className="grid gap-3">
           <input type="text" placeholder="Hospital Name" className="p-2 border rounded" />
           <input type="number" placeholder="Amount" className="p-2 border rounded" />
           <button onClick={handlePaymentRedirect} 
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Pay To hospital</button>
+          className="bg-success text-surface-foreground px-4 py-2 rounded hover:bg-success">Pay To hospital</button>
         </form>
       </section>
 
-      <section className="mb-6 bg-white p-4 rounded shadow">
-  <h2 className="text-xl font-semibold text-teal-700 mb-2">Payment for Doctor</h2>
+      <section className="mb-6 bg-card p-4 rounded shadow">
+  <h2 className="text-xl font-semibold text-primary mb-2">Payment for Doctor</h2>
   <form className="grid gap-3" onSubmit={handlePaymentRedirect}></form>
         <form className="grid gap-3">
           <input type="text" placeholder="Doctor Name" className="p-2 border rounded" />
           <input type="number" placeholder="Amount" className="p-2 border rounded" />
           <button onClick={handlePaymentRedirect} 
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Pay To Doctor</button>
+          className="bg-success text-surface-foreground px-4 py-2 rounded hover:bg-success">Pay To Doctor</button>
         </form>
       </section>
 

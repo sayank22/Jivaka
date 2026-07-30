@@ -16,7 +16,7 @@ import PaymentPage from '../pages/PaymentPage';
 
 import ProtectedRoute from '../components/ProtectedRoute';
 
-const AppRoutes = () => {
+const AppRoutes = ({ theme, toggleTheme }) => {
   const location = useLocation();
 
   // Paths where you don't want to show Navbar
@@ -26,7 +26,7 @@ const AppRoutes = () => {
 
   return (
     <>
-      {!shouldHideNavbar && <Navbar />}
+      {!shouldHideNavbar && <Navbar theme={theme} toggleTheme={toggleTheme} />}
 
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>

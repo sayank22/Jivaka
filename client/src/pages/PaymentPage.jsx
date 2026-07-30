@@ -8,8 +8,8 @@ function PaymentPage() {
   const [selectedMethod, setSelectedMethod] = useState('upi');
 
   return (
-    <div className="p-6 min-h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold mb-6 text-center text-teal-700">Payment Options</h1>
+    <div className="p-6 min-h-screen bg-muted">
+      <h1 className="text-3xl font-bold mb-6 text-center text-primary">Payment Options</h1>
 
       <Card className="max-w-2xl mx-auto p-6">
         <Tabs defaultValue="upi" className="w-full" onValueChange={setSelectedMethod}>

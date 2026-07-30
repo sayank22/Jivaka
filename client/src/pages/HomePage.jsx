@@ -26,21 +26,21 @@ const roles = [
     label: 'Doctor',
     description: 'Doctor and their Assistants',
     path: '/login/doctor',
-    color: 'bg-blue-500 hover:bg-blue-700',
+    color: 'bg-primary text-primary-foreground hover:bg-primary/90',
     image: 'https://cdn-icons-png.flaticon.com/512/3774/3774299.png',
   },
   {
     label: 'Patient',
     description: 'Patient and Family',
     path: '/login/patient',
-    color: 'bg-green-500 hover:bg-green-700',
+    color: 'bg-secondary text-secondary-foreground hover:bg-secondary/90',
     image: patientImage,
   },
   {
     label: 'Hospital',
     description: 'Hospital Staffs and Admin',
     path: '/login/hospital',
-    color: 'bg-purple-500 hover:bg-purple-700',
+    color: 'bg-accent text-accent-foreground hover:bg-accent/90',
     image: 'https://cdn-icons-png.flaticon.com/512/4320/4320337.png',
   },
 ];
@@ -90,7 +90,7 @@ const HomePage = () => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-blue-100 to-purple-200 relative">
+    <div className="min-h-screen bg-gradient-to-tr from-surface to-muted relative">
       {/* Logo */}
       
 
@@ -98,7 +98,7 @@ const HomePage = () => {
       <div className="absolute top-6 right-6 z-50">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="text-3xl text-teal-800 focus:outline-none"
+          className="text-3xl text-primary focus:outline-none"
         >
           ☰
         </button>
@@ -111,13 +111,13 @@ const HomePage = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-16 right-6 bg-white shadow-lg rounded-md w-40 z-50 border border-gray-200 before:content-[''] before:absolute before:-top-2 before:right-4 before:border-8 before:border-transparent before:border-b-white"
+            className="absolute top-16 right-6 bg-card shadow-lg rounded-md w-40 z-50 border border-border before:content-[''] before:absolute before:-top-2 before:right-4 before:border-8 before:border-transparent before:border-b-white"
           >
-            <ul className="text-left text-gray-700">
+            <ul className="text-left text-muted-foreground">
               <li>
                 <Link
                   to="/about"
-                  className="block px-4 py-2 hover:bg-gray-100"
+                  className="block px-4 py-2 hover:bg-muted"
                   onClick={() => setMenuOpen(false)}
                 >
                   About
@@ -129,7 +129,7 @@ const HomePage = () => {
                     setShowModal(true);
                     setMenuOpen(false);
                   }}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  className="block w-full text-left px-4 py-2 hover:bg-muted"
                 >
                   Plans
                 </button>
@@ -137,7 +137,7 @@ const HomePage = () => {
               <li>
                 <Link
                   to="/feedback"
-                  className="block px-4 py-2 hover:bg-gray-100"
+                  className="block px-4 py-2 hover:bg-muted"
                   onClick={() => setMenuOpen(false)}
                 >
                   Feedback
@@ -152,7 +152,7 @@ const HomePage = () => {
       {/* Tagline */}
       <div className="text-left pt-28 pl-6 pr-6 max-w-4xl mx-auto">
         <motion.h1
-          className="text-5xl font-bold text-teal-800 mb-4"
+          className="text-5xl font-bold text-primary mb-4"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -160,7 +160,7 @@ const HomePage = () => {
           Welcome to Jivaka
         </motion.h1>
         <motion.p
-          className="text-lg text-gray-700 mb-12"
+          className="text-lg text-muted-foreground mb-12"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
@@ -168,7 +168,7 @@ const HomePage = () => {
           A modern Indian hospital management system for patients, doctors, and hospitals — rooted in tradition, built for the future.
         </motion.p>
       </div>
-<div className="overflow-hidden bg-teal-700 text-white py-3">
+<div className="overflow-hidden bg-primary text-surface-foreground py-3">
   <div className="flex flex-nowrap gap-8 animate-marquee whitespace-nowrap">
     {[
       { label: 'Doctors', value: '5,300', icon: '🩺' },
@@ -180,7 +180,7 @@ const HomePage = () => {
         <span>{item.icon}</span>
         <span className="font-light">{item.label}:</span>
         <span className="font-semibold">{item.value}</span>
-        <div className="w-2 h-2 bg-white opacity-60 rounded-full mx-3" />
+        <div className="w-2 h-2 bg-card opacity-60 rounded-full mx-3" />
       </div>
     ))}
     {[
@@ -193,7 +193,7 @@ const HomePage = () => {
         <span>{item.icon}</span>
         <span className="font-light">{item.label}:</span>
         <span className="font-semibold">{item.value}</span>
-        <div className="w-2 h-2 bg-white opacity-60 rounded-full mx-3" />
+        <div className="w-2 h-2 bg-card opacity-60 rounded-full mx-3" />
       </div>
     ))}
     {[
@@ -206,7 +206,7 @@ const HomePage = () => {
         <span>{item.icon}</span>
         <span className="font-light">{item.label}:</span>
         <span className="font-semibold">{item.value}</span>
-        <div className="w-2 h-2 bg-white opacity-60 rounded-full mx-3" />
+        <div className="w-2 h-2 bg-card opacity-60 rounded-full mx-3" />
       </div>
     ))}
   </div>
@@ -214,12 +214,12 @@ const HomePage = () => {
 
       {/* Role Cards */}
       <motion.div
-        className="bg-teal-100 shadow-2xl rounded-2xl p-10 text-center max-w-5xl w-full mx-auto"
+        className="bg-surface shadow-2xl rounded-2xl p-10 text-center max-w-5xl w-full mx-auto"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <p className="text-teal-600 mb-10 text-xl font-semibold">
+        <p className="text-primary mb-10 text-xl font-semibold">
           Please select your role to continue:
         </p>
 
@@ -229,19 +229,19 @@ const HomePage = () => {
               key={role.label}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-purple-100 rounded-2xl shadow-lg hover:shadow-2xl p-6 flex flex-col items-center transition duration-300 border border-gray-100"
+              className="bg-surface rounded-2xl shadow-lg hover:shadow-2xl p-6 flex flex-col items-center transition duration-300 border border-border"
             >
               <img
                 src={role.image}
                 alt={role.label}
-                className="w-36 h-36 mb-4 rounded-xl shadow-md object-cover border-4 border-white"
+                className="w-36 h-36 mb-4 rounded-xl shadow-md object-cover border-4 border-border"
               />
-              <h2 className="text-xl font-semibold text-gray-700 mb-2">
+              <h2 className="text-xl font-semibold text-muted-foreground mb-2">
                 {role.description}
               </h2>
               <button
                 onClick={() => navigate(role.path)}
-                className={`${role.color} text-white px-4 py-2 rounded-lg mt-auto w-full md:w-auto transition`}
+                className={`${role.color} text-surface-foreground px-4 py-2 rounded-lg mt-auto w-full md:w-auto transition`}
               >
                 Continue as {role.label}
               </button>
@@ -253,7 +253,7 @@ const HomePage = () => {
       {/* Description */}
       <div className="text-right pt-28 pl-6 pr-6 max-w-4xl mx-auto">
         <motion.h1
-          className="text-5xl font-bold text-teal-800 mb-4"
+          className="text-5xl font-bold text-primary mb-4"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -262,7 +262,7 @@ const HomePage = () => {
           and Safe
         </motion.h1>
         <motion.p
-          className="text-lg text-gray-700 mb-12"
+          className="text-lg text-muted-foreground mb-12"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
@@ -270,7 +270,7 @@ const HomePage = () => {
           A customer friendly, Blazingly fast, super-easy app to book. 
         </motion.p>
         </div>
-<div className="overflow-hidden bg-teal-700 text-white py-3">
+<div className="overflow-hidden bg-primary text-surface-foreground py-3">
   <div className="flex flex-nowrap gap-8 animate-marquee whitespace-nowrap">
     {[
       { label: 'Doctors can easily manage every task', icon: '🩺' },
@@ -281,7 +281,7 @@ const HomePage = () => {
       <div key={idx} className="flex items-center gap-2 min-w-fit">
         <span>{item.icon}</span>
         <span className="font-light">{item.label}</span>
-        <div className="w-2 h-2 bg-white opacity-60 rounded-full mx-3" />
+        <div className="w-2 h-2 bg-card opacity-60 rounded-full mx-3" />
       </div>
     ))}
     {[
@@ -293,7 +293,7 @@ const HomePage = () => {
       <div key={idx} className="flex items-center gap-2 min-w-fit">
         <span>{item.icon}</span>
         <span className="font-light">{item.label}</span>
-        <div className="w-2 h-2 bg-white opacity-60 rounded-full mx-3" />
+        <div className="w-2 h-2 bg-card opacity-60 rounded-full mx-3" />
       </div>
     ))}
     {[
@@ -305,14 +305,14 @@ const HomePage = () => {
       <div key={idx + 100} className="flex items-center gap-2 min-w-fit">
         <span>{item.icon}</span>
         <span className="font-light">{item.label}</span>
-        <div className="w-2 h-2 bg-white opacity-60 rounded-full mx-3" />
+        <div className="w-2 h-2 bg-card opacity-60 rounded-full mx-3" />
       </div>
     ))}
   </div>
 </div>
       {/* How It Works Section */}
 <div className="mt-20 max-w-4xl mx-auto px-6 text-center">
-  <h2 className="text-3xl font-bold text-teal-700 mb-6">How It Works</h2>
+  <h2 className="text-3xl font-bold text-primary mb-6">How It Works</h2>
 
   {/* Tab Buttons */}
   <div className="flex justify-center gap-4 mb-6">
@@ -322,8 +322,8 @@ const HomePage = () => {
         onClick={() => setSelectedRole(role)}
         className={`px-4 py-2 rounded-full text-sm font-medium transition duration-300 ease-in-out ${
           selectedRole === role
-            ? 'bg-teal-600 text-white shadow-lg'
-            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            ? 'bg-primary text-surface-foreground shadow-lg'
+            : 'bg-muted text-muted-foreground hover:bg-muted'
         }`}
       >
         {role}
@@ -340,26 +340,26 @@ const HomePage = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.4 }}
-        className="bg-teal-100 p-6 rounded-xl shadow-xl border-l-4 border-green-400 text-left"
+        className="bg-surface p-6 rounded-xl shadow-xl border-l-4 border-green-400 text-left"
       >
-        <h3 className="text-xl font-semibold text-green-700 mb-4 flex items-center gap-2">
-          <UserIcon className="w-5 h-5 text-green-600" /> Patient Flow
+        <h3 className="text-xl font-semibold text-success mb-4 flex items-center gap-2">
+          <UserIcon className="w-5 h-5 text-success" /> Patient Flow
         </h3>
-        <ul className="space-y-4 text-gray-700 text-sm leading-relaxed">
+        <ul className="space-y-4 text-muted-foreground text-sm leading-relaxed">
           <li className="flex items-start gap-2">
-            <Search className="w-4 h-4 mt-1 text-gray-600" />
+            <Search className="w-4 h-4 mt-1 text-muted-foreground" />
             <span>Check <strong>Doctors</strong>, <strong>Hospitals</strong>, and <strong>Diagnostic Centers</strong></span>
           </li>
           <li className="flex items-start gap-2">
-            <Calendar className="w-4 h-4 mt-1 text-gray-600" />
+            <Calendar className="w-4 h-4 mt-1 text-muted-foreground" />
             <span>Book a doctor as per need (fees, availability, specialization)</span>
           </li>
           <li className="flex items-start gap-2">
-            <StethoscopeIcon className="w-4 h-4 mt-1 text-gray-600" />
+            <StethoscopeIcon className="w-4 h-4 mt-1 text-muted-foreground" />
             <span>Visit the doctor → Get consultation / prescriptions / tests</span>
           </li>
           <li className="flex items-start gap-2">
-            <CreditCard className="w-4 h-4 mt-1 text-gray-600" />
+            <CreditCard className="w-4 h-4 mt-1 text-muted-foreground" />
             <span>Pay directly — 100% fee goes to the doctor via clinic</span>
           </li>
         </ul>
@@ -373,26 +373,26 @@ const HomePage = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.4 }}
-        className="bg-teal-100 p-6 rounded-xl shadow-xl border-l-4 border-blue-400 text-left"
+        className="bg-surface p-6 rounded-xl shadow-xl border-l-4 border-blue-400 text-left"
       >
-        <h3 className="text-xl font-semibold text-blue-700 mb-4 flex items-center gap-2">
-          <UserCog className="w-5 h-5 text-blue-600" /> Doctor Flow
+        <h3 className="text-xl font-semibold text-info mb-4 flex items-center gap-2">
+          <UserCog className="w-5 h-5 text-info" /> Doctor Flow
         </h3>
-        <ul className="space-y-4 text-gray-700 text-sm leading-relaxed">
+        <ul className="space-y-4 text-muted-foreground text-sm leading-relaxed">
           <li className="flex items-start gap-2">
-            <ClipboardList className="w-4 h-4 mt-1 text-gray-600" />
+            <ClipboardList className="w-4 h-4 mt-1 text-muted-foreground" />
             <span>Check schedule and clinic assignments</span>
           </li>
           <li className="flex items-start gap-2">
-            <Hospital className="w-4 h-4 mt-1 text-gray-600" />
+            <Hospital className="w-4 h-4 mt-1 text-muted-foreground" />
             <span>Visit assigned hospital/clinic</span>
           </li>
           <li className="flex items-start gap-2">
-            <Microscope className="w-4 h-4 mt-1 text-gray-600" />
+            <Microscope className="w-4 h-4 mt-1 text-muted-foreground" />
             <span>See patients and give prescriptions/tests</span>
           </li>
           <li className="flex items-start gap-2">
-            <DollarSign className="w-4 h-4 mt-1 text-gray-600" />
+            <DollarSign className="w-4 h-4 mt-1 text-muted-foreground" />
             <span>Receive consultation fees directly</span>
           </li>
         </ul>
@@ -406,26 +406,26 @@ const HomePage = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.4 }}
-        className="bg-teal-100 p-6 rounded-xl shadow-xl border-l-4 border-purple-400 text-left"
+        className="bg-surface p-6 rounded-xl shadow-xl border-l-4 border-purple-400 text-left"
       >
-        <h3 className="text-xl font-semibold text-purple-700 mb-4 flex items-center gap-2">
-          <Building2Icon className="w-5 h-5 text-purple-600" /> Hospital Flow
+        <h3 className="text-xl font-semibold text-accent mb-4 flex items-center gap-2">
+          <Building2Icon className="w-5 h-5 text-accent" /> Hospital Flow
         </h3>
-        <ul className="space-y-4 text-gray-700 text-sm leading-relaxed">
+        <ul className="space-y-4 text-muted-foreground text-sm leading-relaxed">
           <li className="flex items-start gap-2">
-            <CalendarClock className="w-4 h-4 mt-1 text-gray-600" />
+            <CalendarClock className="w-4 h-4 mt-1 text-muted-foreground" />
             <span>Manage doctor schedules and hospital staff</span>
           </li>
           <li className="flex items-start gap-2">
-            <TabletSmartphone className="w-4 h-4 mt-1 text-gray-600" />
+            <TabletSmartphone className="w-4 h-4 mt-1 text-muted-foreground" />
             <span>Take appointments and assign doctors</span>
           </li>
           <li className="flex items-start gap-2">
-            <FlaskConical className="w-4 h-4 mt-1 text-gray-600" />
+            <FlaskConical className="w-4 h-4 mt-1 text-muted-foreground" />
             <span>Perform diagnostic tests and upload results</span>
           </li>
           <li className="flex items-start gap-2">
-            <Wallet className="w-4 h-4 mt-1 text-gray-600" />
+            <Wallet className="w-4 h-4 mt-1 text-muted-foreground" />
             <span>Receive payment and manage reports</span>
           </li>
         </ul>
@@ -437,7 +437,7 @@ const HomePage = () => {
 {/* Description */}
       <div className="text-center pt-28 pl-6 pr-6 max-w-4xl mx-auto">
         <motion.h1
-          className="text-5xl font-bold text-teal-800 mb-4"
+          className="text-5xl font-bold text-primary mb-4"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -446,7 +446,7 @@ const HomePage = () => {
           For the people
         </motion.h1>
         <motion.p
-          className="text-lg text-gray-700 mb-12"
+          className="text-lg text-muted-foreground mb-12"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
@@ -457,21 +457,21 @@ const HomePage = () => {
 
       {/* Features */}
       <div className="mt-20 max-w-5xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-teal-700 mb-6 text-center">Key Features</h2>
+        <h2 className="text-3xl font-bold text-primary mb-6 text-center">Key Features</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-center">
           {features.map((feature, i) => (
             <motion.div
               key={i}
-              className="bg-blue-200 p-6 rounded-xl shadow-md cursor-pointer"
+              className="bg-muted p-6 rounded-xl shadow-md cursor-pointer"
               whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.3 }}
               onClick={() => setExpandedIndex(expandedIndex === i ? null : i)}
             >
               <div className="text-4xl mb-2">{feature.icon}</div>
-              <p className="text-lg font-medium text-gray-700">{feature.label}</p>
+              <p className="text-lg font-medium text-muted-foreground">{feature.label}</p>
               {expandedIndex === i && (
                 <motion.p
-                  className="text-sm text-gray-600 mt-2"
+                  className="text-sm text-muted-foreground mt-2"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
@@ -484,19 +484,19 @@ const HomePage = () => {
         </div>
       </div>
 {/* Extended Footer Section */}
-<section className="bg-teal-50 border-t mt-20 py-16">
+<section className="bg-muted border-t mt-20 py-16">
   <div className="max-w-6xl mx-auto px-6">
-    <h2 className="text-4xl font-bold text-teal-800 text-center mb-4">
+    <h2 className="text-4xl font-bold text-primary text-center mb-4">
       One App. All Your Healthcare Needs.
     </h2>
-    <p className="text-center text-gray-600 text-lg mb-10">
+    <p className="text-center text-muted-foreground text-lg mb-10">
       Jivaka is a single platform tailored for Patients, Doctors, and Hospitals.
     </p>
 
-    <div className="grid md:grid-cols-3 gap-8 text-gray-700">
+    <div className="grid md:grid-cols-3 gap-8 text-muted-foreground">
       {/* Product Column */}
       <div>
-        <h3 className="text-xl font-semibold mb-3 text-teal-700">Product for the Future</h3>
+        <h3 className="text-xl font-semibold mb-3 text-primary">Product for the Future</h3>
         <ul className="space-y-2">
           <li>• Patient App</li>
           <li>• Doctor App</li>
@@ -506,18 +506,18 @@ const HomePage = () => {
 
       {/* About Column */}
       <div>
-        <h3 className="text-xl font-semibold mb-3 text-teal-700">About</h3>
+        <h3 className="text-xl font-semibold mb-3 text-primary">About</h3>
         <ul className="space-y-2">
           <li>
             <Link
   to="/about"
-  className="relative font-bold text-purple-700 transition-all duration-300 hover:text-purple-900 hover:scale-105 inline-block after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px] after:bg-purple-900 after:transition-all after:duration-300 hover:after:w-full"
+  className="relative font-bold text-accent transition-all duration-300 hover:text-accent/90 hover:scale-105 inline-block after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px] after:bg-accent after:transition-all after:duration-300 hover:after:w-full"
 >
   Who am I
 </Link>
 
           </li>
-          <li className="text-gray-700 font-medium">Plans:</li>
+          <li className="text-muted-foreground font-medium">Plans:</li>
           <li>- Basic Access: Free for patients and doctors</li>
           <li>- Premium: ₹499/month for full hospital analytics</li>
           <li>- Enterprise: Custom plan for large hospitals</li>
@@ -526,12 +526,12 @@ const HomePage = () => {
 
       {/* Contact Column */}
       <div>
-  <h3 className="text-xl font-semibold mb-3 text-teal-700">Contact Me</h3>
+  <h3 className="text-xl font-semibold mb-3 text-primary">Contact Me</h3>
   <ul className="space-y-3">
     <li>
       <a
         href="https://www.linkedin.com/in/sayan-kundu-70b5442b6"
-        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-red-400 hover:scale-[1.02] hover:shadow-md"
+        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-destructive/70 hover:scale-[1.02] hover:shadow-md"
       >
         💼 LinkdIn: Sayan Kundu
       </a>
@@ -539,7 +539,7 @@ const HomePage = () => {
     <li>
       <a
         href="https://drive.google.com/file/d/1Mhn6U396WW0DiciBdBbsP2eJP5P9CSg4/view?usp=drive_link"
-        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-blue-400 hover:scale-[1.02] hover:shadow-md"
+        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-info hover:scale-[1.02] hover:shadow-md"
       >
         📄 Resume
       </a>
@@ -553,7 +553,7 @@ const HomePage = () => {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 text-gray-800"
+          className="h-5 w-5 text-muted-foreground"
           fill="currentColor"
           viewBox="0 0 24 24"
         >
@@ -565,7 +565,7 @@ const HomePage = () => {
     <li>
       <a
         href="mailto:sayank10023@gmail.com"
-        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-green-400 hover:scale-[1.02] hover:shadow-md"
+        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-success/70 hover:scale-[1.02] hover:shadow-md"
       >
         📧 Email: sayank10023@gmail.com
       </a>
@@ -578,10 +578,10 @@ const HomePage = () => {
 </section>
 
       {/* Footer */}
-      <footer className="text-center py-10 text-sm text-gray-500 border-t mt-20">
+      <footer className="text-center py-10 text-sm text-muted-foreground border-t mt-20">
         <p>
           © {new Date().getFullYear()}{' '}
-          <strong className="text-teal-700 font-semibold">Jivaka</strong> • Made By Sayan Kundu in India
+          <strong className="text-primary font-semibold">Jivaka</strong> • Made By Sayan Kundu in India
         </p>
       </footer>
 
@@ -596,7 +596,7 @@ const HomePage = () => {
       onClick={() => setShowModal(false)}
     >
       <motion.div
-        className="bg-white p-8 rounded-xl shadow-xl w-96 text-center relative"
+        className="bg-card p-8 rounded-xl shadow-xl w-96 text-center relative"
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
         exit={{ scale: 0.8 }}
@@ -604,20 +604,20 @@ const HomePage = () => {
       >
         <button
           onClick={() => setShowModal(false)}
-          className="absolute top-2 right-3 text-xl text-gray-500 hover:text-gray-800"
+          className="absolute top-2 right-3 text-xl text-muted-foreground hover:text-muted-foreground"
         >
           &times;
         </button>
-        <h3 className="text-xl font-semibold mb-4 text-teal-700">Our Plans</h3>
-        <p className="text-gray-600 mb-4 text-sm leading-relaxed text-left">
-          <span className="font-semibold text-teal-600">🩺 Basic Access – Free</span><br />
+        <h3 className="text-xl font-semibold mb-4 text-primary">Our Plans</h3>
+        <p className="text-muted-foreground mb-4 text-sm leading-relaxed text-left">
+          <span className="font-semibold text-primary">🩺 Basic Access – Free</span><br />
           - Book appointments and receive reminders<br />
           - Doctors can manage schedule and view history<br />
           - Access to test results and prescriptions<br />
           - Basic support via email<br />
           - UPI & card payment included<br /><br />
 
-          <span className="font-semibold text-teal-600">💼 Premium – ₹499/month</span><br />
+          <span className="font-semibold text-primary">💼 Premium – ₹499/month</span><br />
           - All Basic features, plus:<br />
           - Advanced hospital analytics & dashboards<br />
           - Priority appointment scheduling<br />
@@ -625,7 +625,7 @@ const HomePage = () => {
           - Hospital slot management<br />
           - Premium support (Email + Chat)<br /><br />
 
-          <span className="font-semibold text-teal-600">🏢 Enterprise – Custom Pricing</span><br />
+          <span className="font-semibold text-primary">🏢 Enterprise – Custom Pricing</span><br />
           - All Premium features, plus:<br />
           - Dedicated account manager<br />
           - Integration with hospital systems<br />
@@ -635,7 +635,7 @@ const HomePage = () => {
         </p>
         <button
           onClick={() => setShowModal(false)}
-          className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700"
+          className="bg-primary text-surface-foreground px-4 py-2 rounded hover:bg-primary"
         >
           Close
         </button>

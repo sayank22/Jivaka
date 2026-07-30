@@ -169,7 +169,7 @@ const handleSlotChange = (e) => {
   return (
     <div className="p-6 bg-gradient-to-tr from-green-100 to-blue-50 min-h-screen">
 
-      <h1 className="text-2xl font-bold text-center text-teal-800 mt-2 mb-6">
+      <h1 className="text-2xl font-bold text-center text-primary mt-2 mb-6">
         Welcome, Dr. {user?.fullName || user?.primaryEmailAddress?.emailAddress}
       </h1>
 
@@ -185,13 +185,13 @@ const handleSlotChange = (e) => {
           <input type="text" name="symptoms" value={formData.symptoms} onChange={handleChange} placeholder="Symptoms" className="p-2 border rounded" required />
           <input type="text" name="diagnosis" value={formData.diagnosis} onChange={handleChange} placeholder="Diagnosis" className="p-2 border rounded" required />
           <textarea name="medicines" value={formData.medicines} onChange={handleChange} placeholder="Medicines" className="p-2 border rounded" required></textarea>
-          <button type="submit" className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">Submit</button>
+          <button type="submit" className="bg-primary text-surface-foreground px-4 py-2 rounded hover:bg-primary">Submit</button>
         </form>
       </Section>
 
       <Section title="Prescriptions Given" icon={<FaNotesMedical />}>
         {prescriptions.length ? prescriptions.map((p, i) => (
-          <div key={i} className="p-2 border mb-2 rounded bg-gray-50">
+          <div key={i} className="p-2 border mb-2 rounded bg-muted">
             <strong>{p.patientName}</strong><br />
             Symptoms: {p.symptoms}<br />
             Diagnosis: {p.diagnosis}<br />
@@ -206,13 +206,13 @@ const handleSlotChange = (e) => {
     <input type="text" name="hospitalName" value={slotForm.hospitalName} onChange={handleSlotChange} placeholder="Hospital Name" className="p-2 border rounded" required />
     <input type="text" name="days" value={slotForm.days} onChange={handleSlotChange} placeholder="Days (e.g., Mon, Wed, Fri)" className="p-2 border rounded" required />
     <input type="text" name="time" value={slotForm.time} onChange={handleSlotChange} placeholder="Time (e.g., 10 AM - 2 PM)" className="p-2 border rounded" required />
-    <button type="submit" className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">Submit</button>
+    <button type="submit" className="bg-primary text-surface-foreground px-4 py-2 rounded hover:bg-primary">Submit</button>
   </form>
 </Section>
 
       <Section title="Time-Slot for Hospital" icon={<FaNotesMedical />}>
   {slot.length ? slot.map((s, i) => (
-    <div key={i} className="p-2 border mb-2 rounded bg-gray-50">
+    <div key={i} className="p-2 border mb-2 rounded bg-muted">
       <strong>{s.hospitalName}</strong><br />
       Days: {s.days}<br />
       Time: {s.time}<br />
@@ -221,21 +221,21 @@ const handleSlotChange = (e) => {
 </Section>
 
  <section className="mb-6 mt-10 px-4">
-  <h2 className="text-2xl font-bold mb-6 text-gray-800">Uploaded Test Results</h2>
+  <h2 className="text-2xl font-bold mb-6 text-muted-foreground">Uploaded Test Results</h2>
 
   {testResults.length === 0 ? (
-    <p className="text-gray-600 text-center text-lg">No test results uploaded yet.</p>
+    <p className="text-muted-foreground text-center text-lg">No test results uploaded yet.</p>
   ) : (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {testResults.map((result) => (
         <article
           key={result._id}
-          className="bg-white p-4 shadow-sm rounded-xl border border-gray-200 transition hover:shadow-md"
+          className="bg-card p-4 shadow-sm rounded-xl border border-border transition hover:shadow-md"
         >
-          <h3 className="text-lg font-semibold text-blue-800">{result.testName}</h3>
-          <p className="text-sm text-gray-700 mt-1">👤 Patient: <strong>{result.patientName}</strong></p>
-          <p className="text-sm text-gray-700">👨‍⚕️ Doctor: <strong>{result.recommendedDoctor}</strong></p>
-          <p className="text-sm text-gray-700">📝 Result: <em>{result.result}</em></p>
+          <h3 className="text-lg font-semibold text-info">{result.testName}</h3>
+          <p className="text-sm text-muted-foreground mt-1">👤 Patient: <strong>{result.patientName}</strong></p>
+          <p className="text-sm text-muted-foreground">👨‍⚕️ Doctor: <strong>{result.recommendedDoctor}</strong></p>
+          <p className="text-sm text-muted-foreground">📝 Result: <em>{result.result}</em></p>
 
           {result.fileUrl && (
             <a
@@ -243,14 +243,14 @@ const handleSlotChange = (e) => {
 }${result.fileUrl}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-500 underline mt-2 inline-block"
+              className="text-info underline mt-2 inline-block"
             >
               📄 View Report
             </a>
           )}
 
-          <p className="text-xs text-gray-500 mt-2">🏥 Uploaded by: {result.uploadedBy}</p>
-          <p className="text-xs text-gray-500">🕒 {new Date(result.timestamp).toLocaleString()}</p>
+          <p className="text-xs text-muted-foreground mt-2">🏥 Uploaded by: {result.uploadedBy}</p>
+          <p className="text-xs text-muted-foreground">🕒 {new Date(result.timestamp).toLocaleString()}</p>
         </article>
       ))}
     </div>
@@ -291,10 +291,10 @@ const handleSlotChange = (e) => {
 
 const Section = ({ title, children, icon }) => (
   <div className="mb-8">
-    <h2 className="text-xl font-bold text-teal-700 flex items-center gap-2 mb-3">
+    <h2 className="text-xl font-bold text-primary flex items-center gap-2 mb-3">
       {icon} {title}
     </h2>
-    <div className="bg-white p-4 rounded shadow-md">{children}</div>
+    <div className="bg-card p-4 rounded shadow-md">{children}</div>
   </div>
 );
 
@@ -310,12 +310,12 @@ const ToggleList = ({ label, show, toggle, list, color }) => (
 const AppointmentList = ({ list }) => (
   <ul className="mt-2 space-y-2">
     {list.length > 0 ? list.map((a, i) => (
-      <li key={i} className="p-2 bg-gray-50 rounded shadow-sm">
+      <li key={i} className="p-2 bg-muted rounded shadow-sm">
         <strong>{a.patientName || 'Unknown'}</strong> - {a.reason} <br />
-        <span className="text-sm text-gray-600">📅 {new Date(a.date).toLocaleString()} | 🏥 {a.hospital}</span>
+        <span className="text-sm text-muted-foreground">📅 {new Date(a.date).toLocaleString()} | 🏥 {a.hospital}</span>
       </li>
     )) : (
-      <li className="text-gray-500">No appointments.</li>
+      <li className="text-muted-foreground">No appointments.</li>
     )}
   </ul>
 );

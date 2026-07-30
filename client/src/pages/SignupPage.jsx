@@ -14,12 +14,12 @@ const SignupPage = () => {
   }, [role, navigate]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-green-100 to-blue-200 px-4">
-      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md text-center">
-        <h1 className="text-2xl font-bold text-green-700 mb-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-surface to-muted px-4">
+      <div className="bg-card p-6 rounded-lg shadow-xl w-full max-w-md text-center">
+        <h1 className="text-2xl font-bold text-success mb-4">
           Sign Up as {role?.charAt(0).toUpperCase() + role?.slice(1)}
         </h1>
-        <p className="text-gray-600 mb-6">Create your account below.</p>
+        <p className="text-muted-foreground mb-6">Create your account below.</p>
 
         <div className="flex justify-center">
           <SignUp redirectUrl={`/${role}`} />

@@ -16,13 +16,13 @@ const CollapsibleSection = ({ title, children }) => {
   return (
     <div className="mb-6">
       <div
-        className="flex items-center justify-between cursor-pointer bg-teal-100 p-3 rounded shadow"
+        className="flex items-center justify-between cursor-pointer bg-surface p-3 rounded shadow"
         onClick={() => setOpen(!open)}
       >
-        <h2 className="text-lg font-bold text-teal-800">{title}</h2>
+        <h2 className="text-lg font-bold text-primary">{title}</h2>
         <FaAngleDown className={`transition-transform ${open ? 'rotate-180' : ''}`} />
       </div>
-      {open && <div className="mt-2 p-4 bg-white rounded shadow-inner">{children}</div>}
+      {open && <div className="mt-2 p-4 bg-card rounded shadow-inner">{children}</div>}
     </div>
   );
 };
@@ -174,14 +174,14 @@ useEffect(() => {
 
   return (
     <div className="p-6 bg-gradient-to-tr from-gray-50 to-blue-100 min-h-screen">
-      <h1 className="text-2xl text-center font-bold text-teal-800 mb-6">
+      <h1 className="text-2xl text-center font-bold text-primary mb-6">
         Hospital - {user.fullName || user.primaryEmailAddress?.emailAddress}
       </h1>
       
-<section className="mb-6 bg-white p-4 rounded shadow">
-  <h2 className="text-xl font-semibold text-teal-700 mb-2">Diagnostic Appointment</h2>
+<section className="mb-6 bg-card p-4 rounded shadow">
+  <h2 className="text-xl font-semibold text-primary mb-2">Diagnostic Appointment</h2>
         {diagnosticAppointments.length === 0 ? (
-          <p className="text-gray-500">No diagnostic appointments found.</p>
+          <p className="text-muted-foreground">No diagnostic appointments found.</p>
         ) : (
           diagnosticAppointments.map((booking) => (
             <div key={booking._id} className="border-b py-2">
@@ -197,10 +197,10 @@ useEffect(() => {
         )}
       </section>
       
-      <section className="mb-6 bg-white p-4 rounded shadow">
-  <h2 className="text-xl font-semibold text-teal-700 mb-2">Doctor's Schedule</h2>
+      <section className="mb-6 bg-card p-4 rounded shadow">
+  <h2 className="text-xl font-semibold text-primary mb-2">Doctor's Schedule</h2>
   {doctorSlots.length === 0 ? (
-    <p className="text-gray-500">No slots available</p>
+    <p className="text-muted-foreground">No slots available</p>
   ) : (
     doctorSlots.map((slot, index) => (
       <div key={index} className="border-b py-2">
@@ -211,8 +211,8 @@ useEffect(() => {
   )}
 </section>
 
-<section className="mb-6 bg-white p-4 rounded shadow">
-  <h2 className="text-xl font-semibold text-teal-700 mb-2">Upload Test Results</h2>
+<section className="mb-6 bg-card p-4 rounded shadow">
+  <h2 className="text-xl font-semibold text-primary mb-2">Upload Test Results</h2>
   <form className="grid gap-3" onSubmit={handleSubmit}>
     <input
       type="text"
@@ -251,7 +251,7 @@ useEffect(() => {
     /> */}
     <button
       type="submit"
-      className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+      className="bg-indigo-600 text-surface-foreground px-4 py-2 rounded hover:bg-indigo-700"
     >
       Upload
     </button>
@@ -259,21 +259,21 @@ useEffect(() => {
 </section>
 
  <section className="mb-6 mt-10 px-4">
-  <h2 className="text-2xl font-bold mb-6 text-gray-800">Uploaded Test Results</h2>
+  <h2 className="text-2xl font-bold mb-6 text-muted-foreground">Uploaded Test Results</h2>
 
   {testResults.length === 0 ? (
-    <p className="text-gray-600 text-center text-lg">No test results uploaded yet.</p>
+    <p className="text-muted-foreground text-center text-lg">No test results uploaded yet.</p>
   ) : (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {testResults.map((result) => (
         <article
           key={result._id}
-          className="bg-white p-4 shadow-sm rounded-xl border border-gray-200 transition hover:shadow-md"
+          className="bg-card p-4 shadow-sm rounded-xl border border-border transition hover:shadow-md"
         >
-          <h3 className="text-lg font-semibold text-blue-800">{result.testName}</h3>
-          <p className="text-sm text-gray-700 mt-1">👤 Patient: <strong>{result.patientName}</strong></p>
-          <p className="text-sm text-gray-700">👨‍⚕️ Doctor: <strong>{result.recommendedDoctor}</strong></p>
-          <p className="text-sm text-gray-700">📝 Result: <em>{result.result}</em></p>
+          <h3 className="text-lg font-semibold text-info">{result.testName}</h3>
+          <p className="text-sm text-muted-foreground mt-1">👤 Patient: <strong>{result.patientName}</strong></p>
+          <p className="text-sm text-muted-foreground">👨‍⚕️ Doctor: <strong>{result.recommendedDoctor}</strong></p>
+          <p className="text-sm text-muted-foreground">📝 Result: <em>{result.result}</em></p>
 
           {result.fileUrl && (
             <a
@@ -281,14 +281,14 @@ useEffect(() => {
 }${result.fileUrl}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-500 underline mt-2 inline-block"
+              className="text-info underline mt-2 inline-block"
             >
               📄 View Report
             </a>
           )}
 
-          <p className="text-xs text-gray-500 mt-2">🏥 Uploaded by: {result.uploadedBy}</p>
-          <p className="text-xs text-gray-500">🕒 {new Date(result.timestamp).toLocaleString()}</p>
+          <p className="text-xs text-muted-foreground mt-2">🏥 Uploaded by: {result.uploadedBy}</p>
+          <p className="text-xs text-muted-foreground">🕒 {new Date(result.timestamp).toLocaleString()}</p>
         </article>
       ))}
     </div>
@@ -296,14 +296,14 @@ useEffect(() => {
 </section>
 
 
-      <section className="mb-6 bg-white p-4 rounded shadow">
-  <h2 className="text-xl font-semibold text-teal-700 mb-2">Pay</h2>
+      <section className="mb-6 bg-card p-4 rounded shadow">
+  <h2 className="text-xl font-semibold text-primary mb-2">Pay</h2>
   <form className="grid gap-3" onSubmit={handleSubmit}></form>
         <form className="grid gap-3">
           <input type="text" placeholder="Hospital Name" className="p-2 border rounded" />
           <input type="number" placeholder="Amount" className="p-2 border rounded" />
           <button onClick={handlePaymentRedirect} 
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Pay To Jivaka</button>
+          className="bg-success text-surface-foreground px-4 py-2 rounded hover:bg-success">Pay To Jivaka</button>
         </form>
       </section>
       
@@ -324,7 +324,7 @@ useEffect(() => {
             <option>CT Scan</option>
           </select>
           <input type="datetime-local" className="p-2 border rounded" />
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Book</button>
+          <button type="submit" className="bg-info text-surface-foreground px-4 py-2 rounded hover:bg-info">Book</button>
         </form>
       </CollapsibleSection>
       
