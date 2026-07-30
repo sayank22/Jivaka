@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 
 import patientImage from '../assets/1.jpg';
+import { useDialogReveal, useInteractiveMotion, useStaggerReveal } from '../hooks/useGsapMotion';
 
 const roles = [
   {
@@ -82,75 +83,24 @@ const features = [
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [menuOpen, setMenuOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedRole, setSelectedRole] = useState('Patient');
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const pageRef = useRef(null);
+  useStaggerReveal(pageRef, '[data-motion-hero]', { y: 16, duration: 0.5, stagger: 0.1 });
+  useStaggerReveal(pageRef, '[data-motion-card]', { y: 14, duration: 0.42, stagger: 0.08 });
+  useInteractiveMotion(pageRef);
+  useDialogReveal(pageRef, showModal);
   
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-surface to-muted relative">
+    <div ref={pageRef} className="min-h-screen bg-gradient-to-tr from-surface to-muted relative">
       {/* Logo */}
       
 
-      {/* Hamburger Button */}
-      <div className="absolute top-6 right-6 z-50">
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="text-3xl text-primary focus:outline-none"
-        >
-          ☰
-        </button>
-      </div>
-
-      {/* Dropdown Menu */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-16 right-6 bg-card shadow-lg rounded-md w-40 z-50 border border-border before:content-[''] before:absolute before:-top-2 before:right-4 before:border-8 before:border-transparent before:border-b-white"
-          >
-            <ul className="text-left text-muted-foreground">
-              <li>
-                <Link
-                  to="/about"
-                  className="block px-4 py-2 hover:bg-muted"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <button
-                  onClick={() => {
-                    setShowModal(true);
-                    setMenuOpen(false);
-                  }}
-                  className="block w-full text-left px-4 py-2 hover:bg-muted"
-                >
-                  Plans
-                </button>
-              </li>
-              <li>
-                <Link
-                  to="/feedback"
-                  className="block px-4 py-2 hover:bg-muted"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Feedback
-                </Link>
-              </li>
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      
-
       {/* Tagline */}
-      <div className="text-left pt-28 pl-6 pr-6 max-w-4xl mx-auto">
+      <div data-motion-hero className="text-left pt-28 pl-6 pr-6 max-w-4xl mx-auto">
         <motion.h1
           className="text-5xl font-bold text-primary mb-4"
           initial={{ opacity: 0, y: -20 }}
@@ -227,6 +177,8 @@ const HomePage = () => {
           {roles.map((role) => (
             <motion.div
               key={role.label}
+              data-motion-card
+              data-motion-interactive
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-surface rounded-2xl shadow-lg hover:shadow-2xl p-6 flex flex-col items-center transition duration-300 border border-border"
@@ -240,6 +192,7 @@ const HomePage = () => {
                 {role.description}
               </h2>
               <button
+                data-motion-interactive
                 onClick={() => navigate(role.path)}
                 className={`${role.color} text-surface-foreground px-4 py-2 rounded-lg mt-auto w-full md:w-auto transition`}
               >
@@ -462,6 +415,8 @@ const HomePage = () => {
           {features.map((feature, i) => (
             <motion.div
               key={i}
+              data-motion-card
+              data-motion-interactive
               className="bg-muted p-6 rounded-xl shadow-md cursor-pointer"
               whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.3 }}
@@ -596,6 +551,7 @@ const HomePage = () => {
       onClick={() => setShowModal(false)}
     >
       <motion.div
+        data-motion-dialog-panel
         className="bg-card p-8 rounded-xl shadow-xl w-96 text-center relative"
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}

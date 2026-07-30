@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useInteractiveMotion, useStaggerReveal } from '../hooks/useGsapMotion';
 
 const Feedback = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +8,9 @@ const Feedback = () => {
     profession: '',
     concern: '',
   });
+  const formRef = useRef(null);
+  useStaggerReveal(formRef, '[data-motion-form-field]', { y: 10, duration: 0.35, stagger: 0.06 });
+  useInteractiveMotion(formRef);
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -25,10 +29,10 @@ const Feedback = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-surface to-muted flex items-center justify-center p-4">
-      <div className="bg-card rounded-xl shadow-xl p-8 max-w-md w-full">
+      <div ref={formRef} className="bg-card rounded-xl shadow-xl p-8 max-w-md w-full">
         <h2 className="text-2xl font-bold text-primary mb-6 text-center">Submit Your Feedback</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
+          <div data-motion-form-field>
             <label className="block text-sm font-medium text-muted-foreground">Name</label>
             <input
               type="text"
@@ -40,7 +44,7 @@ const Feedback = () => {
               placeholder="Your name"
             />
           </div>
-          <div>
+          <div data-motion-form-field>
             <label className="block text-sm font-medium text-muted-foreground">Profession</label>
             <input
               type="text"
@@ -52,7 +56,7 @@ const Feedback = () => {
               placeholder="e.g., Doctor, Patient, Hospital Admin"
             />
           </div>
-          <div>
+          <div data-motion-form-field>
             <label className="block text-sm font-medium text-muted-foreground">Concern / Message</label>
             <textarea
               name="concern"
@@ -66,6 +70,7 @@ const Feedback = () => {
           </div>
           <button
             type="submit"
+            data-motion-interactive
             className="w-full bg-primary text-surface-foreground py-2 px-4 rounded-md hover:bg-primary transition"
           >
             Submit Feedback

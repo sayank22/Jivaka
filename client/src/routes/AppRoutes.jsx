@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { SignIn, SignUp } from '@clerk/clerk-react';
@@ -15,6 +15,13 @@ import HospitalDashboard from '../pages/Dashboards/HospitalDashboard';
 import PaymentPage from '../pages/PaymentPage';
 
 import ProtectedRoute from '../components/ProtectedRoute';
+import { usePageReveal } from '../hooks/useGsapMotion';
+
+const RouteTransition = ({ children, routeKey }) => {
+  const transitionRef = useRef(null);
+  usePageReveal(transitionRef, [routeKey]);
+  return <main ref={transitionRef}>{children}</main>;
+};
 
 const AppRoutes = ({ theme, toggleTheme }) => {
   const location = useLocation();
@@ -28,7 +35,7 @@ const AppRoutes = ({ theme, toggleTheme }) => {
     <>
       {!shouldHideNavbar && <Navbar theme={theme} toggleTheme={toggleTheme} />}
 
-      <AnimatePresence mode="wait">
+      <RouteTransition routeKey={location.pathname}>
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<About />} />
@@ -74,7 +81,7 @@ const AppRoutes = ({ theme, toggleTheme }) => {
           <Route path="/payment" element={<PaymentPage />} />
 
         </Routes>
-      </AnimatePresence>
+      </RouteTransition>
     </>
   );
 };

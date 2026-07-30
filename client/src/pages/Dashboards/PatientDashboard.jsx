@@ -1,6 +1,6 @@
 import { useAuth } from '@clerk/clerk-react';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useUser, SignOutButton } from '@clerk/clerk-react'; 
 import { FaHospitalAlt, FaUserMd, FaVials, FaPrescriptionBottle } from 'react-icons/fa';
@@ -8,6 +8,7 @@ import { AnimatePresence } from 'framer-motion';
 import PaymentPage from '../PaymentPage';
 import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
+import { useDialogReveal, useInteractiveMotion, useStaggerReveal } from '../../hooks/useGsapMotion';
 
 
 const mockData = {
@@ -108,7 +109,7 @@ const Section = ({ title, icon, children }) => (
       {icon && <span className="text-primary text-2xl mr-2">{icon}</span>}
       <h2 className="text-xl font-semibold text-primary">{title}</h2>
     </div>
-    <div className="bg-card p-5 rounded-2xl shadow-xl border border-border">
+    <div data-motion-dashboard-card className="bg-card p-5 rounded-2xl shadow-xl border border-border">
       {children}
     </div>
   </div>
@@ -121,6 +122,7 @@ const ToggleList = ({ items, renderTitle, renderDetails }) => {
       {items.map((item, idx) => (
         <div
           key={idx}
+          data-motion-interactive
           className="cursor-pointer border border-border rounded-lg p-3 bg-card shadow hover:bg-muted transition"
         >
           <div
@@ -159,6 +161,10 @@ const [showTestModal, setShowTestModal] = useState(false);
 const [showModal, setShowModal] = useState(false);
 const [prescriptions, setPrescriptions] = useState([]);
 const [testResults, setTestResults] = useState([]);
+const dashboardRef = useRef(null);
+useStaggerReveal(dashboardRef, '[data-motion-dashboard-card]', { y: 12, duration: 0.38, stagger: 0.06 });
+useInteractiveMotion(dashboardRef);
+useDialogReveal(dashboardRef, showModal || showTestModal);
 const handlePaymentRedirect = () => {
   navigate('/payment'); // 👈 This will redirect to PaymentPage
 };
@@ -209,7 +215,7 @@ useEffect(() => {
   if (!isLoaded || !user) return null;
 
   return (
-    <div className="p-6 bg-gradient-to-tr from-surface to-muted min-h-screen">
+    <div ref={dashboardRef} className="p-6 bg-gradient-to-tr from-surface to-muted min-h-screen">
        <h1 className=" mb-6 text-3xl font-bold text-primary">
             Welcome, {user?.fullName || user?.primaryEmailAddress?.emailAddress}
           </h1>
@@ -217,7 +223,7 @@ useEffect(() => {
       <Section title="Doctor Specializations" icon={<FaUserMd />}> 
       {showModal && selectedDoctor && (
   <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
-    <div className="bg-card p-6 rounded-xl w-full max-w-md shadow-lg relative">
+    <div data-motion-dialog-panel className="bg-card p-6 rounded-xl w-full max-w-md shadow-lg relative">
       <h2 className="text-xl font-bold mb-4 text-primary">Book Appointment</h2>
       <button
         className="absolute top-2 right-3 text-xl text-muted-foreground hover:text-destructive"
@@ -326,7 +332,7 @@ useEffect(() => {
       <Section title="Diagnostic Centers" icon={<FaVials />}> 
       {showTestModal && selectedTest && (
   <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
-    <div className="bg-card p-6 rounded-xl w-full max-w-md shadow-lg relative">
+    <div data-motion-dialog-panel className="bg-card p-6 rounded-xl w-full max-w-md shadow-lg relative">
       <h2 className="text-xl font-bold mb-4 text-primary">Book Diagnostic Test</h2>
       <button
         className="absolute top-2 right-3 text-xl text-muted-foreground hover:text-destructive"

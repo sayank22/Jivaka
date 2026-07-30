@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from "axios";
 import { useUser, useAuth } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
@@ -7,11 +7,15 @@ import {
   FaChartBar, FaChevronDown, FaChevronUp
 } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { useInteractiveMotion, useStaggerReveal } from '../../hooks/useGsapMotion';
 
 const DoctorDashboard = () => {
   const { user, isLoaded } = useUser();
   const { getToken } = useAuth();
   const navigate = useNavigate();
+  const dashboardRef = useRef(null);
+  useStaggerReveal(dashboardRef, '[data-motion-dashboard-card]', { y: 12, duration: 0.38, stagger: 0.06 });
+  useInteractiveMotion(dashboardRef);
   
 
   const [appointments, setAppointments] = useState([]);
@@ -167,7 +171,7 @@ const handleSlotChange = (e) => {
 
 
   return (
-    <div className="p-6 bg-gradient-to-tr from-green-100 to-blue-50 min-h-screen">
+    <div ref={dashboardRef} className="p-6 bg-gradient-to-tr from-green-100 to-blue-50 min-h-screen">
 
       <h1 className="text-2xl font-bold text-center text-primary mt-2 mb-6">
         Welcome, Dr. {user?.fullName || user?.primaryEmailAddress?.emailAddress}
@@ -294,7 +298,7 @@ const Section = ({ title, children, icon }) => (
     <h2 className="text-xl font-bold text-primary flex items-center gap-2 mb-3">
       {icon} {title}
     </h2>
-    <div className="bg-card p-4 rounded shadow-md">{children}</div>
+    <div data-motion-dashboard-card className="bg-card p-4 rounded shadow-md">{children}</div>
   </div>
 );
 
@@ -310,7 +314,7 @@ const ToggleList = ({ label, show, toggle, list, color }) => (
 const AppointmentList = ({ list }) => (
   <ul className="mt-2 space-y-2">
     {list.length > 0 ? list.map((a, i) => (
-      <li key={i} className="p-2 bg-muted rounded shadow-sm">
+      <li key={i} data-motion-interactive className="p-2 bg-muted rounded shadow-sm">
         <strong>{a.patientName || 'Unknown'}</strong> - {a.reason} <br />
         <span className="text-sm text-muted-foreground">📅 {new Date(a.date).toLocaleString()} | 🏥 {a.hospital}</span>
       </li>

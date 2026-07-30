@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useInteractiveMotion, useStaggerReveal } from '../hooks/useGsapMotion';
 
 function PaymentPage() {
   const [selectedMethod, setSelectedMethod] = useState('upi');
+  const paymentRef = useRef(null);
+  useStaggerReveal(paymentRef, '[data-motion-payment-item]', { y: 10, duration: 0.35, stagger: 0.06 }, [selectedMethod]);
+  useInteractiveMotion(paymentRef);
 
   return (
     <div className="p-6 min-h-screen bg-muted">
       <h1 className="text-3xl font-bold mb-6 text-center text-primary">Payment Options</h1>
 
-      <Card className="max-w-2xl mx-auto p-6">
+      <Card ref={paymentRef} className="max-w-2xl mx-auto p-6">
         <Tabs defaultValue="upi" className="w-full" onValueChange={setSelectedMethod}>
           <TabsList className="grid grid-cols-4 gap-2 mb-4">
             <TabsTrigger value="upi">UPI</TabsTrigger>
@@ -21,13 +25,13 @@ function PaymentPage() {
           </TabsList>
 
           <TabsContent value="upi">
-            <h2 className="text-lg font-semibold mb-2">Pay via UPI ID</h2>
+            <h2 data-motion-payment-item className="text-lg font-semibold mb-2">Pay via UPI ID</h2>
             <Input placeholder="Enter your UPI ID (e.g. name@upi)" className="mb-4" />
             <Button className="w-full">Pay ₹500</Button>
           </TabsContent>
 
           <TabsContent value="card">
-            <h2 className="text-lg font-semibold mb-2">Pay via Card</h2>
+            <h2 data-motion-payment-item className="text-lg font-semibold mb-2">Pay via Card</h2>
             <Input placeholder="Card Number" className="mb-2" />
             <div className="flex gap-2 mb-2">
               <Input placeholder="MM/YY" className="w-1/2" />
@@ -38,7 +42,7 @@ function PaymentPage() {
           </TabsContent>
 
           <TabsContent value="netbanking">
-            <h2 className="text-lg font-semibold mb-2">Net Banking</h2>
+            <h2 data-motion-payment-item className="text-lg font-semibold mb-2">Net Banking</h2>
             <select className="w-full p-2 border rounded mb-4">
               <option value="">Select Your Bank</option>
               <option value="sbi">State Bank of India</option>
@@ -50,7 +54,7 @@ function PaymentPage() {
           </TabsContent>
 
           <TabsContent value="apps">
-            <h2 className="text-lg font-semibold mb-4">Choose a UPI App</h2>
+            <h2 data-motion-payment-item className="text-lg font-semibold mb-4">Choose a UPI App</h2>
             <div className="grid grid-cols-3 gap-4 mb-4">
               <img src="/images/gpay.png" alt="GPay" className="w-16 mx-auto" />
               <img src="/images/phonepe.png" alt="PhonePe" className="w-16 mx-auto" />

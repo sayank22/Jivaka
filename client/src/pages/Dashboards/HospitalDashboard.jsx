@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser, useAuth } from '@clerk/clerk-react';
 import { FaAngleDown } from 'react-icons/fa';
 import axios from 'axios';
 import PaymentPage from '../PaymentPage';
 import { toast } from 'react-toastify';
+import { useInteractiveMotion, useStaggerReveal } from '../../hooks/useGsapMotion';
 
 
 
@@ -14,8 +15,9 @@ const CollapsibleSection = ({ title, children }) => {
   
 
   return (
-    <div className="mb-6">
+    <div data-motion-dashboard-card className="mb-6">
       <div
+        data-motion-interactive
         className="flex items-center justify-between cursor-pointer bg-surface p-3 rounded shadow"
         onClick={() => setOpen(!open)}
       >
@@ -31,6 +33,9 @@ const HospitalDashboard = () => {
   const navigate = useNavigate();
   const { user, isLoaded } = useUser();
   const { getToken } = useAuth();
+  const dashboardRef = useRef(null);
+  useStaggerReveal(dashboardRef, '[data-motion-dashboard-card]', { y: 12, duration: 0.38, stagger: 0.06 });
+  useInteractiveMotion(dashboardRef);
   const [diagnosticAppointments, setDiagnosticAppointments] = useState([]);
   const [doctorSlots, setDoctorSlots] = useState([]);
   const [testResults, setTestResults] = useState([]);
@@ -173,7 +178,7 @@ useEffect(() => {
   ];
 
   return (
-    <div className="p-6 bg-gradient-to-tr from-gray-50 to-blue-100 min-h-screen">
+    <div ref={dashboardRef} className="p-6 bg-gradient-to-tr from-gray-50 to-blue-100 min-h-screen">
       <h1 className="text-2xl text-center font-bold text-primary mb-6">
         Hospital - {user.fullName || user.primaryEmailAddress?.emailAddress}
       </h1>
