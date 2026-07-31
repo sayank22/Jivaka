@@ -99,7 +99,9 @@ const HomePage = () => {
 
       {/* Tagline */}
       <section className="relative isolate min-h-[20rem] overflow-hidden sm:min-h-[24rem]">
-      <Suspense fallback={null}><HeroNetwork /></Suspense>
+      <Suspense fallback={null}>
+    <HeroNetwork position="right" />
+  </Suspense>
       <div data-motion-hero className="relative z-10 text-left pt-28 pl-6 pr-6 max-w-4xl mx-auto">
         <Motion.h1
           className="text-5xl font-bold text-primary"
@@ -119,6 +121,7 @@ const HomePage = () => {
         </Motion.p>
       </div>
       </section>
+
 <div className="overflow-hidden bg-primary text-surface-foreground py-3">
   <div className="flex flex-nowrap gap-8 animate-marquee whitespace-nowrap">
     {[
@@ -206,8 +209,11 @@ const HomePage = () => {
       
 
       {/* Description */}
+      <section className="relative isolate min-h-[20rem] overflow-hidden sm:min-h-[24rem]">
+      <Suspense fallback={null}>
+    <HeroNetwork position="left" />
+  </Suspense>
       <div className="text-right pt-28 pl-6 pr-6 max-w-4xl mx-auto">
-        
         <Motion.h1
           className="text-5xl font-bold text-primary mb-4"
           initial={{ opacity: 0, y: -20 }}
@@ -226,6 +232,8 @@ const HomePage = () => {
           A customer friendly, Blazingly fast, super-easy app to book. 
         </Motion.p>
         </div>
+        </section>
+
 <div className="overflow-hidden bg-primary text-surface-foreground py-3">
   <div className="flex flex-nowrap gap-8 animate-marquee whitespace-nowrap">
     {[
@@ -266,6 +274,7 @@ const HomePage = () => {
     ))}
   </div>
 </div>
+
       {/* How It Works Section */}
 <div className="mt-20 max-w-4xl mx-auto px-6 text-center">
   <h2 className="text-3xl font-bold text-primary mb-6">How It Works</h2>
@@ -391,6 +400,13 @@ const HomePage = () => {
 </div>
 
 {/* Description */}
+<section className="relative isolate min-h-[20rem] overflow-hidden sm:min-h-[24rem]">
+      <Suspense fallback={null}>
+    <HeroNetwork position="right" />
+  </Suspense>
+  <Suspense fallback={null}>
+    <HeroNetwork position="left" />
+  </Suspense>
       <div className="text-center pt-28 pl-6 pr-6 max-w-4xl mx-auto">
         <Motion.h1
           className="text-5xl font-bold text-primary mb-4"
@@ -410,6 +426,7 @@ const HomePage = () => {
            You pay less. There is no commission or middle-men. Direct payment between Doctors, patients and Hospitals. 0% surge and 0% commission.
         </Motion.p>
       </div>
+      </section>
 
       {/* Features */}
       <div className="mt-20 max-w-5xl mx-auto px-6">

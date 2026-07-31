@@ -98,7 +98,7 @@ function Network({ colors, reducedMotion }) {
   );
 }
 
-const HeroNetwork = () => {
+const HeroNetwork = ({ position = "center" }) => {
   const reducedMotion = useReducedMotion();
   const [colors, setColors] = useState(() => readThemeColors());
 
@@ -109,7 +109,12 @@ const HeroNetwork = () => {
   }, []);
 
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 opacity-95">
+    <div aria-hidden="true" className={`
+    absolute inset-y-0 z-0 pointer-events-none
+    ${position === "right" ? "right-0 w-1/2" : ""}
+    ${position === "left" ? "left-0 w-1/2" : ""}
+    ${position === "center" ? "inset-0" : ""}
+  `}>
       <Canvas dpr={[1, 1.5]} gl={{ alpha: true, antialias: false, powerPreference: 'high-performance' }} camera={{ position: [0, 0, 4], fov: 54 }}>
         <Network colors={colors} reducedMotion={reducedMotion} />
         <Preload all />
