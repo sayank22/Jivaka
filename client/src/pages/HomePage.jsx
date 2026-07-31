@@ -23,7 +23,8 @@ import patientImage from '../assets/1.jpg';
 import { useDialogReveal, useInteractiveMotion, useStaggerReveal } from '../hooks/useGsapMotion';
 
 // const HeroEcg = lazy(() => import('../components/HeroEcg'));
-const HeroNetwork = lazy(() => import('../components/HeroNetwork'));
+// const HeroNetwork = lazy(() => import('../components/HeroNetwork'));
+const HeroDna = lazy(() => import('../components/HeroDna'));
 
 const roles = [
   {
@@ -101,9 +102,8 @@ const HomePage = () => {
       {/* Tagline */}
       <section className="relative isolate min-h-[20rem] overflow-hidden sm:min-h-[24rem]">
       {/* <Suspense fallback={null}><HeroEcg /></Suspense> */}
-      <Suspense fallback={null}>
-    <HeroNetwork position="right" />
-  </Suspense>
+      {/* <Suspense fallback={null}><HeroNetwork position="right" /></Suspense> */}
+      <Suspense fallback={null}><HeroDna position="right" /></Suspense>
       <div data-motion-hero className="relative z-10 text-left pt-28 pl-6 pr-6 max-w-4xl mx-auto">
         <Motion.h1
           className="text-5xl font-bold text-primary"
@@ -212,9 +212,8 @@ const HomePage = () => {
 
       {/* Description */}
       <section className="relative isolate min-h-[20rem] overflow-hidden sm:min-h-[24rem]">
-        <Suspense fallback={null}>
-    <HeroNetwork position="left" />
-  </Suspense>
+        {/* <Suspense fallback={null}><HeroNetwork position="left" /></Suspense> */}
+        <Suspense fallback={null}><HeroDna position="left" /></Suspense>
       <div className="text-right pt-28 pl-6 pr-6 max-w-4xl mx-auto">
         <Motion.h1
           className="text-5xl font-bold text-primary mb-4"
@@ -403,12 +402,10 @@ const HomePage = () => {
 
 {/* Description */}
 <section className="relative isolate min-h-[20rem] overflow-hidden sm:min-h-[24rem]">
-  <Suspense fallback={null}>
-    <HeroNetwork position="left" />
-  </Suspense>
-  <Suspense fallback={null}>
-    <HeroNetwork position="right" />
-  </Suspense>
+  {/* <Suspense fallback={null}><HeroNetwork position="left" /></Suspense> */}
+  <Suspense fallback={null}><HeroDna position="left" /></Suspense>
+  {/* <Suspense fallback={null}><HeroNetwork position="right" /></Suspense> */}
+  <Suspense fallback={null}><HeroDna position="right" /></Suspense>
       <div className="text-center pt-28 pl-6 pr-6 max-w-4xl mx-auto">
         <Motion.h1
           className="text-5xl font-bold text-primary mb-4"
