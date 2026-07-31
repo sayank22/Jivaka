@@ -6,7 +6,7 @@ import { Menu, Sun, Moon } from "lucide-react";
 import { useInteractiveMotion, useStaggerReveal } from '../hooks/useGsapMotion';
 import AppSidebar from './AppSidebar';
 
-const Navbar = ({ theme, toggleTheme }) => {
+const Navbar = ({ theme, toggleTheme, onOpenFeedback }) => {
   const { user } = useUser();
   const { signOut } = useClerk();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -21,7 +21,7 @@ const Navbar = ({ theme, toggleTheme }) => {
 
   return (
     <>
-    <nav ref={navRef} className="bg-surface text-surface-foreground px-4 py-8 flex justify-between items-center relative dark:bg-surface dark:text-surface-foreground transition-colors duration-300">
+    <nav ref={navRef} className="bg-navbar text-surface-foreground px-4 py-2 flex justify-between items-center relative dark:bg-surface dark:text-surface-foreground transition-colors duration-300">
       <div className="flex items-center gap-3">
         <button
           ref={menuButtonRef}
@@ -40,14 +40,14 @@ const Navbar = ({ theme, toggleTheme }) => {
         <img
           src={logoImage}
           alt="Jivaka Logo"
-          className="w-14 h-14 object-contain"
+          className="w-16 h-16 object-contain"
         />
       </Link>
       </div>
 
-      <div className="text-surface-foreground ml-auto flex items-center space-x-4 text-lg font-bold dark:text-surface-foreground">
-        <Link to="/feedback" data-motion-nav-item data-motion-interactive className="hover:underline">Feedback</Link>
-        <Link to="/" data-motion-nav-item data-motion-interactive className="hover:underline">Home</Link>
+      <div className="text-surface-foreground ml-auto flex items-center space-x-4 text-lg dark:text-surface-foreground">
+        <button type="button" onClick={onOpenFeedback} data-motion-nav-item data-motion-interactive className="hover:font-semibold hover:text-foreground">Feedback</button>
+        <Link to="/" data-motion-nav-item data-motion-interactive className="hover:font-semibold hover:text-foreground">Home</Link>
 
         <button
   type="button"
@@ -63,8 +63,6 @@ const Navbar = ({ theme, toggleTheme }) => {
   <Moon className="h-5 w-5 transition-all duration-300 hover:-rotate-12" />
 )}
 </button>
-
-
 
         {/* Show Sign Out button only on dashboards and if logged in */}
         {user && (

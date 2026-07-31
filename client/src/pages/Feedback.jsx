@@ -1,82 +1,43 @@
-import React, { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { X } from 'lucide-react';
 import { toast } from 'react-toastify';
-import { useInteractiveMotion, useStaggerReveal } from '../hooks/useGsapMotion';
 
-const Feedback = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    profession: '',
-    concern: '',
-  });
-  const formRef = useRef(null);
-  useStaggerReveal(formRef, '[data-motion-form-field]', { y: 10, duration: 0.35, stagger: 0.06 });
-  useInteractiveMotion(formRef);
+const Feedback = ({ onClose }) => {
+  const [formData, setFormData] = useState({ name: '', profession: '', concern: '' });
+  const dialogRef = useRef(null);
 
-  const handleChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') onClose();
+    };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Feedback Submitted:', formData);
-    // You can replace this with an API call to save feedback
-    toast.success("Thank you for your feedback!");
+    window.addEventListener('keydown', onKeyDown);
+    dialogRef.current?.focus();
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [onClose]);
+
+  const handleChange = (event) => setFormData((current) => ({ ...current, [event.target.name]: event.target.value }));
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    toast.success('Thank you for your feedback!');
     setFormData({ name: '', profession: '', concern: '' });
+    onClose();
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-surface to-muted flex items-center justify-center p-4">
-      <div ref={formRef} className="bg-card rounded-xl shadow-xl p-8 max-w-md w-full">
-        <h2 className="text-2xl font-bold text-primary mb-6 text-center">Submit Your Feedback</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div data-motion-form-field>
-            <label className="block text-sm font-medium text-muted-foreground">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full px-4 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-              placeholder="Your name"
-            />
-          </div>
-          <div data-motion-form-field>
-            <label className="block text-sm font-medium text-muted-foreground">Profession</label>
-            <input
-              type="text"
-              name="profession"
-              value={formData.profession}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full px-4 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-              placeholder="e.g., Doctor, Patient, Hospital Admin"
-            />
-          </div>
-          <div data-motion-form-field>
-            <label className="block text-sm font-medium text-muted-foreground">Concern / Message</label>
-            <textarea
-              name="concern"
-              value={formData.concern}
-              onChange={handleChange}
-              required
-              rows={4}
-              className="mt-1 block w-full px-4 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-              placeholder="Write your message here..."
-            />
-          </div>
-          <button
-            type="submit"
-            data-motion-interactive
-            className="w-full bg-primary text-surface-foreground py-2 px-4 rounded-md hover:bg-primary transition"
-          >
-            Submit Feedback
-          </button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onMouseDown={onClose}>
+      <section ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="feedback-title" tabIndex={-1} onMouseDown={(event) => event.stopPropagation()} className="relative w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-2xl sm:p-8">
+        <button type="button" onClick={onClose} aria-label="Close feedback form" className="absolute right-4 top-4 rounded-md p-2 text-muted-foreground hover:bg-muted hover:text-foreground"><X className="h-5 w-5" /></button>
+        <h2 id="feedback-title" className="pr-10 text-2xl font-bold text-primary">Send feedback</h2>
+        <p className="mt-2 text-sm text-muted-foreground">Tell us what would make Jivaka better for you.</p>
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <label className="block text-sm font-medium text-foreground">Name<input name="name" value={formData.name} onChange={handleChange} required className="mt-1.5 w-full rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-ring" placeholder="Your name" /></label>
+          <label className="block text-sm font-medium text-foreground">Profession<input name="profession" value={formData.profession} onChange={handleChange} required className="mt-1.5 w-full rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-ring" placeholder="Doctor, patient, hospital admin…" /></label>
+          <label className="block text-sm font-medium text-foreground">Message<textarea name="concern" value={formData.concern} onChange={handleChange} required rows={4} className="mt-1.5 w-full resize-y rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-ring" placeholder="Write your feedback here…" /></label>
+          <div className="flex justify-end gap-3 pt-2"><button type="button" onClick={onClose} className="rounded-md px-4 py-2 text-sm font-semibold text-muted-foreground hover:bg-muted">Cancel</button><button type="submit" className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90">Submit feedback</button></div>
         </form>
-      </div>
+      </section>
     </div>
   );
 };

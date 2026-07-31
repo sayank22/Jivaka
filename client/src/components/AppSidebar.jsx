@@ -28,7 +28,7 @@ const AppSidebar = ({ isOpen, onClose }) => {
     { label: 'Payments', to: '/payment', icon: CreditCard },
   ], [config, role]);
   const resources = [
-    { label: 'About Jivaka', to: '/about', icon: FileText },
+    { label: 'About', to: '/about', icon: FileText },
     { label: 'Plans', to: '/', icon: ShieldCheck },
     { label: 'Feedback', to: '/feedback', icon: MessageSquare },
   ];

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion as Motion } from 'framer-motion';
 import {
   UserIcon,
   StethoscopeIcon,
@@ -83,40 +83,36 @@ const features = [
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
   const [selectedRole, setSelectedRole] = useState('Patient');
-  const [expandedIndex, setExpandedIndex] = useState(null);
   const pageRef = useRef(null);
   useStaggerReveal(pageRef, '[data-motion-hero]', { y: 16, duration: 0.5, stagger: 0.1 });
   useStaggerReveal(pageRef, '[data-motion-card]', { y: 14, duration: 0.42, stagger: 0.08 });
   useInteractiveMotion(pageRef);
-  useDialogReveal(pageRef, showModal);
+  useDialogReveal(pageRef);
   
 
 
   return (
-    <div ref={pageRef} className="min-h-screen bg-gradient-to-tr from-surface to-muted relative">
-      {/* Logo */}
-      
+    <div ref={pageRef} className="min-h-screen bg-gradient-to-tr from-surface to-muted relative">    
 
       {/* Tagline */}
       <div data-motion-hero className="text-left pt-28 pl-6 pr-6 max-w-4xl mx-auto">
-        <motion.h1
-          className="text-5xl font-bold text-primary mb-4"
+        <Motion.h1
+          className="text-5xl font-bold text-primary"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
           Welcome to Jivaka
-        </motion.h1>
-        <motion.p
+        </Motion.h1>
+        <Motion.p
           className="text-lg text-muted-foreground mb-12"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
         >
           A modern Indian hospital management system for patients, doctors, and hospitals — rooted in tradition, built for the future.
-        </motion.p>
+        </Motion.p>
       </div>
 <div className="overflow-hidden bg-primary text-surface-foreground py-3">
   <div className="flex flex-nowrap gap-8 animate-marquee whitespace-nowrap">
@@ -163,7 +159,7 @@ const HomePage = () => {
 </div>
 
       {/* Role Cards */}
-      <motion.div
+      <Motion.div
         className="bg-surface shadow-2xl rounded-2xl p-10 text-center max-w-5xl w-full mx-auto"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -175,13 +171,13 @@ const HomePage = () => {
 
         <div className="grid md:grid-cols-3 gap-6">
           {roles.map((role) => (
-            <motion.div
+            <Motion.div
               key={role.label}
               data-motion-card
               data-motion-interactive
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-surface rounded-2xl shadow-lg hover:shadow-2xl p-6 flex flex-col items-center transition duration-300 border border-border"
+              className="bg-surface rounded-2xl shadow-lg hover:shadow-2xl p-6 flex flex-col items-center transition duration-300"
             >
               <img
                 src={role.image}
@@ -198,14 +194,14 @@ const HomePage = () => {
               >
                 Continue as {role.label}
               </button>
-            </motion.div>
+            </Motion.div>
           ))}
         </div>
-      </motion.div>
+      </Motion.div>
 
       {/* Description */}
       <div className="text-right pt-28 pl-6 pr-6 max-w-4xl mx-auto">
-        <motion.h1
+        <Motion.h1
           className="text-5xl font-bold text-primary mb-4"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -213,15 +209,15 @@ const HomePage = () => {
         >
           Fast, Easy<br />
           and Safe
-        </motion.h1>
-        <motion.p
+        </Motion.h1>
+        <Motion.p
           className="text-lg text-muted-foreground mb-12"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
         >
           A customer friendly, Blazingly fast, super-easy app to book. 
-        </motion.p>
+        </Motion.p>
         </div>
 <div className="overflow-hidden bg-primary text-surface-foreground py-3">
   <div className="flex flex-nowrap gap-8 animate-marquee whitespace-nowrap">
@@ -287,7 +283,7 @@ const HomePage = () => {
   {/* Role Content */}
   <AnimatePresence mode="wait">
     {selectedRole === 'Patient' && (
-      <motion.div
+      <Motion.div
         key="patient"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -316,11 +312,11 @@ const HomePage = () => {
             <span>Pay directly — 100% fee goes to the doctor via clinic</span>
           </li>
         </ul>
-      </motion.div>
+      </Motion.div>
     )}
 
     {selectedRole === 'Doctor' && (
-      <motion.div
+      <Motion.div
         key="doctor"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -349,11 +345,11 @@ const HomePage = () => {
             <span>Receive consultation fees directly</span>
           </li>
         </ul>
-      </motion.div>
+      </Motion.div>
     )}
 
     {selectedRole === 'Hospital' && (
-      <motion.div
+      <Motion.div
         key="hospital"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -382,14 +378,14 @@ const HomePage = () => {
             <span>Receive payment and manage reports</span>
           </li>
         </ul>
-      </motion.div>
+      </Motion.div>
     )}
   </AnimatePresence>
 </div>
 
 {/* Description */}
       <div className="text-center pt-28 pl-6 pr-6 max-w-4xl mx-auto">
-        <motion.h1
+        <Motion.h1
           className="text-5xl font-bold text-primary mb-4"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -397,208 +393,63 @@ const HomePage = () => {
         >
             By the People<br />
           For the people
-        </motion.h1>
-        <motion.p
+        </Motion.h1>
+        <Motion.p
           className="text-lg text-muted-foreground mb-12"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
         >
            You pay less. There is no commission or middle-men. Direct payment between Doctors, patients and Hospitals. 0% surge and 0% commission.
-        </motion.p>
+        </Motion.p>
       </div>
 
       {/* Features */}
       <div className="mt-20 max-w-5xl mx-auto px-6">
         <h2 className="text-3xl font-bold text-primary mb-6 text-center">Key Features</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 text-center">
           {features.map((feature, i) => (
-            <motion.div
-              key={i}
-              data-motion-card
-              data-motion-interactive
-              className="bg-muted p-6 rounded-xl shadow-md cursor-pointer"
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.3 }}
-              onClick={() => setExpandedIndex(expandedIndex === i ? null : i)}
-            >
-              <div className="text-4xl mb-2">{feature.icon}</div>
-              <p className="text-lg font-medium text-muted-foreground">{feature.label}</p>
-              {expandedIndex === i && (
-                <motion.p
-                  className="text-sm text-muted-foreground mt-2"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {feature.description}
-                </motion.p>
-              )}
-            </motion.div>
+            <Motion.div
+  key={i}
+  data-motion-card
+  data-motion-interactive
+  className="group relative overflow-hidden bg-muted p-6 rounded-xl shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-28"
+>
+  <div className="text-3xl mb-2">{feature.icon}</div>
+
+  <p className="text-lg font-medium text-muted-foreground">
+    {feature.label}
+  </p>
+
+<div
+    className="
+    absolute
+    inset-x-0
+    bottom-0
+
+    translate-y-full
+    group-hover:translate-y-0
+
+    transition-transform
+    duration-300
+
+    bg-card/95
+    backdrop-blur-md
+    p-4
+">
+  <p className="mt-3 text-sm text-muted-foreground
+                opacity-0 max-h-0 overflow-hidden
+                transition-all duration-300
+                group-hover:opacity-100
+                group-hover:max-h-24">
+    {feature.description}
+  </p>
+  <div className="text-xl mb-1">{feature.icon}</div>
+  </div>
+</Motion.div>
           ))}
         </div>
       </div>
-{/* Extended Footer Section */}
-<section className="bg-muted border-t mt-20 py-16">
-  <div className="max-w-6xl mx-auto px-6">
-    <h2 className="text-4xl font-bold text-primary text-center mb-4">
-      One App. All Your Healthcare Needs.
-    </h2>
-    <p className="text-center text-muted-foreground text-lg mb-10">
-      Jivaka is a single platform tailored for Patients, Doctors, and Hospitals.
-    </p>
-
-    <div className="grid md:grid-cols-3 gap-8 text-muted-foreground">
-      {/* Product Column */}
-      <div>
-        <h3 className="text-xl font-semibold mb-3 text-primary">Product for the Future</h3>
-        <ul className="space-y-2">
-          <li>• Patient App</li>
-          <li>• Doctor App</li>
-          <li>• Hospital & Diagnosis Center App</li>
-        </ul>
-      </div>
-
-      {/* About Column */}
-      <div>
-        <h3 className="text-xl font-semibold mb-3 text-primary">About</h3>
-        <ul className="space-y-2">
-          <li>
-            <Link
-  to="/about"
-  className="relative font-bold text-accent transition-all duration-300 hover:text-accent/90 hover:scale-105 inline-block after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px] after:bg-accent after:transition-all after:duration-300 hover:after:w-full"
->
-  Who am I
-</Link>
-
-          </li>
-          <li className="text-muted-foreground font-medium">Plans:</li>
-          <li>- Basic Access: Free for patients and doctors</li>
-          <li>- Premium: ₹499/month for full hospital analytics</li>
-          <li>- Enterprise: Custom plan for large hospitals</li>
-        </ul>
-      </div>
-
-      {/* Contact Column */}
-      <div>
-  <h3 className="text-xl font-semibold mb-3 text-primary">Contact Me</h3>
-  <ul className="space-y-3">
-    <li>
-      <a
-        href="https://www.linkedin.com/in/sayan-kundu-70b5442b6"
-        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-destructive/70 hover:scale-[1.02] hover:shadow-md"
-      >
-        💼 LinkdIn: Sayan Kundu
-      </a>
-    </li>
-    <li>
-      <a
-        href="https://drive.google.com/file/d/1Mhn6U396WW0DiciBdBbsP2eJP5P9CSg4/view?usp=drive_link"
-        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-info hover:scale-[1.02] hover:shadow-md"
-      >
-        📄 Resume
-      </a>
-    </li>
-    <li>
-      <a
-        href="https://github.com/sayank22/Jivaka"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-yellow-400 hover:scale-[1.02] hover:shadow-md"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 text-muted-foreground"
-          fill="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.89.58.1.79-.25.79-.56 0-.27-.01-1.01-.01-1.98-3.2.7-3.87-1.54-3.87-1.54-.53-1.35-1.3-1.71-1.3-1.71-1.07-.74.08-.72.08-.72 1.18.08 1.8 1.21 1.8 1.21 1.05 1.8 2.75 1.28 3.42.98.11-.76.41-1.28.74-1.58-2.55-.29-5.24-1.27-5.24-5.65 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.19 1.18.92-.26 1.91-.39 2.89-.39.98 0 1.97.13 2.89.39 2.22-1.49 3.18-1.18 3.18-1.18.63 1.58.24 2.75.12 3.04.74.8 1.18 1.83 1.18 3.08 0 4.39-2.69 5.35-5.26 5.63.42.37.8 1.1.8 2.21 0 1.6-.01 2.89-.01 3.29 0 .31.21.66.8.55C20.72 21.37 24 17.08 24 12c0-6.35-5.15-11.5-12-11.5z" />
-        </svg>
-        GitHub
-      </a>
-    </li>
-    <li>
-      <a
-        href="mailto:sayank10023@gmail.com"
-        className="flex items-center gap-2 p-3 border rounded-lg transition-all duration-300 hover:bg-success/70 hover:scale-[1.02] hover:shadow-md"
-      >
-        📧 Email: sayank10023@gmail.com
-      </a>
-    </li>
-  </ul>
-</div>
-
-    </div>
-  </div>
-</section>
-
-      {/* Footer */}
-      <footer className="text-center py-10 text-sm text-muted-foreground border-t mt-20">
-        <p>
-          © {new Date().getFullYear()}{' '}
-          <strong className="text-primary font-semibold">Jivaka</strong> • Made By Sayan Kundu in India
-        </p>
-      </footer>
-
-      {/* Modal for Plans */}
-     <AnimatePresence>
-  {showModal && (
-    <motion.div
-      className="fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex justify-center items-center z-50"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={() => setShowModal(false)}
-    >
-      <motion.div
-        data-motion-dialog-panel
-        className="bg-card p-8 rounded-xl shadow-xl w-96 text-center relative"
-        initial={{ scale: 0.8 }}
-        animate={{ scale: 1 }}
-        exit={{ scale: 0.8 }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          onClick={() => setShowModal(false)}
-          className="absolute top-2 right-3 text-xl text-muted-foreground hover:text-muted-foreground"
-        >
-          &times;
-        </button>
-        <h3 className="text-xl font-semibold mb-4 text-primary">Our Plans</h3>
-        <p className="text-muted-foreground mb-4 text-sm leading-relaxed text-left">
-          <span className="font-semibold text-primary">🩺 Basic Access – Free</span><br />
-          - Book appointments and receive reminders<br />
-          - Doctors can manage schedule and view history<br />
-          - Access to test results and prescriptions<br />
-          - Basic support via email<br />
-          - UPI & card payment included<br /><br />
-
-          <span className="font-semibold text-primary">💼 Premium – ₹499/month</span><br />
-          - All Basic features, plus:<br />
-          - Advanced hospital analytics & dashboards<br />
-          - Priority appointment scheduling<br />
-          - Doctor performance tracking<br />
-          - Hospital slot management<br />
-          - Premium support (Email + Chat)<br /><br />
-
-          <span className="font-semibold text-primary">🏢 Enterprise – Custom Pricing</span><br />
-          - All Premium features, plus:<br />
-          - Dedicated account manager<br />
-          - Integration with hospital systems<br />
-          - Unlimited medical record storage<br />
-          - Custom features & security audits<br />
-          - 24x7 priority support
-        </p>
-        <button
-          onClick={() => setShowModal(false)}
-          className="bg-primary text-surface-foreground px-4 py-2 rounded hover:bg-primary"
-        >
-          Close
-        </button>
-      </motion.div>
-    </motion.div>
-  )}
-</AnimatePresence>
     </div>
   );
 };

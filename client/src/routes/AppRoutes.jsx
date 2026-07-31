@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
+import { Navigate, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { SignIn, SignUp } from '@clerk/clerk-react';
 
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import HomePage from '../pages/HomePage';
 import About from '../pages/About';
 import Feedback from '../pages/Feedback';
@@ -25,21 +26,24 @@ const RouteTransition = ({ children, routeKey }) => {
 
 const AppRoutes = ({ theme, toggleTheme }) => {
   const location = useLocation();
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
 
-  // Paths where you don't want to show Navbar
+  // Paths where you don't want to show Navbar or Footer
   const hideNavbarPaths = ['/sign-in', '/sign-up'];
+  const hideFooterPaths = ['/sign-in', '/sign-up'];
 
   const shouldHideNavbar = hideNavbarPaths.includes(location.pathname);
+  const shouldHideFooter = hideFooterPaths.includes(location.pathname);
 
   return (
     <>
-      {!shouldHideNavbar && <Navbar theme={theme} toggleTheme={toggleTheme} />}
+      {!shouldHideNavbar && <Navbar theme={theme} toggleTheme={toggleTheme} onOpenFeedback={() => setFeedbackOpen(true)} />}
 
       <RouteTransition routeKey={location.pathname}>
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<About />} />
-          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/feedback" element={<Navigate to="/" replace />} />
           <Route path="/login/:role" element={<LoginPage />} />
           <Route path="/signup/:role" element={<SignupPage />} />
 
@@ -79,9 +83,11 @@ const AppRoutes = ({ theme, toggleTheme }) => {
             }
           />
           <Route path="/payment" element={<PaymentPage />} />
-
         </Routes>
       </RouteTransition>
+
+      {!shouldHideFooter && <Footer />}
+      {feedbackOpen && <Feedback onClose={() => setFeedbackOpen(false)} />}
     </>
   );
 };

@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    --navbar: 210 16% 90%;
     --background: 210 20% 98%;
     --foreground: 215 20% 15%;
     --surface: 210 16% 98%;
@@ -40,6 +41,7 @@
     --radius: 0.5rem;
   }
   .dark {
+    --navbar: 220 14% 10%;
     --background: 220 15% 10%;
     --overlay: 220 14% 18%;
     --foreground: 210 40% 98%;
@@ -82,5 +84,15 @@
   }
   body {
     @apply bg-background text-foreground transition-colors duration-300;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .footer-link {
+    @apply inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm text-muted-foreground transition hover:bg-muted hover:text-foreground;
   }
 }
