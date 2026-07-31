@@ -22,6 +22,7 @@ import {
 import patientImage from '../assets/1.jpg';
 import { useDialogReveal, useInteractiveMotion, useStaggerReveal } from '../hooks/useGsapMotion';
 
+// const HeroEcg = lazy(() => import('../components/HeroEcg'));
 const HeroNetwork = lazy(() => import('../components/HeroNetwork'));
 
 const roles = [
@@ -99,6 +100,7 @@ const HomePage = () => {
 
       {/* Tagline */}
       <section className="relative isolate min-h-[20rem] overflow-hidden sm:min-h-[24rem]">
+      {/* <Suspense fallback={null}><HeroEcg /></Suspense> */}
       <Suspense fallback={null}>
     <HeroNetwork position="right" />
   </Suspense>
@@ -210,7 +212,7 @@ const HomePage = () => {
 
       {/* Description */}
       <section className="relative isolate min-h-[20rem] overflow-hidden sm:min-h-[24rem]">
-      <Suspense fallback={null}>
+        <Suspense fallback={null}>
     <HeroNetwork position="left" />
   </Suspense>
       <div className="text-right pt-28 pl-6 pr-6 max-w-4xl mx-auto">
@@ -401,11 +403,11 @@ const HomePage = () => {
 
 {/* Description */}
 <section className="relative isolate min-h-[20rem] overflow-hidden sm:min-h-[24rem]">
-      <Suspense fallback={null}>
-    <HeroNetwork position="right" />
-  </Suspense>
   <Suspense fallback={null}>
     <HeroNetwork position="left" />
+  </Suspense>
+  <Suspense fallback={null}>
+    <HeroNetwork position="right" />
   </Suspense>
       <div className="text-center pt-28 pl-6 pr-6 max-w-4xl mx-auto">
         <Motion.h1
