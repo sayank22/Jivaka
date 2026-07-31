@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { lazy, Suspense, useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AnimatePresence, motion as Motion } from 'framer-motion';
 import {
@@ -21,6 +21,8 @@ import {
 
 import patientImage from '../assets/1.jpg';
 import { useDialogReveal, useInteractiveMotion, useStaggerReveal } from '../hooks/useGsapMotion';
+
+const HeroNetwork = lazy(() => import('../components/HeroNetwork'));
 
 const roles = [
   {
@@ -96,7 +98,9 @@ const HomePage = () => {
     <div ref={pageRef} className="min-h-screen bg-gradient-to-tr from-surface to-muted relative">    
 
       {/* Tagline */}
-      <div data-motion-hero className="text-left pt-28 pl-6 pr-6 max-w-4xl mx-auto">
+      <section className="relative isolate min-h-[20rem] overflow-hidden sm:min-h-[24rem]">
+      <Suspense fallback={null}><HeroNetwork /></Suspense>
+      <div data-motion-hero className="relative z-10 text-left pt-28 pl-6 pr-6 max-w-4xl mx-auto">
         <Motion.h1
           className="text-5xl font-bold text-primary"
           initial={{ opacity: 0, y: -20 }}
@@ -114,6 +118,7 @@ const HomePage = () => {
           A modern Indian hospital management system for patients, doctors, and hospitals — rooted in tradition, built for the future.
         </Motion.p>
       </div>
+      </section>
 <div className="overflow-hidden bg-primary text-surface-foreground py-3">
   <div className="flex flex-nowrap gap-8 animate-marquee whitespace-nowrap">
     {[
@@ -198,9 +203,11 @@ const HomePage = () => {
           ))}
         </div>
       </Motion.div>
+      
 
       {/* Description */}
       <div className="text-right pt-28 pl-6 pr-6 max-w-4xl mx-auto">
+        
         <Motion.h1
           className="text-5xl font-bold text-primary mb-4"
           initial={{ opacity: 0, y: -20 }}
